@@ -24,6 +24,6 @@
     "types": ["node"] // 导入指定类型包
   },
   "include": [
-    "example/package/*"  // 导入目录
+    "example/src/package/*"  // 导入目录
   ]
 }

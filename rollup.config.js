@@ -26,7 +26,7 @@ const esPlugin = eslint({
 
 // 基础配置
 const commonConf = {
-  input: getPath("./example/package/index.tsx"),
+  input: getPath("./example/src/package/index.tsx"),
   external: ["react","react-dom"],
   plugins: [
     uglify(),
