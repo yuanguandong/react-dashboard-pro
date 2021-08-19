@@ -1,0 +1,151 @@
+
+html,body{
+  background: #fff;
+}
+.App {
+  position:relative;
+  .wrap {
+    width: 50%;
+    max-width:1024px;
+    transform: translateX(-50%);
+    position:absolute;
+    padding-top: 50px;
+    left:50%;
+    margin: 0 auto;
+    @media screen and (max-width:1200px){
+      min-width:90%;
+    }
+  }
+  .background{
+    position:absolute;
+    background:#FCD503;
+    min-height:480px;
+    width:100%;
+    height:30vh;
+    top: 0;
+    left:0;
+    overflow: hidden;
+    @media screen and (max-width:1200px){
+      height:40vh;
+      min-height:740px;
+    }
+    .symbol{
+      color:rgba(128,128,128,0.2);
+      position:absolute;
+    }
+    
+  }
+  .alignCenter{text-align: center}
+  .logo {
+    text-align:center;
+    font-size: 100px;
+    font-weight: bold;
+    line-height: 100px;
+    user-select: none;
+  }
+  .name {
+    display: inline-block;
+    font-size: 50px;
+    font-weight: bold;
+    vertical-align: top;
+  }
+
+  .container {
+    border-radius: 10px;
+    overflow: hidden;
+    width: 100%;
+    height: 350px;
+    background:#fff;
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.3);
+    margin:20px 0;
+    position: relative;
+  }
+
+  .block{
+    float: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s;
+    position: relative;
+    &:hover {
+      opacity: 0.9;
+      transition: all 0.3s;
+    }
+    &:focus{
+      border:1px solid rgba(128,128,128,0.5);
+      opacity:0.8;
+    }
+    &:active{
+      border:1px solid rgba(128,128,128,0.5);
+      
+    }
+  }
+
+  .TopSide {
+    .block;
+    background: #20252b;
+    width: 100%;
+    height: 50px;
+    
+  }
+
+  .LeftSide {
+    .block;
+    background: #202020;
+    height: calc(100% - 50px);
+    
+  }
+
+  .RightSide {
+    .block;
+    background: #272c34;
+    height: calc(100% - 50px);
+  }
+
+  .key {
+    /* border:1px solid gray; */
+    margin: 5px;
+    background: #fff;
+    color: #000;
+    padding: 3px 5px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  .count {
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    margin: 0 10px;
+  }
+
+  .tip {
+    height: 50px;
+    line-height: 50px;
+    padding-left: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+  }
+
+
+  .code{border-radius:10px; overflow:hidden; margin:20px 0px;}
+  
+  pre{margin-bottom:0;padding: 30px!important;}
+  .footer{width:100%; text-align:center; padding:50px;}
+  .github{
+    position:absolute;
+    right:20px;
+    top:20px;
+    width:100px;
+    height:20px;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100px;
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "name": "smart-background",
+  "version": "1.0.7",
+  "description": "Automatically generate the background of the symbol picture, so you no longer have to worry about the background 自动生成符号背景，让你不再为背景头疼",
+  "keywords": [
+    "react",
+    "background",
+    "javascript",
+    "tsx",
+    "smart",
+    "smart-background",
+    "emoji",
+    "icon",
+    "icons",
+    "background",
+    "图片",
+    "背景"
+  ],
+  "homepage": "https://yuanguandong.github.io/smart-background/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yuanguandong/smart-background"
+  },
+  "author": "yuanguandong",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "module": "lib/index.esm.js",
+  "scripts": {
+    "start": "cd example && npm start",
+    "dev": "set NODE_ENV=developemnt&& rollup -c rollup.config.js -w",
+    "build": "rm -rf lib && set NODE_ENV=production && rollup -c rollup.config.js",
+    "init": "mkdir /Volumes/mac/github/smart-background/example/src/pages/package && ln -s /Volumes/mac/github/smart-background/src/* /Volumes/mac/github/smart-background/example/src/pages/package"
+  },
+  "types": "lib/index.d.ts",
+  "devDependencies": {
+    "@emotion/react": "^11.4.1",
+    "@emotion/styled": "^11.3.0",
+    "@types/react": "^17.0.13",
+    "@typescript-eslint/parser": "^4.28.2",
+    "react": "^17.0.2",
+    "react-resize-detector": "^6.7.6",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-eslint": "^7.0.0",
+    "rollup-plugin-less": "^1.1.3",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-typescript2": "^0.30.0",
+    "rollup-plugin-uglify": "^6.0.4",
+    "tslib": "^2.3.0",
+    "typescript": "^4.3.5"
+  },
+  "files": [
+    "lib"
+  ]
+}
