@@ -56,17 +56,5 @@ export default [
       file: packageJSON.module, // es6模块
       format: "es",
     },
-  },
-  // {
-  //   input: "src/style.less",
-  //   output: {
-  //     file: "lib/style.css",
-  //     format: "es",
-  //   },
-  //   plugins: [
-  //     postcss({
-  //       extract: true,
-  //     }),
-  //   ],
-  // },
+  }
 ];
