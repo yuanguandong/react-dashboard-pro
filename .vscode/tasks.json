@@ -1,0 +1,68 @@
+{
+  // 有关 tasks.json 格式的文档，请参见
+    // https://go.microsoft.com/fwlink/?LinkId=733558
+    "version": "2.0.0",
+    "tasks": [
+      //f4
+      {
+        "type": "shell",
+        "command": "git pull gitlab master",
+        "label": "git pull",
+        "problemMatcher": []
+      },
+      //f6
+      {
+        "type": "npm",
+        "script": "gitpush",
+        "path": "./",
+        "group": "build",
+        "label": "git push",
+        "problemMatcher": []
+      },
+      //f8 start
+      {
+        "type": "shell",
+        "command": "cd example && npm start",
+        "label": "start",
+        "problemMatcher": []
+      },
+      //f9 build
+      {
+        "type": "shell",
+        "command": "cd server && sh start.sh",
+        "label": "build",
+        "problemMatcher": []
+      },
+      //f10 publish
+      {
+        "type": "shell",
+        "command": "cd example && rm -rf /Volumes/mac/github/smart-background/example/node_modules/smart-background && mkdir /Volumes/mac/github/smart-background/example/node_modules/smart-background && ln -s /Volumes/mac/github/smart-background/lib/* /Volumes/mac/github/smart-background/example/node_modules/smart-background",
+        "label": "publish",
+        "problemMatcher": []
+      },
+      //f11 my install
+      {
+        "type": "shell",
+        "command": "cd example && cnpm i",
+        "label": "my install",
+        "problemMatcher": []
+      },
+      //f12 reset
+      {
+        "type": "shell",
+        "command": "cd example && rm -rf node_modules",
+        "label": "reset",
+        "problemMatcher": []
+      },
+      {
+        "type": "shell",
+        "command": "git checkout master && git merge feature-0-dev && git add . && git commit -m 'merge' && git push",
+        "label": "merge",
+        "problemMatcher": []
+      }
+  
+      
+    ]
+  }
+  
+
