@@ -29,7 +29,7 @@
       //f9 build
       {
         "type": "shell",
-        "command": "cd server && sh start.sh",
+        "command": "npm run build",
         "label": "build",
         "problemMatcher": []
       },

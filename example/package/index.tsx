@@ -1,10 +1,10 @@
 import styled from "@emotion/styled";
 import React, { ReactNode, useEffect, useMemo, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
-import stylesArr from "./style";
-import "./style.ts";
+// import stylesArr from "./style";
+import './style.less';
+// import "./style.ts";
 import { getPosition } from "./utils";
-
 const REPEAT = [1, 2];
 
 const styles: any = {
@@ -111,26 +111,26 @@ const SmartBackground = (props: SmartBackgroundProps) => {
     return arr;
   }, [amount, symbols]);
 
-  useEffect(() => {
-    let styleSheet: any = document.styleSheets[0];
-    const styleLength = styleSheet.cssRules.length;
-    let hasLoadCss = false;
-    for (let i = styleLength - 1; i > 0; i--) {
-      if (
-        styleSheet["cssRules"][i] &&
-        styleSheet["cssRules"][i]["name"] === "smart-background-scroll-top"
-      ) {
-        hasLoadCss = true;
-        break;
-      }
-    }
-    if (hasLoadCss) {
-      return;
-    }
-    stylesArr.forEach((style) => {
-      styleSheet.insertRule(style, styleLength);
-    });
-  }, []);
+  // useEffect(() => {
+  //   let styleSheet: any = document.styleSheets[0];
+  //   const styleLength = styleSheet.cssRules.length;
+  //   let hasLoadCss = false;
+  //   for (let i = styleLength - 1; i > 0; i--) {
+  //     if (
+  //       styleSheet["cssRules"][i] &&
+  //       styleSheet["cssRules"][i]["name"] === "smart-background-scroll-top"
+  //     ) {
+  //       hasLoadCss = true;
+  //       break;
+  //     }
+  //   }
+  //   if (hasLoadCss) {
+  //     return;
+  //   }
+  //   stylesArr.forEach((style) => {
+  //     styleSheet.insertRule(style, styleLength);
+  //   });
+  // }, []);
 
   console.log('childrenWrapClassName',childrenWrapClassName)
 

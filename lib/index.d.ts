@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import "./style.ts";
+import './style.less';
 declare type Animation = {
     type: "left" | "right" | "top" | "bottom";
     speed: number;

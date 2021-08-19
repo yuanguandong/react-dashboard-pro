@@ -1,3 +1,13 @@
+import {
+  Api,
+  Code,
+  Code0,
+  Code1,
+  Code2,
+  Code3,
+  Code4,
+  Footer
+} from '@/components';
 import { Typography } from 'antd';
 import React, { useState } from 'react';
 import {
@@ -19,21 +29,11 @@ import {
   FaYinYang
 } from 'react-icons/fa';
 import { Helmet } from 'umi';
+// import Background from 'smart-background';
+import Background from '../../package';
 import packageInfo from '../config';
-import {
-  Api,
-  Code,
-  Code0,
-  Code1,
-  Code2,
-  Code3,
-  Code4,
-  Footer
-} from './components';
 import './index.less';
 import Intro from './intro';
-// import Background from 'smart-background';
-import Background from './package';
 const { Title, Paragraph, Text, Link } = Typography;
 
 const images = [
