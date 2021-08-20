@@ -1,3 +1,6 @@
+import { Modal } from "antd";
+import { ReactNode } from "react";
+
 export function randomNum(minNum: number, maxNum: number) {
   switch (arguments.length) {
     case 1:
@@ -12,20 +15,19 @@ export function randomNum(minNum: number, maxNum: number) {
   }
 }
 
-export const getPosition = (random:any, fontSize:number) => {
-  if(!random){
+export const getPosition = (random: any, fontSize: number) => {
+  if (!random) {
     return {
-      fontSize
-    }
+      fontSize,
+    };
   }
-  const {fontSizeRange} = random
+  const { fontSizeRange } = random;
   const [minNum, maxNum] = fontSizeRange;
   const fontSizeFin = randomNum(minNum, maxNum);
   const top = randomNum(0, 100) + '%';
   const left = randomNum(0, 100) + '%';
-  return { fontSize:fontSizeFin, top, left };
+  return { fontSize: fontSizeFin, top, left };
 };
-
 
 /*
 生成uuid
@@ -33,7 +35,8 @@ len:number  长度
 radix:number  进制
 */
 export function generateUuid(len: number = 32, radix: number = 10): string {
-  const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
+  const chars =
+    '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
   const uuid = [];
   let i;
   radix = radix || chars.length;
@@ -61,3 +64,39 @@ export function generateUuid(len: number = 32, radix: number = 10): string {
 
   return uuid.join('');
 }
+
+interface confirmUtilAsyncProps {
+  content: string | ReactNode; //提示内容
+  [key: string]: any;
+}
+const { confirm } = Modal;
+/**
+ * 异步确认弹窗，抛出确认或取消布尔值
+ *
+ * @param {confirmUtilAsyncProps} props
+ */
+export const confirmUtilAsync = (props: confirmUtilAsyncProps) =>
+  new Promise((resolve, reject) => {
+    const { content, okType = 'primary', ...restProps } = props;
+    confirm({
+      title: '提示',
+      content,
+      cancelText: '取消',
+      okText: '确定',
+      okType,
+      okButtonProps: {
+        size: 'small',
+      },
+      zIndex: 9999,
+      cancelButtonProps: {
+        size: 'small',
+      },
+      onOk() {
+        resolve(true);
+      },
+      onCancel() {
+        resolve(false);
+      },
+      ...restProps,
+    });
+  });

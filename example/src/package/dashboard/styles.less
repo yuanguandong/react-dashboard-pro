@@ -1,0 +1,73 @@
+@import '~react-grid-layout/css/styles.css';
+@import '~react-resizable/css/styles.css';
+
+.reactgriditem {
+  position: relative;
+  overflow: hidden;
+
+  .mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0);
+    cursor: move;
+    transition: all 0.3s;
+  }
+
+  .configicon {
+    position: absolute;
+    top: 0;
+    right: 30px;
+    z-index: 1;
+    display: none;
+    width: 30px;
+    height: 30px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 30px;
+    text-align: center;
+    background: var(--primary-color);
+    border-radius: var(--card-border-radius) 0 0 var(--card-border-radius);
+    cursor: pointer;
+  }
+
+  .deleteicon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    display: none;
+    width: 30px;
+    height: 30px;
+    color: #fff;
+    font-size: 16px;
+    line-height: 30px;
+    text-align: center;
+    background: #f5222d;
+    border-radius: var(--card-border-radius);
+    cursor: pointer;
+  }
+
+  .configicon + .deleteicon {
+    border-radius: 0 var(--card-border-radius) var(--card-border-radius) 0;
+  }
+
+  &:hover {
+    .mask {
+      background: rgba(0, 0, 0, 0.05);
+      transition: all 0.3s;
+    }
+
+    .configicon {
+      display: block;
+    }
+
+    .deleteicon {
+      display: block;
+    }
+  }
+}
