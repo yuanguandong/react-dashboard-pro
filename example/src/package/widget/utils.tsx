@@ -1,4 +1,5 @@
 import { Drawer } from 'antd';
+import _ from 'lodash';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { FaCog } from 'react-icons/fa';
@@ -6,7 +7,6 @@ import allWidgets from '../widgets';
 //获取widget的类型
 export const getWidgetType = (i: string, widgets?: any): string => {
   let allWidgets = widgets;
-
   var widgetType = '';
   Object.keys(allWidgets).map((key) => {
     if (i.indexOf(key) >= 0) {
@@ -23,24 +23,19 @@ export const ConfigBar = (props: any) => {
     widgetKey,
     editMode,
     onDeleteWidget,
-    showConfigBtn,
-    setVisible = () => {},
+    setConfigShow = () => {},
   } = props;
+  const widgetType = getWidgetType(widgetKey, widgets);
   return (
     <>
       {editMode && <div className={'react-dashboard-mask'}></div>}
-      {showConfigBtn &&
-      editMode &&
-      widgets[getWidgetType(widgetKey, widgets)] &&
-      widgets[getWidgetType(widgetKey, widgets)].configComponent ? (
+      {editMode && _.get('widgets', widgetType + '.configComponent') && (
         <div
           className={'react-dashboard-configicon'}
-          onClick={() => setVisible(true)}
+          onClick={() => setConfigShow(true)}
         >
           <FaCog />
         </div>
-      ) : (
-        ''
       )}
       {editMode && (
         <div
@@ -84,7 +79,8 @@ export const ConfigWrap = (props: any) => {
     if (!widgetKey) {
       return;
     }
-    return widgets[getWidgetType(widgetKey, widgets)]['name'] + '设置';
+    const widgetType = getWidgetType(widgetKey, widgets);
+    return _.get(widgets, widgetType + '.name') + '设置';
   }, [widgetKey, widgets, getWidgetType]);
 
   useEffect(() => {
@@ -112,3 +108,5 @@ export const ConfigWrap = (props: any) => {
     </>
   );
 };
+
+

@@ -1,4 +1,4 @@
-import { FaShareAltSquare } from 'react-icons/fa';
+import { AiOutlineClockCircle } from 'react-icons/ai';
 import Panel from './panel';
 import snapShot from './snapshot.png';
 
@@ -10,7 +10,7 @@ export default {
   configComponent: null,
   maxLength: 1,
   snapShot,
-  icon: <FaShareAltSquare/>,
+  icon: <AiOutlineClockCircle/>,
   iconBackground: 'linear-gradient(-20deg, #b721ff 0%, #21d4fd 100%)',
   size: {
     defaultWidth: 4,

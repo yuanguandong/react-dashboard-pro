@@ -36,7 +36,7 @@ import {
 } from './service';
 
 const ResponsiveReactGridLayout: any = WidthProvider(Responsive);
-const maxWidgetLength = 20;
+export const maxWidgetLength = 20;
 
 type LayoutItem = {
   w: number; //宽度
@@ -190,7 +190,7 @@ const Comp = (props: Dashboard) => {
   const addWidget = useCallback(
     (widget, type) => {
       if (dirtyCurrentLayout.length >= maxWidgetLength) {
-        message.warning('超过了最大限制数量20' + ',' + '不能再添加了');
+        message.warning(`超过了最大限制数量${maxWidgetLength}` + ',' + '不能再添加了');
       }
       const lastItem = dirtyCurrentLayout[dirtyCurrentLayout.length - 1];
       const newLayout = [

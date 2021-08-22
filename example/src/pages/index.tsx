@@ -21,7 +21,7 @@ import Background from 'smart-background';
 import { Helmet } from 'umi';
 // import Background from '../../package';
 import packageInfo from '../config';
-import Dashboard from '../package';
+import Dashboard from './dashboard';
 import './index.less';
 import Intro from './intro';
 

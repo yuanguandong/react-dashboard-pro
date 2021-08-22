@@ -3,7 +3,6 @@ import classnames from 'classnames';
 import moment from 'moment';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useResizeDetector } from 'react-resize-detector';
-import { ConfigBar } from '../../widget/utils';
 import styles from './index.less';
 
 
@@ -114,11 +113,6 @@ const Widget = (props: any) => {
           </div>
         </Col>
       </Row>
-      <ConfigBar
-        widgetKey={widgetKey}
-        editMode={editMode}
-        onDeleteWidget={onDeleteWidget}
-      />
     </div>
   );
 };

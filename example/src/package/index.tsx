@@ -1,7 +1,4 @@
-import React from 'react';
-import Dashboard from './dashboard';
-import './style.less';
-import allWidgets from './widgets';
-export default () => {
-  return <Dashboard id={'default'} widgets={allWidgets} initialLayout={[]} />;
-};
+export { default as Dashboard } from './dashboard';
+export { default as Widget } from './widget';
+export { default as Widgets } from './widgets';
+

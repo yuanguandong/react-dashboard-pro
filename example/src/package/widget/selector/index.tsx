@@ -35,6 +35,9 @@ const WidgetSelector = (props: any) => {
   const [menuData, setMenuData] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [keywords, setKeywords] = useState('');
+  console.log('currentLayout',currentLayout)
+
+  
 
   //计算是否还可添加
   const canBeAdd = (widget: any) => {
@@ -106,6 +109,21 @@ const WidgetSelector = (props: any) => {
   useEffect(() => {
     handleCalcMenuData(widgets);
   }, []);
+
+  useEffect(()=>{
+    let newStateWidgets = _.cloneDeep(stateWidgets)
+    Object.keys(newStateWidgets).map((key) => {
+      newStateWidgets[key].length = 0;
+    });
+    currentLayout.map((item: any) => {
+      Object.keys(newStateWidgets).map((key) => {
+        if (item['i'].indexOf(key) >= 0) {
+          newStateWidgets[key].length = newStateWidgets[key].length + 1;
+        }
+      });
+    });
+    setStateWidgets(newStateWidgets)
+  },[currentLayout])
 
   return (
     <>
@@ -184,7 +202,7 @@ const WidgetSelector = (props: any) => {
                       <div
                         className={'react-dashboard-widget-iconWrap'}
                         style={{
-                          backgroundImage: stateWidgets[key]['iconBackground'],
+                          backgroundImage: _.get(stateWidgets,key+'.iconBackground')
                         }}
                       >
                         {stateWidgets[key].icon}
