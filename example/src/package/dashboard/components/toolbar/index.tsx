@@ -9,7 +9,7 @@ export interface ToolBarPropsIF {
   fixed?: boolean;
 }
 
-const prefixCls = 'gant-toolbar';
+const prefixCls = 'react-dashboard-toolbar';
 
 const Toolbar = (props: ToolBarPropsIF) => {
   const { extraLeft, extraRight, fixed, className, style, ...restProps } = props;

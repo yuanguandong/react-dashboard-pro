@@ -32,15 +32,15 @@ export const addWidget = async (
   const newLayout = [
     ...currentLayout,
     {
-      w: widget.rect.defaultWidth,
-      h: widget.rect.defaultHeight,
+      w: widget.size.defaultWidth,
+      h: widget.size.defaultHeight,
       x: 0,
       y: lastItem ? lastItem.y + lastItem.h : 0,
       i: widgetKey,
-      minW: widget.rect.minWidth,
-      maxW: widget.rect.maxWidth,
-      minH: widget.rect.minHeight,
-      maxH: widget.rect.maxHeight,
+      minW: widget.size.minWidth,
+      maxW: widget.size.maxWidth,
+      minH: widget.size.minHeight,
+      maxH: widget.size.maxHeight,
     },
   ];
 

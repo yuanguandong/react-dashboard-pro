@@ -4,9 +4,9 @@ interface WidgetProps {
   widgets: any;
   widgetKey: string;
   widgetType: string;
-  itemHeight: number;
+  widgetHeight: number;
   editMode: boolean;
-  handleDeleteWidget?: Function;
+  onDeleteWidget?: Function;
   [key:string]:any;
 }
 
@@ -16,9 +16,9 @@ const Widget = (props: WidgetProps) => {
     widgets,
     widgetKey,
     widgetType,
-    itemHeight,
+    widgetHeight,
     editMode,
-    handleDeleteWidget,
+    onDeleteWidget,
   } = props;
   return React.createElement(widgets[widgetType]['component'], {
     ...props

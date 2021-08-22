@@ -1,31 +1,26 @@
-.wrap {
+.react-dashboard-widget-wrap {
   display: flex;
-
-  .leftBar {
-    /* margin-right: 10px; */
+  .react-dashboard-widget-leftBar {
     padding: 10px;
     width: 180px;
     border-right: 1px solid rgba(0, 0, 0, 0.1);
-    background:var(--component-background);
-    .searchIcon {
+    background: var(--component-background);
+    .react-dashboard-widget-searchIcon {
       color: var(--text-color);
     }
 
-    .item {
+    .react-dashboard-widget-item {
       display: flex;
       justify-content: space-between;
       padding: 10px;
-      // .name {
-      //   text-align: left;
-      // }
 
-      .Badge {
-        :global {
+      .react-dashboard-widget-Badge {
+
           .ant-badge-count {
             color: var(--text-color);
             background-color: var(--component-background-1) !important;
           }
-        }
+        
       }
 
       cursor: pointer;
@@ -36,42 +31,30 @@
       }
     }
 
-    .active {
+    .react-dashboard-widget-active {
       background: rgba(0, 0, 0, 0.03);
       font-weight: bold;
     }
   }
 
-  .Layer {
+  .react-dashboard-widget-Layer {
     flex: 1 1;
-    // height: 60vh;
     overflow-y: auto;
     overflow-x: hidden;
-    /* margin: -10px; */
     padding: 10px;
     background: rgba(0, 0, 0, 0.01);
 
 
-    :global {
-      .waterfall {
+      .react-dashboard-widget-waterfall {
         width: 100%;
       }
 
       .ant-popover-inner-content {
         background: rgba(0, 0, 0, 0.01);
-        // &:after {
-        //   content: '';
-        //   width: 100%;
-        //   display: block;
-        //   height: 0px;
-        //   clear: both;
-        //   visibility: hidden;
-        // }
       }
-    }
+    
 
-
-    .item {
+    .react-dashboard-widget-item {
       cursor: pointer;
       height: auto;
       margin-bottom: 10px;
@@ -84,13 +67,13 @@
       border: 1px solid rgba(0, 0, 0, 0.1);
       -webkit-column-break-inside: avoid;
       position: relative;
-      background:var(--component-background);
-      .shortcut {
+      background: var(--component-background);
+      .react-dashboard-widget-shortcut {
         width: 100%;
         height: auto;
       }
 
-      .mask {
+      .react-dashboard-widget-mask {
         opacity: 0;
         position: absolute;
         top: 0;
@@ -106,23 +89,22 @@
 
       &:hover {
         transition: all 0.3s;
-        // box-shadow: 0 0px 10px rgba(0, 0, 0, 0.3);
+
         border: 1px solid var(--component-background-3);
 
-        .mask {
+        .react-dashboard-widget-mask {
           opacity: 1;
           transition: all 0.3s;
         }
       }
 
-      .bottombar {
+      .react-dashboard-widget-bottombar {
         border-top: 1px solid rgba(0, 0, 0, 0.1);
         width: 100%;
-        // height: 40px;
-        // background: var(--component-background);
+
         padding: 5px;
 
-        .iconWrap {
+        .react-dashboard-widget-iconWrap {
           display: inline-block;
           width: 28px;
           height: 28px;
@@ -134,28 +116,19 @@
           font-size: 16px;
         }
 
-        .name {
+        .react-dashboard-widget-name {
           font-size: 16px;
           flex: 1;
           color: var(--text-color);
           line-height: 28px;
           font-weight: bold;
           display: inline;
-
-          // padding-left: 10px;
-
         }
 
-        .description {
+        .react-dashboard-widget-description {
           margin-top: 5px;
         }
       }
     }
   }
-}
-
-.title {
-  font-size: 16px;
-  font-weight: bold;
-  line-height: 30px;
 }

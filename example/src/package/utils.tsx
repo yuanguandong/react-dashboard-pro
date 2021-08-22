@@ -1,5 +1,5 @@
-import { Modal } from "antd";
-import { ReactNode } from "react";
+import { Modal } from 'antd';
+import { ReactNode } from 'react';
 
 export function randomNum(minNum: number, maxNum: number) {
   switch (arguments.length) {
@@ -101,12 +101,10 @@ export const confirmUtilAsync = (props: confirmUtilAsyncProps) =>
     });
   });
 
-
-
-  // 基础reducer
+// 基础reducer
 export function reducer(state: any, action: any) {
   switch (action.type) {
-    case "save":
+    case 'save':
       return {
         ...state,
         ...action.payload,

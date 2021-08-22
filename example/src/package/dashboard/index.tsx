@@ -28,13 +28,12 @@ import Widget from '../widget';
 import WidgetSelector from '../widget/selector';
 import { getWidgetType } from '../widget/utils';
 import { Toolbar } from './components';
-import styles from './index.less';
+import './index.less';
 import {
   fetch as fetchApi,
   removeWidgetApi,
   update as updateApi
 } from './service';
-import './styles.less';
 
 const ResponsiveReactGridLayout: any = WidthProvider(Responsive);
 const maxWidgetLength = 20;
@@ -197,15 +196,15 @@ const Comp = (props: Dashboard) => {
       const newLayout = [
         ...dirtyCurrentLayout,
         {
-          w: widget.rect.defaultWidth,
-          h: widget.rect.defaultHeight,
+          w: widget.size.defaultWidth,
+          h: widget.size.defaultHeight,
           x: 0,
           y: lastItem ? lastItem['y'] + lastItem['h'] : 0,
           i: type + '-' + generateUuid(),
-          minW: widget.rect.minWidth,
-          maxW: widget.rect.maxWidth,
-          minH: widget.rect.minHeight,
-          maxH: widget.rect.maxHeight,
+          minW: widget.size.minWidth,
+          maxW: widget.size.maxWidth,
+          minH: widget.size.minHeight,
+          maxH: widget.size.maxHeight,
         },
       ];
       onLayoutChange(newLayout);
@@ -282,7 +281,7 @@ const Comp = (props: Dashboard) => {
         }}
       >
         <ResponsiveReactGridLayout
-          className="layout"
+          className="react-dashboard-layout"
           layouts={{ lg: finLayout }}
           rowHeight={30}
           isDraggable={stateEditMode}
@@ -297,20 +296,20 @@ const Comp = (props: Dashboard) => {
           {finLayout.map((item: any) => (
             <div
               key={item.i}
-              className={classnames('ant-card', 'reactgriditem')}
+              className={classnames('react-dashboard-item')}
             >
               {widgets[getWidgetType(item.i, widgets)] ? (
                 <Widget
                   // {...restProps}
                   widgetKey={item.i}
                   widgetType={getWidgetType(item.i, widgets)}
-                  itemHeight={item.h * 40 - 10}
+                  widgetHeight={item.h * 40 - 10}
                   editMode={stateEditMode}
-                  handleDeleteWidget={() => deleteWidget(item.i)}
+                  onDeleteWidget={() => deleteWidget(item.i)}
                   widgets={widgets}
                 />
               ) : (
-                <div className="aligncenter full">
+                <div className="react-dashboard-aligncenter react-dashboard-full">
                   <div style={{ textAlign: 'center' }}>
                     <div>
                       {'数据有误'} {item.i}
@@ -319,7 +318,7 @@ const Comp = (props: Dashboard) => {
                       <Button
                         icon={<DeleteOutlined />}
                         size="small"
-                        className="gant-margin-v-10"
+                        style={{margin:'10px 0'}}
                         onClick={() => deleteWidget(item.i)}
                       >
                         {'删除'}
@@ -363,7 +362,7 @@ const Comp = (props: Dashboard) => {
           <>
             {!stateEditMode ? (
               <Spin spinning={loading}>
-                <div className="emptyContent" style={{ minHeight: 300 }}>
+                <div className="react-dashboard-emptyContent" style={{ minHeight: 300 }}>
                   {!loading && (
                     <Empty description={<span>{'当前仪表板没有小程序'}</span>}>
                       <Button
@@ -380,7 +379,7 @@ const Comp = (props: Dashboard) => {
               </Spin>
             ) : (
               <div
-                className={classnames('full', 'aligncenter')}
+                className={classnames('react-dashboard-full', 'react-dashboard-aligncenter')}
                 style={{ minHeight: 300 }}
               >
                 <WidgetSelector
@@ -403,9 +402,7 @@ const Comp = (props: Dashboard) => {
             )}
           </>
         )}
-        {stateEditMode && !_.isEmpty(finLayout) && (
-          <div className={styles.block} />
-        )}
+
         {stateEditMode && (
           <Toolbar
             fixed={false}
