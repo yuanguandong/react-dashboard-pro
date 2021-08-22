@@ -20,7 +20,7 @@ const WidgetSelector = (props: any) => {
       icon={<PlusOutlined/>}
       style={{ marginLeft: '10px' }}
     >
-      {'添加小程序'}
+      {'添加'}
     </Button>
   } = props;
 
@@ -107,6 +107,7 @@ const WidgetSelector = (props: any) => {
           width,
           height
         }}
+        centered
         title={<><AppstoreAddOutlined className='gant-margin-h-5' />{'选择小程序'}</>}
         visible={visible}
         isModalDialog

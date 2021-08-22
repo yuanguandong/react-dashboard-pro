@@ -7,6 +7,7 @@ interface WidgetProps {
   itemHeight: number;
   editMode: boolean;
   handleDeleteWidget?: Function;
+  [key:string]:any;
 }
 
 //widget渲染器
@@ -20,12 +21,7 @@ const Widget = (props: WidgetProps) => {
     handleDeleteWidget,
   } = props;
   return React.createElement(widgets[widgetType]['component'], {
-    widgets,
-    widgetKey,
-    widgetType,
-    itemHeight,
-    editMode,
-    handleDeleteWidget,
+    ...props
   });
 };
 

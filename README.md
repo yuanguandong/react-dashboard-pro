@@ -1,4 +1,4 @@
-# Smart Background
+# React Dashboard Pro
 [![npm version](https://badge.fury.io/js/smart-background.svg)](#) [![npm version](https://img.shields.io/badge/react-%3E16-green)](#) [![npm version](	https://img.shields.io/github/issues/yuanguandong/smart-background)](#) [![npm version](	https://img.shields.io/github/forks/yuanguandong/smart-background)](#) [![npm version](https://img.shields.io/github/license/yuanguandong/smart-background)](#) [![npm version](	https://img.shields.io/github/stars/yuanguandong/smart-background)](#)
 ### An React Component Can Automatically Generate The Background
 一个快速生成元素背景的react组件

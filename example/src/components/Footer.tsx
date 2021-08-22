@@ -6,7 +6,7 @@ export default () => {
   return (
     <div className="footer">
       <Typography>
-        <Title>Smart Background</Title>
+        <Title>React Dashboard Pro</Title>
         <Paragraph>
           If you think it works, please give me a STAR
         </Paragraph>

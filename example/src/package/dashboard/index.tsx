@@ -7,16 +7,21 @@
  */
 import {
   CheckOutlined,
+  CloseOutlined,
   DashboardOutlined,
   DeleteOutlined,
-  InfoOutlined,
   PlusOutlined,
-  ReloadOutlined
+  ReloadOutlined,
+  RetweetOutlined
 } from '@ant-design/icons';
 import { Button, Empty, message, Spin, Tooltip } from 'antd';
 import classnames from 'classnames';
 import _ from 'lodash';
-import React, { useCallback, useEffect, useReducer, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect, useMemo, useReducer,
+  useState
+} from 'react';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import { confirmUtilAsync, generateUuid, reducer } from '../utils';
 import Widget from '../widget';
@@ -72,16 +77,16 @@ const Comp = (props: Dashboard) => {
 
   const [state, dispatch] = useReducer(reducer, {
     currentLayout: [],
+    dirtyCurrentLayout: [],
   });
-  console.log('state',state)
-  const { currentLayout } = state;
+  const { currentLayout, dirtyCurrentLayout } = state;
 
   //计算当前widget可添加length
-  const calcLength = useCallback((widgets, currentLayout) => {
+  const calcLength = useCallback((widgets, layout) => {
     Object.keys(widgets).map((key) => {
       widgets[key].length = 0;
     });
-    currentLayout.map((item: any) => {
+    layout.map((item: any) => {
       Object.keys(widgets).map((key) => {
         if (item['i'].indexOf(key) >= 0) {
           widgets[key].length = widgets[key].length + 1;
@@ -95,20 +100,20 @@ const Comp = (props: Dashboard) => {
     _.debounce(async (payload: object, callback?: Function) => {
       try {
         const response = await fetchApi({ id });
-        let currentLayout = _.isArray(initialLayout) ? initialLayout : [];
+        let layout = _.isArray(initialLayout) ? initialLayout : [];
         if (response) {
           const resArr = JSON.parse(response).currentLayout;
           if (!_.isEmpty(resArr)) {
-            currentLayout = resArr;
+            layout = resArr;
           }
         }
-        calcLength(widgets, currentLayout);
-        console.log('fetch', currentLayout);
-        if (currentLayout) {
+        calcLength(widgets, layout);
+        if (layout) {
           dispatch({
             type: 'save',
             payload: {
-              currentLayout,
+              currentLayout: layout,
+              dirtyCurrentLayout: layout,
             },
           });
         }
@@ -130,13 +135,13 @@ const Comp = (props: Dashboard) => {
   //设置布局信息
   const update = useCallback(
     async (payload: any, callback: Function = () => {}) => {
-      const currentLayout = payload['currentLayout'];
-      calcLength(widgets, currentLayout);
+      const layout = payload['layout'];
+      calcLength(widgets, layout);
       try {
         const response = await updateApi({
           id,
           data: {
-            currentLayout: currentLayout,
+            currentLayout: layout,
           },
         });
         if (!response) {
@@ -145,7 +150,7 @@ const Comp = (props: Dashboard) => {
         dispatch({
           type: 'save',
           payload: {
-            currentLayout,
+            currentLayout: layout,
             widgets,
           },
         });
@@ -171,26 +176,26 @@ const Comp = (props: Dashboard) => {
       if (!stateEditMode) {
         return;
       }
-      console.log('layout',layout)
-      update(
-        {
-          currentLayout: layout,
+      dispatch({
+        type: 'save',
+        payload: {
+          dirtyCurrentLayout: layout,
         },
-        callback,
-      );
+      });
+      callback && callback()
     }, 300),
-    [currentLayout, stateEditMode, update],
+    [stateEditMode],
   );
 
   //添加小程序
   const addWidget = useCallback(
     (widget, type) => {
-      if (currentLayout.length >= maxWidgetLength) {
+      if (dirtyCurrentLayout.length >= maxWidgetLength) {
         message.warning('超过了最大限制数量20' + ',' + '不能再添加了');
       }
-      const lastItem = currentLayout[currentLayout.length - 1];
+      const lastItem = dirtyCurrentLayout[dirtyCurrentLayout.length - 1];
       const newLayout = [
-        ...currentLayout,
+        ...dirtyCurrentLayout,
         {
           w: widget.rect.defaultWidth,
           h: widget.rect.defaultHeight,
@@ -206,23 +211,28 @@ const Comp = (props: Dashboard) => {
       onLayoutChange(newLayout);
       message.success('添加成功');
     },
-    [currentLayout, onLayoutChange, maxWidgetLength],
+    [dirtyCurrentLayout, onLayoutChange, maxWidgetLength],
   );
 
   //删除小程序
   const deleteWidget = useCallback(
     (widgetKey) => {
-      
-      currentLayout.map((item: any, index: number) => {
+      dirtyCurrentLayout.map((item: any, index: number) => {
         if (item['i'] === widgetKey) {
-          currentLayout.splice(index, 1);
+          dirtyCurrentLayout.splice(index, 1);
         }
       });
-      onLayoutChange(currentLayout, [], () => {
-        removeWidget(widgetKey);
+      dispatch({
+        type: 'save',
+        payload: {
+          dirtyCurrentLayout,
+        },
       });
+      // onLayoutChange(dirtyCurrentLayout, [], () => {
+      //   removeWidget(widgetKey);
+      // });
     },
-    [currentLayout, onLayoutChange],
+    [dirtyCurrentLayout, onLayoutChange],
   );
 
   //重置
@@ -246,19 +256,34 @@ const Comp = (props: Dashboard) => {
   useEffect(() => {
     setStateEditMode(editMode);
   }, [editMode]);
-  console.log('render', currentLayout);
+
+  useEffect(() => {
+    exitEditCallback(stateEditMode);
+  }, [stateEditMode]);
+
+  const finLayout = useMemo(() => {
+    return stateEditMode ? dirtyCurrentLayout : currentLayout;
+  }, [stateEditMode,dirtyCurrentLayout,currentLayout]);
+
+  console.log('dirtyCurrentLayout',dirtyCurrentLayout)
+  console.log('currentLayout',currentLayout)
+  console.log('finLayout',finLayout)
+
   return (
-    <Spin spinning={loading}>
+    <Spin
+      spinning={loading}
+      style={{
+        width: '100%',
+      }}
+    >
       <div
         style={{
-          width: 'calc(100% + 0px)',
-          // marginLeft: '-5px',
-          // marginTop: '-5px',
+          width: '100%',
         }}
       >
         <ResponsiveReactGridLayout
           className="layout"
-          layouts={{ lg: currentLayout }}
+          layouts={{ lg: finLayout }}
           rowHeight={30}
           isDraggable={stateEditMode}
           breakpoints={{ lg: 1200, md: 800, sm: 600, xs: 400, xxs: 300 }}
@@ -269,7 +294,7 @@ const Comp = (props: Dashboard) => {
           // onWidthChange={()=>onWidthChange()}  //宽度改变回调
           measureBeforeMount //动画相关
         >
-          {currentLayout.map((item: any) => (
+          {finLayout.map((item: any) => (
             <div
               key={item.i}
               className={classnames('ant-card', 'reactgriditem')}
@@ -307,7 +332,7 @@ const Comp = (props: Dashboard) => {
           ))}
         </ResponsiveReactGridLayout>
 
-        {currentLayout.length > 0 ? (
+        {finLayout.length > 0 ? (
           !stateEditMode && (
             <div
               style={{
@@ -330,7 +355,7 @@ const Comp = (props: Dashboard) => {
                 onClick={() => setStateEditMode(true)}
               >
                 <DashboardOutlined />
-                {'设计仪表板'}
+                {'编辑仪表板'}
               </Button>
             </div>
           )
@@ -338,10 +363,7 @@ const Comp = (props: Dashboard) => {
           <>
             {!stateEditMode ? (
               <Spin spinning={loading}>
-                <div
-                  className="emptyContent"
-                  // style={{ height: 'calc(100vh - 92px)' }}
-                >
+                <div className="emptyContent" style={{ minHeight: 300 }}>
                   {!loading && (
                     <Empty description={<span>{'当前仪表板没有小程序'}</span>}>
                       <Button
@@ -350,7 +372,7 @@ const Comp = (props: Dashboard) => {
                         onClick={() => setStateEditMode(true)}
                       >
                         <DashboardOutlined />
-                        {'设计仪表板'}
+                        {'编辑仪表板'}
                       </Button>
                     </Empty>
                   )}
@@ -359,15 +381,15 @@ const Comp = (props: Dashboard) => {
             ) : (
               <div
                 className={classnames('full', 'aligncenter')}
-                // style={{ height: 'calc(100vh - 92px)' }}
+                style={{ minHeight: 300 }}
               >
                 <WidgetSelector
                   widgets={widgets}
-                  currentLayout={currentLayout}
+                  currentLayout={finLayout}
                   addWidget={addWidget}
                 >
                   <>
-                    <Tooltip title={'添加小程序'}>
+                    <Tooltip title={'添加'}>
                       <Button
                         type="dashed"
                         shape="circle"
@@ -381,7 +403,7 @@ const Comp = (props: Dashboard) => {
             )}
           </>
         )}
-        {stateEditMode && !_.isEmpty(currentLayout) && (
+        {stateEditMode && !_.isEmpty(finLayout) && (
           <div className={styles.block} />
         )}
         {stateEditMode && (
@@ -389,44 +411,65 @@ const Comp = (props: Dashboard) => {
             fixed={false}
             extraRight={
               <>
-                <Tooltip
-                  placement="top"
-                  title={
-                    '在布局时请尽量不要改变浏览器大小' +
-                    ',' +
-                    '布局宽度可以随浏览器变小' +
-                    ',' +
-                    '但不会随浏览器宽度变大' +
-                    '!'
-                  }
-                >
-                  <InfoOutlined className="marginh10" />
-                </Tooltip>
                 <Button
                   size="small"
                   onClick={() => {
                     setStateEditMode(false);
-                    exitEditCallback();
+                    dispatch({
+                      type:'save',
+                      payload:{
+                        dirtyCurrentLayout: currentLayout,
+                      }
+                    })
                   }}
-                  icon={<CheckOutlined />}
+                  icon={<CloseOutlined />}
                 >
-                  {'完成'}
+                  {'取消'}
                 </Button>
-                {!_.isEmpty(currentLayout) && (
+                <Button
+                  size="small"
+                  onClick={() => {
+                    dispatch({
+                      type:'save',
+                      payload:{
+                        dirtyCurrentLayout: currentLayout,
+                      }
+                    })
+                  }}
+                  icon={<RetweetOutlined />}
+                >
+                  {'恢复'}
+                </Button>
+                {!_.isEmpty(finLayout) && (
                   <Button
                     size="small"
                     danger
                     onClick={() => reset()}
                     icon={<DeleteOutlined />}
                   >
-                    {'一键清空'}
+                    {'清空'}
                   </Button>
                 )}
                 <WidgetSelector
                   widgets={widgets}
-                  currentLayout={currentLayout}
+                  currentLayout={finLayout}
                   addWidget={addWidget}
                 />
+                <Button
+                  size="small"
+                  onClick={() => {
+                    update(
+                      {
+                        layout:dirtyCurrentLayout,
+                      }
+                    );
+                    setStateEditMode(false);
+                  }}
+                  type="primary"
+                  icon={<CheckOutlined />}
+                >
+                  {'保存'}
+                </Button>
               </>
             }
           />

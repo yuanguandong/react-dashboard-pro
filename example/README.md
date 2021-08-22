@@ -1,4 +1,4 @@
-# Smart Background Demo
+# React Dashboard Pro Demo
 
 ## Getting Started
 
