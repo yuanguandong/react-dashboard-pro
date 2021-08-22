@@ -5,17 +5,30 @@
                   主要布局技术是借助react-grid-layout实现的
  * @MainAuthor:   袁官东
  */
-import { Button, Empty, Icon, message, Spin, Tooltip } from 'antd';
+import {
+  CheckOutlined,
+  DashboardOutlined,
+  DeleteOutlined,
+  InfoOutlined,
+  PlusOutlined,
+  ReloadOutlined
+} from '@ant-design/icons';
+import { Button, Empty, message, Spin, Tooltip } from 'antd';
 import classnames from 'classnames';
-import { Toolbar } from 'gantd';
+import _ from 'lodash';
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import { Responsive, WidthProvider } from 'react-grid-layout';
-import { confirmUtil, generateUuid, reducer } from '../utils';
+import { confirmUtilAsync, generateUuid, reducer } from '../utils';
 import Widget from '../widget';
 import WidgetSelector from '../widget/selector';
 import { getWidgetType } from '../widget/utils';
+import { Toolbar } from './components';
 import styles from './index.less';
-import { fetch as fetchApi, removeWidgetApi, update as updateApi } from './service';
+import {
+  fetch as fetchApi,
+  removeWidgetApi,
+  update as updateApi
+} from './service';
 import './styles.less';
 
 const ResponsiveReactGridLayout: any = WidthProvider(Responsive);
@@ -37,8 +50,7 @@ type LayoutItem = {
 
 interface Dashboard {
   id: string; //唯一标识
-  type: 'user' | 'company'; //存储方式
-  widgets: object; //widget库
+  widgets: any; //widget库
   editMode?: boolean; //是否编辑状态
   exitEditCallback?: Function; //退出编辑时回调
   initialLayout?: LayoutItem[]; //初始布局
@@ -46,7 +58,14 @@ interface Dashboard {
 }
 
 const Comp = (props: Dashboard) => {
-  const { id, type = 'user', editMode = false, widgets, exitEditCallback = () => {},initialLayout=[], ...restProps } = props;
+  const {
+    id,
+    editMode = false,
+    widgets,
+    exitEditCallback = () => {},
+    initialLayout = [],
+    ...restProps
+  } = props;
 
   const [stateEditMode, setStateEditMode] = useState(editMode);
   const [loading, setLoading] = useState(editMode);
@@ -54,16 +73,16 @@ const Comp = (props: Dashboard) => {
   const [state, dispatch] = useReducer(reducer, {
     currentLayout: [],
   });
-
+  console.log('state',state)
   const { currentLayout } = state;
 
   //计算当前widget可添加length
   const calcLength = useCallback((widgets, currentLayout) => {
-    Object.keys(widgets).map(key => {
+    Object.keys(widgets).map((key) => {
       widgets[key].length = 0;
     });
-    currentLayout.map((item: object) => {
-      Object.keys(widgets).map(key => {
+    currentLayout.map((item: any) => {
+      Object.keys(widgets).map((key) => {
         if (item['i'].indexOf(key) >= 0) {
           widgets[key].length = widgets[key].length + 1;
         }
@@ -75,16 +94,16 @@ const Comp = (props: Dashboard) => {
   const fetch = useCallback(
     _.debounce(async (payload: object, callback?: Function) => {
       try {
-        const response = await fetchApi({ id, type });
+        const response = await fetchApi({ id });
         let currentLayout = _.isArray(initialLayout) ? initialLayout : [];
-        console.log('currentLayout',currentLayout)
-        if (response && response.bigData) {
-          const resArr = JSON.parse(response.bigData).currentLayout;
-          if(!_.isEmpty(resArr)){
-            currentLayout = resArr
+        if (response) {
+          const resArr = JSON.parse(response).currentLayout;
+          if (!_.isEmpty(resArr)) {
+            currentLayout = resArr;
           }
         }
         calcLength(widgets, currentLayout);
+        console.log('fetch', currentLayout);
         if (currentLayout) {
           dispatch({
             type: 'save',
@@ -96,32 +115,30 @@ const Comp = (props: Dashboard) => {
         setLoading(false);
       } catch (error) {}
     }, 200),
-    [id, type, widgets],
+    [id, widgets],
   );
 
   //刷新
   const reload = useCallback(
     async (payload: object, callback?: Function) => {
       setLoading(true);
-      fetch({ id, type });
+      fetch({ id });
     },
     [fetch],
   );
 
   //设置布局信息
   const update = useCallback(
-    async (payload: object, callback: Function = () => {}) => {
+    async (payload: any, callback: Function = () => {}) => {
       const currentLayout = payload['currentLayout'];
       calcLength(widgets, currentLayout);
       try {
         const response = await updateApi({
           id,
-          type,
           data: {
             currentLayout: currentLayout,
           },
         });
-
         if (!response) {
           return;
         }
@@ -135,21 +152,17 @@ const Comp = (props: Dashboard) => {
         callback();
       } catch (error) {}
     },
-    [id, type, widgets],
+    [id, widgets],
   );
 
   //删除widget信息
-  const removeWidget = useCallback(
-    async widgetKey => {
-      try {
-        await removeWidgetApi({
-          widgetKey,
-          type,
-        });
-      } catch (error) {}
-    },
-    [type],
-  );
+  const removeWidget = useCallback(async (widgetKey) => {
+    try {
+      await removeWidgetApi({
+        widgetKey,
+      });
+    } catch (error) {}
+  }, []);
 
   //改变布局触发
   const onLayoutChange = useCallback(
@@ -158,6 +171,7 @@ const Comp = (props: Dashboard) => {
       if (!stateEditMode) {
         return;
       }
+      console.log('layout',layout)
       update(
         {
           currentLayout: layout,
@@ -197,13 +211,13 @@ const Comp = (props: Dashboard) => {
 
   //删除小程序
   const deleteWidget = useCallback(
-    widgetKey => {
-      currentLayout.map((item: object, index: number) => {
+    (widgetKey) => {
+      
+      currentLayout.map((item: any, index: number) => {
         if (item['i'] === widgetKey) {
           currentLayout.splice(index, 1);
         }
       });
-
       onLayoutChange(currentLayout, [], () => {
         removeWidget(widgetKey);
       });
@@ -212,19 +226,18 @@ const Comp = (props: Dashboard) => {
   );
 
   //重置
-  const reset = useCallback(() => {
-    confirmUtil({
+  const reset = useCallback(async () => {
+    const res: boolean = await confirmUtilAsync({
       content: '确定清空当前仪表板吗' + '?' + '清空操作不可恢复',
-      onOk: () => {
-        onLayoutChange([]);
-      },
     });
+    if (res) {
+      onLayoutChange([]);
+    }
   }, [onLayoutChange]);
 
   //id改变副作用
   useEffect(() => {
     fetch({
-      type,
       id,
     });
   }, [id]);
@@ -233,10 +246,16 @@ const Comp = (props: Dashboard) => {
   useEffect(() => {
     setStateEditMode(editMode);
   }, [editMode]);
-
+  console.log('render', currentLayout);
   return (
     <Spin spinning={loading}>
-      <div style={{ width: 'calc(100% + 10px)', marginLeft: '-5px', marginTop: '-5px' }}>
+      <div
+        style={{
+          width: 'calc(100% + 0px)',
+          // marginLeft: '-5px',
+          // marginTop: '-5px',
+        }}
+      >
         <ResponsiveReactGridLayout
           className="layout"
           layouts={{ lg: currentLayout }}
@@ -251,10 +270,13 @@ const Comp = (props: Dashboard) => {
           measureBeforeMount //动画相关
         >
           {currentLayout.map((item: any) => (
-            <div key={item.i} className={classnames('ant-card', 'reactgriditem')}>
+            <div
+              key={item.i}
+              className={classnames('ant-card', 'reactgriditem')}
+            >
               {widgets[getWidgetType(item.i, widgets)] ? (
                 <Widget
-                  {...restProps}
+                  // {...restProps}
                   widgetKey={item.i}
                   widgetType={getWidgetType(item.i, widgets)}
                   itemHeight={item.h * 40 - 10}
@@ -269,7 +291,12 @@ const Comp = (props: Dashboard) => {
                       {'数据有误'} {item.i}
                     </div>
                     {stateEditMode && (
-                      <Button icon="delete" size="small" className="gant-margin-v-10" onClick={() => deleteWidget(item.i)}>
+                      <Button
+                        icon={<DeleteOutlined />}
+                        size="small"
+                        className="gant-margin-v-10"
+                        onClick={() => deleteWidget(item.i)}
+                      >
                         {'删除'}
                       </Button>
                     )}
@@ -282,10 +309,27 @@ const Comp = (props: Dashboard) => {
 
         {currentLayout.length > 0 ? (
           !stateEditMode && (
-            <div style={{ display: 'flex', margin: '0 10px', marginBottom: '10px' }}>
-              <Button size="small" icon="reload" loading={loading} style={{ marginRight: '10px' }} onClick={() => reload({ id, type })} />
-              <Button size="small" type="default" style={{ flex: 1 }} onClick={() => setStateEditMode(true)}>
-                <Icon type="dashboard" />
+            <div
+              style={{
+                display: 'flex',
+                margin: '0 10px',
+                marginBottom: '10px',
+              }}
+            >
+              <Button
+                size="small"
+                icon={<ReloadOutlined />}
+                loading={loading}
+                style={{ marginRight: '10px' }}
+                onClick={() => reload({ id })}
+              />
+              <Button
+                size="small"
+                type="default"
+                style={{ flex: 1 }}
+                onClick={() => setStateEditMode(true)}
+              >
+                <DashboardOutlined />
                 {'设计仪表板'}
               </Button>
             </div>
@@ -294,11 +338,18 @@ const Comp = (props: Dashboard) => {
           <>
             {!stateEditMode ? (
               <Spin spinning={loading}>
-                <div className="emptyContent" style={{ height: 'calc(100vh - 92px)' }}>
+                <div
+                  className="emptyContent"
+                  // style={{ height: 'calc(100vh - 92px)' }}
+                >
                   {!loading && (
                     <Empty description={<span>{'当前仪表板没有小程序'}</span>}>
-                      <Button size="small" type="primary" onClick={() => setStateEditMode(true)}>
-                        <Icon type="dashboard" />
+                      <Button
+                        size="small"
+                        type="primary"
+                        onClick={() => setStateEditMode(true)}
+                      >
+                        <DashboardOutlined />
                         {'设计仪表板'}
                       </Button>
                     </Empty>
@@ -306,11 +357,23 @@ const Comp = (props: Dashboard) => {
                 </div>
               </Spin>
             ) : (
-              <div className={classnames('full', 'aligncenter')} style={{ height: 'calc(100vh - 92px)' }}>
-                <WidgetSelector widgets={widgets} currentLayout={currentLayout} addWidget={addWidget}>
+              <div
+                className={classnames('full', 'aligncenter')}
+                // style={{ height: 'calc(100vh - 92px)' }}
+              >
+                <WidgetSelector
+                  widgets={widgets}
+                  currentLayout={currentLayout}
+                  addWidget={addWidget}
+                >
                   <>
                     <Tooltip title={'添加小程序'}>
-                      <Button type="dashed" shape="circle" icon="plus" size="large" />
+                      <Button
+                        type="dashed"
+                        shape="circle"
+                        icon={<PlusOutlined />}
+                        size="large"
+                      />
                     </Tooltip>
                   </>
                 </WidgetSelector>
@@ -318,19 +381,26 @@ const Comp = (props: Dashboard) => {
             )}
           </>
         )}
-        {stateEditMode && !_.isEmpty(currentLayout) && <div className={styles.block} />}
+        {stateEditMode && !_.isEmpty(currentLayout) && (
+          <div className={styles.block} />
+        )}
         {stateEditMode && (
           <Toolbar
-            fixed={true}
+            fixed={false}
             extraRight={
               <>
                 <Tooltip
                   placement="top"
                   title={
-                    '在布局时请尽量不要改变浏览器大小' + ',' + '布局宽度可以随浏览器变小' + ',' + '但不会随浏览器宽度变大' + '!'
+                    '在布局时请尽量不要改变浏览器大小' +
+                    ',' +
+                    '布局宽度可以随浏览器变小' +
+                    ',' +
+                    '但不会随浏览器宽度变大' +
+                    '!'
                   }
                 >
-                  <Icon className="marginh10" type="exclamation-circle" />
+                  <InfoOutlined className="marginh10" />
                 </Tooltip>
                 <Button
                   size="small"
@@ -338,16 +408,25 @@ const Comp = (props: Dashboard) => {
                     setStateEditMode(false);
                     exitEditCallback();
                   }}
-                  icon="check"
+                  icon={<CheckOutlined />}
                 >
                   {'完成'}
                 </Button>
                 {!_.isEmpty(currentLayout) && (
-                  <Button size="small" type="danger" onClick={() => reset()} icon="delete">
+                  <Button
+                    size="small"
+                    danger
+                    onClick={() => reset()}
+                    icon={<DeleteOutlined />}
+                  >
                     {'一键清空'}
                   </Button>
                 )}
-                <WidgetSelector widgets={widgets} currentLayout={currentLayout} addWidget={addWidget} />
+                <WidgetSelector
+                  widgets={widgets}
+                  currentLayout={currentLayout}
+                  addWidget={addWidget}
+                />
               </>
             }
           />

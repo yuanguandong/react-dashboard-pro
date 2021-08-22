@@ -52,5 +52,10 @@
   },
   "files": [
     "lib"
-  ]
+  ],
+  "dependencies": {
+    "@ant-design/icons": "^4.6.3",
+    "data-cell-g": "^0.1.64",
+    "react-grid-layout": "^1.2.5"
+  }
 }

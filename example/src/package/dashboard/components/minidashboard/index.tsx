@@ -3,13 +3,13 @@
                   主要还是借助了react-grid-layout，关键技术点是css 的缩放
  * @MainAuthor:   袁官东
  */
-import { getWidgetType } from '@/components/specific/widget/utils';
-import { Button, Col, Empty, Icon, Tag } from 'antd';
+import { Button, Col, Empty, Tag } from 'antd';
 import classnames from 'classnames';
+import _ from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { Responsive, WidthProvider } from 'react-grid-layout';
+import { getWidgetType } from '../../..//widget/utils';
 import styles from './index.less';
-
 
 
 const ResponsiveReactGridLayout: any = WidthProvider(Responsive);
@@ -89,7 +89,7 @@ const Comp = (props: dashboard) => {
               return <div key={item.i} className={classnames('ant-card', 'reactgriditem')}>
                 {widgets[getWidgetType(item.i,widgets)] ?
                   <div className={styles.widget} style={{ height: item.h * 40 - 10, backgroundImage: `${item.iconBackground}`, }}>
-                    <Icon type={item['icon']} />
+                    {item.icon}
                   </div>
                   : <div className="aligncenter full">
                     {'数据有误'}{getWidgetType(item.i,widgets)}

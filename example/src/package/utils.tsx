@@ -76,7 +76,7 @@ const { confirm } = Modal;
  * @param {confirmUtilAsyncProps} props
  */
 export const confirmUtilAsync = (props: confirmUtilAsyncProps) =>
-  new Promise((resolve, reject) => {
+  new Promise<boolean>((resolve, reject) => {
     const { content, okType = 'primary', ...restProps } = props;
     confirm({
       title: '提示',
@@ -100,3 +100,16 @@ export const confirmUtilAsync = (props: confirmUtilAsyncProps) =>
       ...restProps,
     });
   });
+
+
+
+  // 基础reducer
+export function reducer(state: any, action: any) {
+  switch (action.type) {
+    case "save":
+      return {
+        ...state,
+        ...action.payload,
+      };
+  }
+}

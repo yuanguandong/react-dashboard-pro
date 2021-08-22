@@ -1,4 +1,4 @@
 import MiniDashboard from './minidashboard'
-import SendToDashboard from './sendtodashboard'
+import Toolbar from './toolbar'
 
-export {MiniDashboard,SendToDashboard}
+export { MiniDashboard, Toolbar }

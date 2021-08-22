@@ -11,12 +11,22 @@ interface WidgetProps {
 
 //widget渲染器
 const Widget = (props: WidgetProps) => {
-  const { widgetType, widgets } = props;
-  return (
-    <>
-      {React.createElement(widgets[widgetType]['component'], { ...props })}
-    </>
-  )
-}
+  const {
+    widgets,
+    widgetKey,
+    widgetType,
+    itemHeight,
+    editMode,
+    handleDeleteWidget,
+  } = props;
+  return React.createElement(widgets[widgetType]['component'], {
+    widgets,
+    widgetKey,
+    widgetType,
+    itemHeight,
+    editMode,
+    handleDeleteWidget,
+  });
+};
 
-export default Widget
+export default Widget;

@@ -1,10 +1,11 @@
-import { Badge, Button, Empty, Input, List } from 'antd';
+import { AppstoreAddOutlined, PlusOutlined, SearchOutlined } from '@ant-design/icons';
+import { Badge, Button, Empty, Input, List, Modal } from 'antd';
 import classnames from 'classnames';
 import _ from 'lodash';
-import SmartModal from 'modal-g';
 import React, { useCallback, useEffect, useState } from 'react';
-import { FaAppStoreIos, FaSearch } from 'react-icons/fa';
 import styles from './index.less';
+
+
 
 const Search = Input.Search;
 
@@ -16,7 +17,7 @@ const WidgetSelector = (props: any) => {
     children = <Button
       size="small"
       type="primary"
-      icon='plus'
+      icon={<PlusOutlined/>}
       style={{ marginLeft: '10px' }}
     >
       {'添加小程序'}
@@ -99,13 +100,14 @@ const WidgetSelector = (props: any) => {
       <div style={{ display: 'inline-block' }} onClick={() => { setVisible(true) }}>
         {children}
       </div>
-      <SmartModal
-        id='widgetSelector'
+      <Modal
+        width={width}
+        height={height}
         itemState={{
           width,
           height
         }}
-        title={<><FaAppStoreIos className='gant-margin-h-5' />{'选择小程序'}</>}
+        title={<><AppstoreAddOutlined className='gant-margin-h-5' />{'选择小程序'}</>}
         visible={visible}
         isModalDialog
         onCancel={() => { setVisible(false) }}
@@ -120,7 +122,7 @@ const WidgetSelector = (props: any) => {
               placeholder={'请输入小程序名称'}
               onSearch={handleSearch}
               onChange={(e) => handleSearch(e.target.value)}
-              prefix={<FaSearch className={styles.searchIcon} />}
+              prefix={<SearchOutlined className={styles.searchIcon} />}
               allowClear
             />
             <List
@@ -157,7 +159,7 @@ const WidgetSelector = (props: any) => {
                     <div className={styles.mask}>
                       {
                         canBeAdd(stateWidgets[key]) ?
-                          <Button type="primary" shape="circle" icon="plus" size="large" onClick={() => addWidget(stateWidgets[key], key)} />
+                          <Button type="primary" shape="circle" icon={<PlusOutlined/>} size="large" onClick={() => addWidget(stateWidgets[key], key)} />
                           :
                           <div style={{ padding: 20, color: '#fff', fontWeight: 'bold' }}>{'该小程序最多添加'}{stateWidgets[key].maxLength}{'个'}</div>
                       }
@@ -176,7 +178,7 @@ const WidgetSelector = (props: any) => {
             }
           </div>
         </div>
-      </SmartModal>
+      </Modal>
     </>
   )
 }

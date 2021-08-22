@@ -1,17 +1,14 @@
 import React from 'react';
-// import './style.less';
-
-
-// interface DashboardProProps {
-//   [key: string]: any;
-// }
-
-// const DashboardPro = (props: DashboardProProps) => {
-//   return <>1</>;
-// };
-// export default DashboardPro;
-
-
-export default ()=>{
-  return <>1</>
-}
+import Dashboard from './dashboard';
+import './style.less';
+import allWidgets from './widgets';
+export default () => {
+  return (
+    <Dashboard
+      id={'default'}
+      widgets={allWidgets}
+      initialLayout={[]}
+    />
+    // <>1</>
+  );
+};

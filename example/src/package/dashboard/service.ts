@@ -1,39 +1,31 @@
 
-import request from '@/utils/request';
+import { request } from './utils';
 
 
 interface payloadProps {
   id: string;
-  type: string;
   data?: object;
 }
 
 // 获取仪表板信息
 export async function fetch(payload: payloadProps) {
-  const { id, type } = payload
+  const { id } = payload
   let url = '/accountUserSelf/getUserData';
-  if (type == 'company') {
-    url = '/companyData/getCompanyData'
-  }
   if (!id) { return }
   return request(url, {
-    method: 'POST',
+    method: 'GET',
     data: {
       dataId: id,
       dataType: "dashboard",
-    },
-    serviceId:'fwSecurity' 
+    }
   });
 }
 
 
 // 修改仪表板信息
 export async function update(payload: payloadProps) {
-  const { id, type, data } = payload
+  const { id, data } = payload
   let url = '/accountUserSelf/setUserData';
-  if (type == 'company') {
-    url = '/companyData/setCompanyData'
-  }
   if (!id) { return }
   return request(url, {
     method: 'POST',
@@ -41,8 +33,7 @@ export async function update(payload: payloadProps) {
       dataId: id,
       dataType: "dashboard",
       bigData: JSON.stringify(data)
-    },
-    serviceId:'fwSecurity' 
+    }
   });
 }
 
@@ -64,18 +55,14 @@ export async function update(payload: payloadProps) {
 // }
 
 //删除小程序信息
-export function removeWidgetApi(params) {
-  const { widgetKey, type } = params
+export function removeWidgetApi(params:any) {
+  const { widgetKey } = params
   let url = '/accountUserSelf/delUserData';
-  if (type == 'company') {
-    url = '/companyData/delCompanyData'
-  }
   return request(url, {
-    method: 'POST',
+    method: 'DELETE',
     data: {
       dataId: widgetKey,
       dataType: "widget",
-    },
-    serviceId:'fwSecurity' 
+    }
   });
 }

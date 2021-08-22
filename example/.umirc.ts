@@ -12,6 +12,7 @@ export default defineConfig({
     type: 'none',
   },
   antd:{},
+  devtool:'source-map',
   routes: [
     { path: '/', component: '@/pages/index' },
   ],
