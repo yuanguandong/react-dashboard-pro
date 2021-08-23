@@ -149,7 +149,7 @@ const Index: React.FunctionComponent<IProps> = () => {
         </div>
         <div className="wrap">
           
-          <div className="container">
+          <div className="container" style={{background:'#edebe9'}}>
             <Dashboard />
           </div>
           {/* <Title level={2}>Easy To Use 容易使用</Title> */}

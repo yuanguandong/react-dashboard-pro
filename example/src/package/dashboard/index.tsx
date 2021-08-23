@@ -264,10 +264,6 @@ const Comp = (props: Dashboard) => {
     return stateEditMode ? dirtyCurrentLayout : currentLayout;
   }, [stateEditMode,dirtyCurrentLayout,currentLayout]);
 
-  console.log('dirtyCurrentLayout',dirtyCurrentLayout)
-  console.log('currentLayout',currentLayout)
-  console.log('finLayout',finLayout)
-
   return (
     <Spin
       spinning={loading}

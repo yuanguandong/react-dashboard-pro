@@ -5,10 +5,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useResizeDetector } from 'react-resize-detector';
 import styles from './index.less';
 
-
 const Widget = (props: any) => {
-  const { widgetHeight, editMode, widgetKey, onDeleteWidget } = props;
-
+  const { widgetHeight } = props;
   const [layout, setLayout] = useState('h');
   const [fontSize, setfontSize] = useState('60px');
   const [degSeconds, setDegSeconds] = useState(0);
@@ -52,7 +50,7 @@ const Widget = (props: any) => {
   const { ref, width, height } = useResizeDetector({ onResize });
 
   return (
-    <div className={classnames('react-dashboard-full', styles.Widget)}>
+    <div className={classnames(styles.Widget)}>
       <Row style={{ height: '100%' }} ref={ref}>
         <Col
           span={layout == 'h' ? 8 : 24}
@@ -106,7 +104,6 @@ const Widget = (props: any) => {
           <div className={styles.calender}>
             <div className={styles.year}>
               {moment().format('YYYY')}
-              
               {moment().format('MMMDo')}{' '}
             </div>
             <div className={styles.day}>{moment().format('dddd')}</div>
@@ -116,7 +113,5 @@ const Widget = (props: any) => {
     </div>
   );
 };
-
-
 
 export default Widget;

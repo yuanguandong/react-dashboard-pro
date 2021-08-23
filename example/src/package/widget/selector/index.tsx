@@ -35,9 +35,6 @@ const WidgetSelector = (props: any) => {
   const [menuData, setMenuData] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [keywords, setKeywords] = useState('');
-  console.log('currentLayout',currentLayout)
-
-  
 
   //计算是否还可添加
   const canBeAdd = (widget: any) => {
@@ -110,8 +107,8 @@ const WidgetSelector = (props: any) => {
     handleCalcMenuData(widgets);
   }, []);
 
-  useEffect(()=>{
-    let newStateWidgets = _.cloneDeep(stateWidgets)
+  useEffect(() => {
+    let newStateWidgets = _.cloneDeep(stateWidgets);
     Object.keys(newStateWidgets).map((key) => {
       newStateWidgets[key].length = 0;
     });
@@ -122,8 +119,8 @@ const WidgetSelector = (props: any) => {
         }
       });
     });
-    setStateWidgets(newStateWidgets)
-  },[currentLayout])
+    setStateWidgets(newStateWidgets);
+  }, [currentLayout]);
 
   return (
     <>
@@ -158,7 +155,11 @@ const WidgetSelector = (props: any) => {
               placeholder={'请输入小程序名称'}
               onSearch={handleSearch}
               onChange={(e) => handleSearch(e.target.value)}
-              prefix={<SearchOutlined className={'react-dashboard-widget-searchIcon'} />}
+              prefix={
+                <SearchOutlined
+                  className={'react-dashboard-widget-searchIcon'}
+                />
+              }
               allowClear
             />
             <List
@@ -173,7 +174,9 @@ const WidgetSelector = (props: any) => {
                   )}
                   onClick={() => handleMenuChange(item, index)}
                 >
-                  <div className={'react-dashboard-widget-name'}>{item['title']}</div>
+                  <div className={'react-dashboard-widget-name'}>
+                    {item['title']}
+                  </div>
                   <div className={'react-dashboard-widget-Badge'}>
                     <Badge count={item['count']} />
                   </div>
@@ -193,7 +196,10 @@ const WidgetSelector = (props: any) => {
                 style={{ columnCount: Math.ceil((width - 200) / 200) }}
               >
                 {Object.keys(stateWidgets).map((key) => (
-                  <div key={key} className={classnames('react-dashboard-widget-item')}>
+                  <div
+                    key={key}
+                    className={classnames('react-dashboard-widget-item')}
+                  >
                     <img
                       src={stateWidgets[key]['snapShot']}
                       className={'react-dashboard-widget-shortcut'}
@@ -202,7 +208,10 @@ const WidgetSelector = (props: any) => {
                       <div
                         className={'react-dashboard-widget-iconWrap'}
                         style={{
-                          backgroundImage: _.get(stateWidgets,key+'.iconBackground')
+                          backgroundImage: _.get(
+                            stateWidgets,
+                            key + '.iconBackground',
+                          ),
                         }}
                       >
                         {stateWidgets[key].icon}
@@ -241,7 +250,10 @@ const WidgetSelector = (props: any) => {
                 ))}
               </div>
             ) : (
-              <div className="react-dashboard-widget-emptyContent" style={{ minHeight: height - 20 }}>
+              <div
+                className="react-dashboard-widget-emptyContent"
+                style={{ minHeight: height - 20 }}
+              >
                 <Empty description={<span>{'该条件下暂无小程序'}</span>} />
               </div>
             )}
