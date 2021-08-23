@@ -1,12 +1,14 @@
 import { Col, Row } from 'antd';
-import classnames from 'classnames';
 import moment from 'moment';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useResizeDetector } from 'react-resize-detector';
-import styles from './index.less';
+import './index.less';
+
+const widgetName = 'Clock';
+const widgetClassName = 'react-dashboard-widget-' + widgetName;
 
 const Widget = (props: any) => {
-  const { widgetHeight } = props;
+  const { } = props;
   const [layout, setLayout] = useState('h');
   const [fontSize, setfontSize] = useState('60px');
   const [degSeconds, setDegSeconds] = useState(0);
@@ -50,32 +52,32 @@ const Widget = (props: any) => {
   const { ref, width, height } = useResizeDetector({ onResize });
 
   return (
-    <div className={classnames(styles.Widget)}>
+    <div className={widgetClassName}>
       <Row style={{ height: '100%' }} ref={ref}>
         <Col
           span={layout == 'h' ? 8 : 24}
-          className={styles.left}
+          className={widgetClassName + '-left'}
           style={{ height: layout == 'h' ? '100%' : '50%' }}
         >
-          <div className={styles.clock}>
-            <div className={styles.c1}>
-              <div className={styles.c2}>
-                <div className={styles.pin}>
-                  <div className={styles.clockInner}></div>
+          <div className={widgetClassName + '-clock'}>
+            <div className={widgetClassName + '-c1'}>
+              <div className={widgetClassName + '-c2'}>
+                <div className={widgetClassName + '-pin'}>
+                  <div className={widgetClassName + '-clockInner'}></div>
                 </div>
                 <div
                   id="hr"
-                  className={styles.hr}
+                  className={widgetClassName + '-hr'}
                   style={{ transform: `rotate(${degHours}deg)` }}
                 ></div>
                 <div
                   id="min"
-                  className={styles.min}
+                  className={widgetClassName + '-min'}
                   style={{ transform: `rotate(${degMinutes}deg)` }}
                 ></div>
                 <div
                   id="sec"
-                  className={styles.sec}
+                  className={widgetClassName + '-sec'}
                   style={{ transform: `rotate(${degSeconds}deg)` }}
                 ></div>
               </div>
@@ -84,10 +86,10 @@ const Widget = (props: any) => {
         </Col>
         <Col
           span={layout == 'h' ? 16 : 24}
-          className={styles.right}
+          className={widgetClassName + '-right'}
           style={{ height: layout == 'h' ? '100%' : '50%' }}
         >
-          <div className={styles.time_num} style={{ fontSize }}>
+          <div className={widgetClassName + '-timeNum'} style={{ fontSize }}>
             {moment().format('HH')}
             <span
               style={{
@@ -101,12 +103,14 @@ const Widget = (props: any) => {
             </span>
             {moment().format('mm')}
           </div>
-          <div className={styles.calender}>
-            <div className={styles.year}>
+          <div className={widgetClassName + '-calender'}>
+            <div className={widgetClassName + '-year'}>
               {moment().format('YYYY')}
               {moment().format('MMMDo')}{' '}
             </div>
-            <div className={styles.day}>{moment().format('dddd')}</div>
+            <div className={widgetClassName + '-day'}>
+              {moment().format('dddd')}
+            </div>
           </div>
         </Col>
       </Row>

@@ -3,8 +3,8 @@ import Panel from './panel';
 import snapShot from './snapshot.png';
 
 export default {
-  name: '时钟',
-  description: '一个时钟组件',
+  name: '引导',
+  description: '强调某些关键词，引导用户点击',
   tags: ['系统工具'],
   component: Panel,
   configComponent: null,

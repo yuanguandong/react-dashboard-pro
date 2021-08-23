@@ -15,6 +15,7 @@ export default defineConfig({
   devtool:'source-map',
   routes: [
     { path: '/', component: '@/pages/index' },
+    { path: '/widget', component: '@/pages/dashboard' },
   ],
   fastRefresh: {},
   outputPath:BASE==='/' ? '../netlify': '../docs' 

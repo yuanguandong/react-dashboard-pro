@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import _ from 'lodash';
 import React, { useState } from 'react';
 import './index.less';
@@ -6,7 +7,7 @@ interface WidgetProps {
   widgets: any;
   widgetKey: string;
   widgetType: string;
-  widgetHeight: number;
+  height: number;
   editMode: boolean;
   onDeleteWidget?: Function;
   [key: string]: any;
@@ -18,15 +19,20 @@ const Widget = (props: WidgetProps) => {
     widgets,
     widgetKey,
     widgetType,
-    widgetHeight,
+    height,
     editMode,
     onDeleteWidget,
+    widgetWrapClassName,
+    widgetWrapStyle,
   } = props;
   const [configShow, setConfigShow] = useState(false);
   const component = _.get(widgets, widgetType + '.component');
   const configComponent = _.get(widgets, widgetType + '.configComponent');
   return (
-    <div className="react-dashboard-widget">
+    <div
+      className={classnames(widgetWrapClassName, 'react-dashboard-widget')}
+      style={widgetWrapStyle}
+    >
       {component &&
         React.createElement(component, {
           ...props,
@@ -37,11 +43,12 @@ const Widget = (props: WidgetProps) => {
         onDeleteWidget={onDeleteWidget}
         setConfigShow={setConfigShow}
       />
-      {configComponent && React.createElement(configComponent, {
-        ...props,
-        visible: configShow,
-        setVisible:setConfigShow
-      })}
+      {configComponent &&
+        React.createElement(configComponent, {
+          ...props,
+          visible: configShow,
+          setVisible: setConfigShow,
+        })}
     </div>
   );
 };

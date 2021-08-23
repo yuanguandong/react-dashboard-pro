@@ -19,7 +19,9 @@ import classnames from 'classnames';
 import _ from 'lodash';
 import React, {
   useCallback,
-  useEffect, useMemo, useReducer,
+  useEffect,
+  useMemo,
+  useReducer,
   useState
 } from 'react';
 import { Responsive, WidthProvider } from 'react-grid-layout';
@@ -58,6 +60,8 @@ interface Dashboard {
   editMode?: boolean; //是否编辑状态
   exitEditCallback?: Function; //退出编辑时回调
   initialLayout?: LayoutItem[]; //初始布局
+  widgetWrapClassName?: string; //widget容器类名
+  widgetWrapStyle?: React.CSSProperties; //widget容器样式
   [key: string]: any;
 }
 
@@ -68,6 +72,8 @@ const Comp = (props: Dashboard) => {
     widgets,
     exitEditCallback = () => {},
     initialLayout = [],
+    widgetWrapClassName,
+    widgetWrapStyle,
     ...restProps
   } = props;
 
@@ -181,7 +187,7 @@ const Comp = (props: Dashboard) => {
           dirtyCurrentLayout: layout,
         },
       });
-      callback && callback()
+      callback && callback();
     }, 300),
     [stateEditMode],
   );
@@ -190,7 +196,9 @@ const Comp = (props: Dashboard) => {
   const addWidget = useCallback(
     (widget, type) => {
       if (dirtyCurrentLayout.length >= maxWidgetLength) {
-        message.warning(`超过了最大限制数量${maxWidgetLength}` + ',' + '不能再添加了');
+        message.warning(
+          `超过了最大限制数量${maxWidgetLength}` + ',' + '不能再添加了',
+        );
       }
       const lastItem = dirtyCurrentLayout[dirtyCurrentLayout.length - 1];
       const newLayout = [
@@ -262,7 +270,7 @@ const Comp = (props: Dashboard) => {
 
   const finLayout = useMemo(() => {
     return stateEditMode ? dirtyCurrentLayout : currentLayout;
-  }, [stateEditMode,dirtyCurrentLayout,currentLayout]);
+  }, [stateEditMode, dirtyCurrentLayout, currentLayout]);
 
   return (
     <Spin
@@ -290,19 +298,18 @@ const Comp = (props: Dashboard) => {
           measureBeforeMount //动画相关
         >
           {finLayout.map((item: any) => (
-            <div
-              key={item.i}
-              className={classnames('react-dashboard-item')}
-            >
+            <div key={item.i} className={classnames('react-dashboard-item')}>
               {widgets[getWidgetType(item.i, widgets)] ? (
                 <Widget
-                  // {...restProps}
+                  {...restProps}
                   widgetKey={item.i}
                   widgetType={getWidgetType(item.i, widgets)}
-                  widgetHeight={item.h * 40 - 10}
+                  height={item.h * 40 - 10}
                   editMode={stateEditMode}
                   onDeleteWidget={() => deleteWidget(item.i)}
                   widgets={widgets}
+                  widgetWrapClassName={widgetWrapClassName}
+                  widgetWrapStyle={widgetWrapStyle}
                 />
               ) : (
                 <div className="react-dashboard-aligncenter react-dashboard-full">
@@ -314,7 +321,7 @@ const Comp = (props: Dashboard) => {
                       <Button
                         icon={<DeleteOutlined />}
                         size="small"
-                        style={{margin:'10px 0'}}
+                        style={{ margin: '10px 0' }}
                         onClick={() => deleteWidget(item.i)}
                       >
                         {'删除'}
@@ -358,7 +365,10 @@ const Comp = (props: Dashboard) => {
           <>
             {!stateEditMode ? (
               <Spin spinning={loading}>
-                <div className="react-dashboard-emptyContent" style={{ minHeight: 300 }}>
+                <div
+                  className="react-dashboard-emptyContent"
+                  style={{ minHeight: 300 }}
+                >
                   {!loading && (
                     <Empty description={<span>{'当前仪表板没有小程序'}</span>}>
                       <Button
@@ -375,7 +385,10 @@ const Comp = (props: Dashboard) => {
               </Spin>
             ) : (
               <div
-                className={classnames('react-dashboard-full', 'react-dashboard-aligncenter')}
+                className={classnames(
+                  'react-dashboard-full',
+                  'react-dashboard-aligncenter',
+                )}
                 style={{ minHeight: 300 }}
               >
                 <WidgetSelector
@@ -409,11 +422,11 @@ const Comp = (props: Dashboard) => {
                   onClick={() => {
                     setStateEditMode(false);
                     dispatch({
-                      type:'save',
-                      payload:{
+                      type: 'save',
+                      payload: {
                         dirtyCurrentLayout: currentLayout,
-                      }
-                    })
+                      },
+                    });
                   }}
                   icon={<CloseOutlined />}
                 >
@@ -423,11 +436,11 @@ const Comp = (props: Dashboard) => {
                   size="small"
                   onClick={() => {
                     dispatch({
-                      type:'save',
-                      payload:{
+                      type: 'save',
+                      payload: {
                         dirtyCurrentLayout: currentLayout,
-                      }
-                    })
+                      },
+                    });
                   }}
                   icon={<RetweetOutlined />}
                 >
@@ -451,11 +464,9 @@ const Comp = (props: Dashboard) => {
                 <Button
                   size="small"
                   onClick={() => {
-                    update(
-                      {
-                        layout:dirtyCurrentLayout,
-                      }
-                    );
+                    update({
+                      layout: dirtyCurrentLayout,
+                    });
                     setStateEditMode(false);
                   }}
                   type="primary"

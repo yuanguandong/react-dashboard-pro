@@ -1,22 +1,22 @@
+@widgetClassName: ~'react-dashboard-widget-Clock';
 
-
-.Widget {
-  width:100%;
-  height:100%;
+.@{widgetClassName} {
+  width: 100%;
+  height: 100%;
   user-select: none;
-  .left {
+  &-left {
     position: relative;
     background: var(--primary-color);
   }
 
-  .right {
+  &-right {
     position: relative;
     display: flex;
     flex-direction: column;
     background: var(--component-background);
   }
 
-  .calender {
+  &-calender {
     padding: 0 20px;
     display: flex;
     width: 100%;
@@ -25,7 +25,7 @@
     border-top: 1px solid rgba(0, 0, 0, 0.05);
   }
 
-  .time_num {
+  &-timeNum {
     font-family: 'UnidreamLED';
     text-align: center;
     display: block;
@@ -36,23 +36,20 @@
     align-items: center;
   }
 
-
-
-  .day {
+  &-day {
     font-size: 14px;
     font-weight: bold;
     text-align: right;
     flex: 1;
   }
 
-  .year {
+  &-year {
     font-size: 14px;
     text-align: left;
     font-weight: bold;
   }
 
-
-  .clock {
+  &-clock {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -66,23 +63,23 @@
     background: var(--primary-color);
   }
 
-  .c1 {
+  &-c1 {
     position: absolute;
     width: 80px;
     height: 80px;
   }
 
-  .c2 {
+  &-c2 {
     position: relative;
     margin: 5px auto 0;
     width: 70px;
     height: 70px;
     border: 5px solid #fff;
     border-radius: 100%;
-    box-shadow:0 1px 5px rgba(0,0,0,0.5);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
   }
 
-  .pin {
+  &-pin {
     position: absolute;
     z-index: 4;
     margin: 22.5px 0 0 22.5px;
@@ -90,10 +87,10 @@
     height: 15px;
     border: 5px solid #fff;
     border-radius: 100%;
-    box-shadow:0 0px 5px rgba(0,0,0,0.5);
+    box-shadow: 0 0px 5px rgba(0, 0, 0, 0.5);
   }
 
-  .clockInner {
+  &-clockInner {
     position: relative;
     margin: 0 auto 0;
     width: 5px;
@@ -102,16 +99,16 @@
     background: var(--primary-color);
   }
 
-  .hr,
-  .min,
-  .sec {
+  &-hr,
+  &-min,
+  &-sec {
     position: absolute;
     -webkit-transform: rotate(0);
     transform: rotate(0);
-    box-shadow:0 1px 3px rgba(0,0,0,0.8);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
   }
 
-  .sec {
+  &-sec {
     z-index: 3;
     margin: 0;
     margin: 30px 0 0 31px;
@@ -119,10 +116,10 @@
     height: 28px;
     border-radius: 4px;
     background: #fff;
-    transform-origin: 0 0
+    transform-origin: 0 0;
   }
 
-  .min {
+  &-min {
     z-index: 2;
     margin: 7px 0 0 28px;
     width: 4px;
@@ -132,7 +129,7 @@
     transform-origin: 2px 23px;
   }
 
-  .hr {
+  &-hr {
     z-index: 1;
     margin: 12px 0 0 28px;
     transform-origin: 2px 18px;
