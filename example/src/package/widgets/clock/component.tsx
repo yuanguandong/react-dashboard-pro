@@ -105,8 +105,7 @@ const Widget = (props: any) => {
           </div>
           <div className={widgetClassName + '-calender'}>
             <div className={widgetClassName + '-year'}>
-              {moment().format('YYYY')}
-              {moment().format('MMMDo')}{' '}
+              {moment().format('YYYY-MM-DD')}
             </div>
             <div className={widgetClassName + '-day'}>
               {moment().format('dddd')}

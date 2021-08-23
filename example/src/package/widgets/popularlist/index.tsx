@@ -3,9 +3,9 @@ import Panel from './component';
 import snapShot from './snapshot.png';
 
 export default {
-  name: '引导',
-  description: '强调某些关键词，引导用户点击',
-  tags: ['系统工具'],
+  name: 'Popular',
+  description: 'PopularList',
+  tags: ['列表'],
   component: Panel,
   configComponent: null,
   maxLength: 1,

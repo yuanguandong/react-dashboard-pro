@@ -1,5 +1,5 @@
 import { AiOutlineClockCircle } from 'react-icons/ai';
-import Panel from './panel';
+import Panel from './component';
 import snapShot from './snapshot.png';
 
 export default {

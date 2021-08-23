@@ -64,3 +64,11 @@ const styles = {
 | exact                 | 精确模式                   | boolean                                                        | false                           | false    |
 | childrenWrapClassName | 子组件容器类名             | string                                                         |                                 | false    |
 | childrenWrapStyle     | 子组件容器类名             | React.CSSProperties                                            |                                 | false    |
+
+
+### Todo
+configPanel
+gap
+modern theme
+dark theme
+更多的widget
