@@ -14,16 +14,22 @@ const Widget = (props: any) => {
     <div className={widgetClassName}>
       <div className={widgetClassName + '-title-wrap'}>
         <div className={widgetClassName + '-title'}>{widgetName}</div>
-        <EllipsisOutlined style={{fontSize:24}}/>
+        <EllipsisOutlined style={{ fontSize: 24 }} />
       </div>
       {List.map((item) => (
         <div className={widgetClassName + '-item'}>
           <Title level={4}>{item.title}</Title>
           <div className={widgetClassName + '-content'}>{item.content}</div>
           <div className={widgetClassName + '-content'}>progress</div>
-          <Progress percent={item.process} />
+          <Progress
+            percent={item.process}
+            strokeColor={{
+              '0%': '#f52248',
+              '100%': 'blue',
+            }}
+          />
           {item.users.map((user) => (
-            <Avatar src={user.avatar} size={24} style={{marginRight:5}}/>
+            <Avatar src={user.avatar} size={24} style={{ marginRight: 5 }} />
           ))}
         </div>
       ))}
