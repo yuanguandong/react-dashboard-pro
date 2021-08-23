@@ -4,8 +4,8 @@ import snapShot from './snapshot.png';
 
 export default {
   name: '时钟',
-  description: '时钟',
-  tags: ['时钟', '时钟'],
+  description: '一个时钟组件',
+  tags: ['系统工具', '时钟'],
   component: Panel,
   configComponent: null,
   maxLength: 1,

@@ -106,7 +106,7 @@ const Widget = (props: any) => {
           <div className={styles.calender}>
             <div className={styles.year}>
               {moment().format('YYYY')}
-              {'年'}
+              
               {moment().format('MMMDo')}{' '}
             </div>
             <div className={styles.day}>{moment().format('dddd')}</div>
