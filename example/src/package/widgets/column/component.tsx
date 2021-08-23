@@ -10,21 +10,16 @@ const { Title } = Typography;
 const Widget = (props: any) => {
   const { height } = props;
 
-
-  
   const config = {
     data: List,
     xField: 'type',
     yField: 'sales',
-    padding:[50,30,80,30],
-    // seriesField: 'type',
-    // isGroup: 'true',
-    color:'#f52248',
-    // range: { color: 'l(0) 0:#B8E1FF 1:#3D76DD' },
+    padding: [50, 30, 80, 30],
+    color: '#f52248',
     columnStyle: {
       radius: [20, 20, 20, 20],
     },
-    legend:false,
+    legend: false,
     minColumnWidth: 10,
     maxColumnWidth: 10,
   };

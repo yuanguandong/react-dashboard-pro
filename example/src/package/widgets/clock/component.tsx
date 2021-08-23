@@ -8,7 +8,7 @@ const widgetName = 'Clock';
 const widgetClassName = 'react-dashboard-widget-' + widgetName;
 
 const Widget = (props: any) => {
-  const { } = props;
+  const {} = props;
   const [layout, setLayout] = useState('h');
   const [fontSize, setfontSize] = useState('60px');
   const [degSeconds, setDegSeconds] = useState(0);
