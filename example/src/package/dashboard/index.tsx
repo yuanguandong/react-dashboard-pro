@@ -25,7 +25,7 @@ import React, {
   useState
 } from 'react';
 import { Responsive, WidthProvider } from 'react-grid-layout';
-import { confirmUtilAsync, generateUuid, reducer } from '../utils';
+import { generateUuid, reducer } from '../utils';
 import Widget from '../widget';
 import WidgetSelector from '../widget/selector';
 import { getWidgetType } from '../widget/utils';
@@ -244,12 +244,7 @@ const Comp = (props: Dashboard) => {
 
   //重置
   const reset = useCallback(async () => {
-    const res: boolean = await confirmUtilAsync({
-      content: '确定清空当前仪表板吗' + '?' + '清空操作不可恢复',
-    });
-    if (res) {
-      onLayoutChange([]);
-    }
+    onLayoutChange([]);
   }, [onLayoutChange]);
 
   //id改变副作用

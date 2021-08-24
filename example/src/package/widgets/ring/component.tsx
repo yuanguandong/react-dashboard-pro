@@ -13,7 +13,7 @@ const Widget = (props: any) => {
     autoFit: true,
     percent: 0.6,
     color: ['#F4664A', '#E8EDF3'],
-    innerRadius: 0.85,
+    innerRadius: 0.8,
     radius: 0.98,
     statistic: {
       title: {

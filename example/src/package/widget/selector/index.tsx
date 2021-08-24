@@ -208,6 +208,10 @@ const WidgetSelector = (props: any) => {
                       <div
                         className={'react-dashboard-widget-iconWrap'}
                         style={{
+                          backgroundColor: _.get(
+                            stateWidgets,
+                            key + '.iconBackground',
+                          ),
                           backgroundImage: _.get(
                             stateWidgets,
                             key + '.iconBackground',

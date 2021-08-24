@@ -1,4 +1,4 @@
-import { AiOutlineClockCircle } from 'react-icons/ai';
+import { ClockCircleOutlined } from '@ant-design/icons';
 import Panel from './component';
 import snapShot from './snapshot.png';
 
@@ -8,10 +8,10 @@ export default {
   tags: ['all','system'],
   component: Panel,
   configComponent: null,
-  maxLength: 1,
+  maxLength: 2,
   snapShot,
-  icon: <AiOutlineClockCircle/>,
-  iconBackground: 'linear-gradient(-20deg, #b721ff 0%, #21d4fd 100%)',
+  icon: <ClockCircleOutlined />,
+  iconBackground: 'blue',
   size: {
     defaultWidth: 4,
     defaultHeight: 5,
