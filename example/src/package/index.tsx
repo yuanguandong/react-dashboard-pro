@@ -1,3 +1,3 @@
-export { default as Dashboard } from './dashboard';
-export { default as Widget } from './widget';
+import Dashboard from './dashboard'
+export default Dashboard
 
