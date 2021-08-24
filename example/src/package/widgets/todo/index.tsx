@@ -4,8 +4,8 @@ import snapShot from './snapshot.png';
 
 export default {
   name: 'Todo',
-  description: '待办事项',
-  tags: ['系统工具'],
+  description: 'todo list',
+  tags: ['all','list'],
   component: Panel,
   configComponent: null,
   maxLength: 1,

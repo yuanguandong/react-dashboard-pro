@@ -35,7 +35,7 @@ const Widget = (props: any) => {
         <div className={widgetClassName + '-title'}>{widgetName}</div>
         <EllipsisOutlined style={{ fontSize: 24 }} />
       </div>
-      <RingProgress {...config} style={{ margin: '0 auto' }} />
+      <RingProgress {...config} style={{height:height-80}}/>
     </div>
   );
 };

@@ -3,9 +3,9 @@ import Panel from './component';
 import snapShot from './snapshot.png';
 
 export default {
-  name: '时钟',
-  description: '一个时钟组件',
-  tags: ['系统工具'],
+  name: 'Clock',
+  description: 'a clock',
+  tags: ['all','system'],
   component: Panel,
   configComponent: null,
   maxLength: 1,

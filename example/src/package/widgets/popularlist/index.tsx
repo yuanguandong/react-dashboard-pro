@@ -5,7 +5,7 @@ import snapShot from './snapshot.png';
 export default {
   name: 'Popular',
   description: 'PopularList',
-  tags: ['列表'],
+  tags: ['all','list'],
   component: Panel,
   configComponent: null,
   maxLength: 1,

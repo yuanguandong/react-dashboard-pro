@@ -3,9 +3,9 @@ import Panel from './component';
 import snapShot from './snapshot.png';
 
 export default {
-  name: 'Todo',
-  description: '待办事项',
-  tags: ['系统工具'],
+  name: 'Ring',
+  description: 'ring progress',
+  tags: ['all','chart'],
   component: Panel,
   configComponent: null,
   maxLength: 1,
