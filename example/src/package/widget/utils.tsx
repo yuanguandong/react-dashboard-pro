@@ -3,9 +3,9 @@ import _ from 'lodash';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { FaCog } from 'react-icons/fa';
-import allWidgets from '../widgets';
+// import allWidgets from '../../widgets';
 //获取widget的类型
-export const getWidgetType = (i: string, widgets?: any): string => {
+export const getWidgetType = (i: string, widgets: any): string => {
   let allWidgets = widgets;
   var widgetType = '';
   Object.keys(allWidgets).map((key) => {
@@ -18,12 +18,12 @@ export const getWidgetType = (i: string, widgets?: any): string => {
 
 //widget配置和删除按钮
 export const ConfigBar = (props: any) => {
-  const widgets = allWidgets;
   const {
     widgetKey,
     editMode,
     onDeleteWidget,
     setConfigShow = () => {},
+    widgets
   } = props;
   const widgetType = getWidgetType(widgetKey, widgets);
   return (
@@ -50,8 +50,7 @@ export const ConfigBar = (props: any) => {
 };
 
 //config的容器
-export const ConfigWrap = (props: any) => {
-  const widgets = allWidgets;
+export const ConfigWrap = (props: any, widgets: any) => {
   const { widgetKey, visible, setVisible, width, children } = props;
 
   const afterVisibleChange = useCallback(
@@ -108,5 +107,3 @@ export const ConfigWrap = (props: any) => {
     </>
   );
 };
-
-

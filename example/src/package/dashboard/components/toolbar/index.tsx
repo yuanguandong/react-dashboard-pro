@@ -12,7 +12,7 @@ export interface ToolBarPropsIF {
 const prefixCls = 'react-dashboard-toolbar';
 
 const Toolbar = (props: ToolBarPropsIF) => {
-  const { extraLeft, extraRight, fixed, className, style, ...restProps } = props;
+  const { extraLeft, extraRight, fixed, className, style } = props;
   return (
     <div className={classNames(prefixCls, fixed ? `${prefixCls}-fixed` : '', className)} style={style}>
       <div className={`${prefixCls}-left`}>{extraLeft}</div>

@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import Dashboard from '../package/dashboard';
-import allWidgets from '../package/widgets';
+import allWidgets from '../widgets';
 
 export default () => {
-  return (
+  const ref= useRef<any>(null)
+  return (<>
     <Dashboard
       id={'default'}
       widgets={allWidgets}
@@ -12,6 +13,8 @@ export default () => {
         borderRadius: 10,
         boxShadow: '0 3px 3px rgba(128,128,128,0.2)',
       }}
+      ref={ref}
     />
+    </>
   );
 };

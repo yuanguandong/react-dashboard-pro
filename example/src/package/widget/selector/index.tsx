@@ -30,8 +30,8 @@ const WidgetSelector = (props: any) => {
 
   const [stateWidgets, setStateWidgets] = useState(widgets);
   const [visible, setVisible] = useState(false);
-  const [height, setHeight] = useState(500);
-  const [width, setWidth] = useState<any>(860);
+  const [height] = useState(500);
+  const [width] = useState<any>(860);
   const [menuData, setMenuData] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [keywords, setKeywords] = useState('');
@@ -153,6 +153,7 @@ const WidgetSelector = (props: any) => {
           <div className={'react-dashboard-widget-leftBar'}>
             <Search
               placeholder={'请输入小程序名称'}
+              value={keywords}
               onSearch={handleSearch}
               onChange={(e) => handleSearch(e.target.value)}
               prefix={

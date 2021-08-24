@@ -1,10 +1,3 @@
-/*
- * @Descripttion: 仪表板组件，属于框架业务型组件
-                  主要用于widget按用户自定义布局的显示，还包含仪表板布局设计器、内嵌widget选择器
-                  内部依赖用户个性化数据接口和公司个性化数据接口、内置数据读取和存储逻辑、内部做了数据管理，
-                  主要布局技术是借助react-grid-layout实现的
- * @MainAuthor:   袁官东
- */
 import {
   CheckOutlined,
   CloseOutlined,
@@ -18,31 +11,31 @@ import { Button, Empty, message, Spin, Tooltip } from 'antd';
 import classnames from 'classnames';
 import _ from 'lodash';
 import React, {
+  forwardRef,
   useCallback,
   useEffect,
+  useImperativeHandle,
   useMemo,
   useReducer,
+  useRef,
   useState
 } from 'react';
 import { Responsive, WidthProvider } from 'react-grid-layout';
+import { ReactJSXElement } from '_@emotion_react@11.4.1@@emotion/react/types/jsx-namespace';
 import { generateUuid, reducer } from '../utils';
 import Widget from '../widget';
 import WidgetSelector from '../widget/selector';
 import { getWidgetType } from '../widget/utils';
 import { Toolbar } from './components';
 import './index.less';
-import {
-  fetch as fetchApi,
-  removeWidgetApi,
-  update as updateApi
-} from './service';
+import { fetch as fetchApi, update as updateApi } from './service';
 
 const ResponsiveReactGridLayout: any = WidthProvider(Responsive);
 export const maxWidgetLength = 20;
 
-type LayoutItem = {
-  w: number; //宽度
-  h: number; //高度
+export type LayoutItem = {
+  w: number; //宽度份数，总共12份
+  h: number; //高度份数，1份大概30px
   x: number; //横向位置，总共12份
   y: number; //纵向位置，1份大概30px
   i: string; //唯一标识
@@ -50,22 +43,68 @@ type LayoutItem = {
   maxW: number; //最大宽度
   minH: number; //最小高度
   maxH: number; //最大高度
-  moved: boolean;
-  static: boolean;
 };
-
-interface Dashboard {
+export type LayoutsIf = LayoutItem[];
+export interface widgetIF {
+  name: string;
+  description: string;
+  tags: string[];
+  component: ReactJSXElement;
+  configComponent: ReactJSXElement;
+  maxLength: number;
+  snapShot: ImageBitmapSource;
+  icon: ReactJSXElement;
+  iconBackground: string;
+  size: {
+    defaultWidth: number;
+    defaultHeight: number;
+    maxWidth: number;
+    maxHeight: number;
+    minWidth: number;
+    minHeight: number;
+  };
+  [key: string]: any;
+}
+interface widgetsIF {
+  [key: string]: widgetIF;
+}
+export interface Dashboard {
   id: string; //唯一标识
-  widgets: any; //widget库
+  widgets: widgetsIF; //widget库
   editMode?: boolean; //是否编辑状态
   exitEditCallback?: Function; //退出编辑时回调
   initialLayout?: LayoutItem[]; //初始布局
   widgetWrapClassName?: string; //widget容器类名
   widgetWrapStyle?: React.CSSProperties; //widget容器样式
+  onLayoutChange: (layout: LayoutItem[]) => void;
+  onReset: (
+    dirtyCurrentLayout: LayoutItem[],
+    currentLayout: LayoutItem,
+  ) => void; //清空
+  onRemoveWidget: (
+    widget: widgetIF,
+    dirtyCurrentLayout: LayoutItem[],
+    currentLayout: LayoutItem[],
+  ) => void; //删除
+  onAddWidget: (
+    widget: widgetIF,
+    dirtyCurrentLayout: LayoutItem[],
+    currentLayout: LayoutItem[],
+  ) => void; //新增
+  onReload: (currentLayout: LayoutItem[]) => void; // 刷新
+  onCancelEdit: (
+    dirtyCurrentLayout: LayoutItem[],
+    currentLayout: LayoutItem,
+  ) => void; //取消编辑
+  onEdit: (currentLayout: LayoutItem[]) => void; //编辑
+  onRevert: (
+    dirtyCurrentLayout: LayoutItem[],
+    currentLayout: LayoutItem,
+  ) => void; //重置
   [key: string]: any;
 }
 
-const Comp = (props: Dashboard) => {
+const Dashboard = forwardRef((props: Dashboard, ref: any) => {
   const {
     id,
     editMode = false,
@@ -74,6 +113,13 @@ const Comp = (props: Dashboard) => {
     initialLayout = [],
     widgetWrapClassName,
     widgetWrapStyle,
+    onLayoutChange: _onLayoutChange,
+    onReset, //清空
+    onRemoveWidget, //删除
+    onAddWidget, //新增
+    onCancelEdit, //取消编辑
+    onEdit, //编辑
+    onRevert, //重置
     ...restProps
   } = props;
 
@@ -86,9 +132,11 @@ const Comp = (props: Dashboard) => {
   });
   const { currentLayout, dirtyCurrentLayout } = state;
 
+  const dom = useRef<any>(null);
+
   //计算当前widget可添加length
-  const calcLength = useCallback((widgets, layout) => {
-    Object.keys(widgets).map((key) => {
+  const calcLength = useCallback((widgets: widgetsIF, layout) => {
+    Object.keys(widgets).map((key: string) => {
       widgets[key].length = 0;
     });
     layout.map((item: any) => {
@@ -166,13 +214,13 @@ const Comp = (props: Dashboard) => {
   );
 
   //删除widget信息
-  const removeWidget = useCallback(async (widgetKey) => {
-    try {
-      await removeWidgetApi({
-        widgetKey,
-      });
-    } catch (error) {}
-  }, []);
+  // const removeWidget = useCallback(async (widgetKey) => {
+  //   try {
+  //     await removeWidgetApi({
+  //       widgetKey,
+  //     });
+  //   } catch (error) {}
+  // }, []);
 
   //改变布局触发
   const onLayoutChange = useCallback(
@@ -187,6 +235,7 @@ const Comp = (props: Dashboard) => {
           dirtyCurrentLayout: layout,
         },
       });
+      _onLayoutChange && _onLayoutChange(layout);
       callback && callback();
     }, 300),
     [stateEditMode],
@@ -194,7 +243,7 @@ const Comp = (props: Dashboard) => {
 
   //添加小程序
   const addWidget = useCallback(
-    (widget, type) => {
+    (widget: widgetIF) => {
       if (dirtyCurrentLayout.length >= maxWidgetLength) {
         message.warning(
           `超过了最大限制数量${maxWidgetLength}` + ',' + '不能再添加了',
@@ -208,13 +257,14 @@ const Comp = (props: Dashboard) => {
           h: widget.size.defaultHeight,
           x: 0,
           y: lastItem ? lastItem['y'] + lastItem['h'] : 0,
-          i: type + '-' + generateUuid(),
+          i: widget.name + '-' + generateUuid(),
           minW: widget.size.minWidth,
           maxW: widget.size.maxWidth,
           minH: widget.size.minHeight,
           maxH: widget.size.maxHeight,
         },
       ];
+      onAddWidget && onAddWidget(widget, dirtyCurrentLayout, newLayout);
       onLayoutChange(newLayout);
       message.success('添加成功');
     },
@@ -222,13 +272,18 @@ const Comp = (props: Dashboard) => {
   );
 
   //删除小程序
-  const deleteWidget = useCallback(
-    (widgetKey) => {
-      dirtyCurrentLayout.map((item: any, index: number) => {
+  const removeWidget = useCallback(
+    (widgetKey: string) => {
+      let removedWidget: any;
+      let newLayout = _.cloneDeep(dirtyCurrentLayout);
+      newLayout.map((item: widgetIF, index: number) => {
         if (item['i'] === widgetKey) {
-          dirtyCurrentLayout.splice(index, 1);
+          removedWidget = item;
+          newLayout.splice(index, 1);
         }
       });
+      onRemoveWidget &&
+        onRemoveWidget(removedWidget, dirtyCurrentLayout, newLayout);
       dispatch({
         type: 'save',
         payload: {
@@ -244,6 +299,7 @@ const Comp = (props: Dashboard) => {
 
   //重置
   const reset = useCallback(async () => {
+    onReset && onReset([], currentLayout);
     onLayoutChange([]);
   }, [onLayoutChange]);
 
@@ -267,6 +323,40 @@ const Comp = (props: Dashboard) => {
     return stateEditMode ? dirtyCurrentLayout : currentLayout;
   }, [stateEditMode, dirtyCurrentLayout, currentLayout]);
 
+  //取消编辑
+  const cancelEdit = () => {
+    setStateEditMode(false);
+    onCancelEdit && onCancelEdit(dirtyCurrentLayout, currentLayout);
+    dispatch({
+      type: 'save',
+      payload: {
+        dirtyCurrentLayout: currentLayout,
+      },
+    });
+  };
+
+  const revert = () => {
+    onRevert && onRevert(dirtyCurrentLayout, currentLayout);
+    dispatch({
+      type: 'save',
+      payload: {
+        dirtyCurrentLayout: currentLayout,
+      },
+    });
+  };
+  const edit = () => setStateEditMode(true);
+
+  useImperativeHandle(ref, () => ({
+    dom: dom.current,
+    reset, //清空
+    removeWidget, //删除
+    addWidget, //新增
+    reload, // 刷新
+    cancelEdit, //取消编辑
+    edit, //编辑
+    revert, //重置
+  }));
+
   return (
     <Spin
       spinning={loading}
@@ -278,6 +368,7 @@ const Comp = (props: Dashboard) => {
         style={{
           width: '100%',
         }}
+        ref={dom}
       >
         <ResponsiveReactGridLayout
           className="react-dashboard-layout"
@@ -301,7 +392,7 @@ const Comp = (props: Dashboard) => {
                   widgetType={getWidgetType(item.i, widgets)}
                   height={item.h * 40 - 10}
                   editMode={stateEditMode}
-                  onDeleteWidget={() => deleteWidget(item.i)}
+                  onDeleteWidget={() => removeWidget(item.i)}
                   widgets={widgets}
                   widgetWrapClassName={widgetWrapClassName}
                   widgetWrapStyle={widgetWrapStyle}
@@ -317,7 +408,7 @@ const Comp = (props: Dashboard) => {
                         icon={<DeleteOutlined />}
                         size="small"
                         style={{ margin: '10px 0' }}
-                        onClick={() => deleteWidget(item.i)}
+                        onClick={() => removeWidget(item.i)}
                       >
                         {'删除'}
                       </Button>
@@ -349,7 +440,7 @@ const Comp = (props: Dashboard) => {
                 size="small"
                 type="default"
                 style={{ flex: 1 }}
-                onClick={() => setStateEditMode(true)}
+                onClick={edit}
               >
                 <DashboardOutlined />
                 {'编辑仪表板'}
@@ -366,11 +457,7 @@ const Comp = (props: Dashboard) => {
                 >
                   {!loading && (
                     <Empty description={<span>{'当前仪表板没有小程序'}</span>}>
-                      <Button
-                        size="small"
-                        type="primary"
-                        onClick={() => setStateEditMode(true)}
-                      >
+                      <Button size="small" type="primary" onClick={edit}>
                         <DashboardOutlined />
                         {'编辑仪表板'}
                       </Button>
@@ -414,29 +501,14 @@ const Comp = (props: Dashboard) => {
               <>
                 <Button
                   size="small"
-                  onClick={() => {
-                    setStateEditMode(false);
-                    dispatch({
-                      type: 'save',
-                      payload: {
-                        dirtyCurrentLayout: currentLayout,
-                      },
-                    });
-                  }}
+                  onClick={cancelEdit}
                   icon={<CloseOutlined />}
                 >
                   {'取消'}
                 </Button>
                 <Button
                   size="small"
-                  onClick={() => {
-                    dispatch({
-                      type: 'save',
-                      payload: {
-                        dirtyCurrentLayout: currentLayout,
-                      },
-                    });
-                  }}
+                  onClick={revert}
                   icon={<RetweetOutlined />}
                 >
                   {'恢复'}
@@ -476,6 +548,6 @@ const Comp = (props: Dashboard) => {
       </div>
     </Spin>
   );
-};
+});
 
-export default Comp;
+export default Dashboard;

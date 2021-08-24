@@ -19,7 +19,6 @@ const Widget = (props: WidgetProps) => {
     widgets,
     widgetKey,
     widgetType,
-    height,
     editMode,
     onDeleteWidget,
     widgetWrapClassName,
@@ -42,6 +41,7 @@ const Widget = (props: WidgetProps) => {
         editMode={editMode}
         onDeleteWidget={onDeleteWidget}
         setConfigShow={setConfigShow}
+        widgets={widgets}
       />
       {configComponent &&
         React.createElement(configComponent, {

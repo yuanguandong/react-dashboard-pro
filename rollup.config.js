@@ -6,7 +6,6 @@ import postcss from "rollup-plugin-postcss";
 import ts from "rollup-plugin-typescript2";
 import { uglify } from "rollup-plugin-uglify";
 import packageJSON from "./package.json";
-
 const getPath = (_path) => path.resolve(__dirname, _path);
 
 const extensions = [".js", ".ts", ".tsx"];
@@ -27,12 +26,15 @@ const esPlugin = eslint({
 // 基础配置
 const commonConf = {
   input: getPath("./example/src/package/index.tsx"),
-  external: ["react","react-dom"],
+  external: ["react","react-dom","antd","@ant-design/icons","react-grid-layout"],
   plugins: [
     uglify(),
     postcss(),
     // less(),
     resolve(extensions),
+    // babel({
+    //   exclude: 'node_modules/**' // 仅仅转译我们的源码
+    // }),
     commonjs(),
     esPlugin,
     tsPlugin,

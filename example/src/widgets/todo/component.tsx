@@ -17,7 +17,7 @@ const Widget = (props: any) => {
         <EllipsisOutlined style={{ fontSize: 24 }} />
       </div>
       {List.map((item) => (
-        <div className={widgetClassName + '-item'}>
+        <div className={widgetClassName + '-item'} key={item.title}>
           <Title level={4}>{item.title}</Title>
           <div className={widgetClassName + '-content'}>{item.content}</div>
           <div className={widgetClassName + '-content'}>progress</div>
