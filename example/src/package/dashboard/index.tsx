@@ -76,6 +76,7 @@ export interface Dashboard {
   initialLayout?: LayoutItem[]; //初始布局
   widgetWrapClassName?: string; //widget容器类名
   widgetWrapStyle?: React.CSSProperties; //widget容器样式
+  currentLayout?:LayoutItem[]; //初始布局
   onLayoutChange: (layout: LayoutItem[]) => void;
   onReset: (
     dirtyCurrentLayout: LayoutItem[],
@@ -97,6 +98,7 @@ export interface Dashboard {
     currentLayout: LayoutItem,
   ) => void; //取消编辑
   onEdit: (currentLayout: LayoutItem[]) => void; //编辑
+  onSave: (currentLayout: LayoutItem[]) => void; //编辑
   onRevert: (
     dirtyCurrentLayout: LayoutItem[],
     currentLayout: LayoutItem,
@@ -113,6 +115,7 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
     initialLayout = [],
     widgetWrapClassName,
     widgetWrapStyle,
+    currentLayout:_currentLayout=[],
     onLayoutChange: _onLayoutChange,
     onReset, //清空
     onRemoveWidget, //删除
@@ -120,6 +123,7 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
     onCancelEdit, //取消编辑
     onEdit, //编辑
     onRevert, //重置
+    onSave, //保存
     ...restProps
   } = props;
 
@@ -150,7 +154,7 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
 
   //获取操作
   const fetch = useCallback(
-    _.debounce(async (payload: object, callback?: Function) => {
+    _.debounce(async () => {
       try {
         const response = await fetchApi({ id });
         let layout = _.isArray(initialLayout) ? initialLayout : [];
@@ -178,9 +182,9 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
 
   //刷新
   const reload = useCallback(
-    async (payload: object, callback?: Function) => {
+    async () => {
       setLoading(true);
-      fetch({ id });
+      fetch();
     },
     [fetch],
   );
@@ -319,6 +323,16 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
     exitEditCallback(stateEditMode);
   }, [stateEditMode]);
 
+  useEffect(() => {
+    dispatch({
+      type: 'save',
+      payload: {
+        currentLayout,
+        dirtyCurrentLayout: currentLayout,
+      },
+    });
+  },[_currentLayout])
+
   const finLayout = useMemo(() => {
     return stateEditMode ? dirtyCurrentLayout : currentLayout;
   }, [stateEditMode, dirtyCurrentLayout, currentLayout]);
@@ -346,6 +360,14 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
   };
   const edit = () => setStateEditMode(true);
 
+  const save =() => {
+    onSave && onSave(dirtyCurrentLayout)
+    update({
+      layout: dirtyCurrentLayout,
+    });
+    setStateEditMode(false);
+  }
+
   useImperativeHandle(ref, () => ({
     dom: dom.current,
     reset, //清空
@@ -355,6 +377,7 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
     cancelEdit, //取消编辑
     edit, //编辑
     revert, //重置
+    save,
   }));
 
   return (
@@ -517,7 +540,7 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
                   <Button
                     size="small"
                     danger
-                    onClick={() => reset()}
+                    onClick={reset}
                     icon={<DeleteOutlined />}
                   >
                     {'清空'}
@@ -530,12 +553,7 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
                 />
                 <Button
                   size="small"
-                  onClick={() => {
-                    update({
-                      layout: dirtyCurrentLayout,
-                    });
-                    setStateEditMode(false);
-                  }}
+                  onClick={save}
                   type="primary"
                   icon={<CheckOutlined />}
                 >

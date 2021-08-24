@@ -1,25 +1,20 @@
 {
-  "name": "smart-background",
-  "version": "1.0.7",
-  "description": "Automatically generate the background of the symbol picture, so you no longer have to worry about the background 自动生成符号背景，让你不再为背景头疼",
+  "name": "react-dashboard-pro",
+  "version": "1.0.0",
+  "description": "Out of the box one-stop dashboard solution 开箱即用的一站式仪表板解决方案",
   "keywords": [
+    "dashboard",
     "react",
-    "background",
     "javascript",
     "tsx",
-    "smart",
-    "smart-background",
-    "emoji",
-    "icon",
-    "icons",
-    "background",
-    "图片",
-    "背景"
+    "antd",
+    "react-dashboard-pro",
+    "仪表板"
   ],
-  "homepage": "https://yuanguandong.github.io/smart-background/",
+  "homepage": "https://yuanguandong.github.io/react-dashboard-pro/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yuanguandong/smart-background"
+    "url": "https://github.com/yuanguandong/react-dashboard-pro"
   },
   "author": "yuanguandong",
   "license": "MIT",
@@ -29,7 +24,7 @@
     "start": "cd example && npm start",
     "dev": "set NODE_ENV=developemnt&& rollup -c rollup.config.js -w",
     "build": "rm -rf lib && set NODE_ENV=production && rollup -c rollup.config.js",
-    "init": "mkdir /Volumes/mac/github/smart-background/example/src/pages/package && ln -s /Volumes/mac/github/smart-background/src/* /Volumes/mac/github/smart-background/example/src/pages/package"
+    "init": "mkdir /Volumes/mac/github/react-dashboard-pro/example/src/pages/package && ln -s /Volumes/mac/github/react-dashboard-pro/src/* /Volumes/mac/github/react-dashboard-pro/example/src/pages/package"
   },
   "types": "lib/index.d.ts",
   "devDependencies": {
@@ -39,7 +34,6 @@
     "@types/react": "^17.0.13",
     "@types/react-grid-layout": "^1.1.2",
     "@typescript-eslint/parser": "^4.28.2",
-    "antd": "^4.16.13",
     "classnames": "^2.3.1",
     "postcss": "^8.3.6",
     "react": "^17.0.2",
@@ -64,6 +58,7 @@
     "@ant-design/icons": "^4.6.3",
     "react-grid-layout": "^1.2.5",
     "react-icons": "^4.2.0",
-    "react-resizable": "^3.0.4"
+    "react-resizable": "^3.0.4",
+    "antd": "^4.16.13"
   }
 }
