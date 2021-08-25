@@ -76,7 +76,7 @@ export interface Dashboard {
   initialLayout?: LayoutItem[]; //初始布局
   widgetWrapClassName?: string; //widget容器类名
   widgetWrapStyle?: React.CSSProperties; //widget容器样式
-  currentLayout?:LayoutItem[]; //初始布局
+  currentLayout?: LayoutItem[]; //初始布局
   onLayoutChange: (layout: LayoutItem[]) => void;
   onReset: (
     dirtyCurrentLayout: LayoutItem[],
@@ -115,7 +115,7 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
     initialLayout = [],
     widgetWrapClassName,
     widgetWrapStyle,
-    currentLayout:_currentLayout=[],
+    layout = [],
     onLayoutChange: _onLayoutChange,
     onReset, //清空
     onRemoveWidget, //删除
@@ -131,8 +131,8 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
   const [loading, setLoading] = useState(editMode);
 
   const [state, dispatch] = useReducer(reducer, {
-    currentLayout: [],
-    dirtyCurrentLayout: [],
+    currentLayout: layout,
+    dirtyCurrentLayout: layout,
   });
   const { currentLayout, dirtyCurrentLayout } = state;
 
@@ -181,13 +181,10 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
   );
 
   //刷新
-  const reload = useCallback(
-    async () => {
-      setLoading(true);
-      fetch();
-    },
-    [fetch],
-  );
+  const reload = useCallback(async () => {
+    setLoading(true);
+    fetch();
+  }, [fetch]);
 
   //设置布局信息
   const update = useCallback(
@@ -291,7 +288,7 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
       dispatch({
         type: 'save',
         payload: {
-          dirtyCurrentLayout,
+          dirtyCurrentLayout:newLayout,
         },
       });
       // onLayoutChange(dirtyCurrentLayout, [], () => {
@@ -309,9 +306,7 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
 
   //id改变副作用
   useEffect(() => {
-    fetch({
-      id,
-    });
+    fetch();
   }, [id]);
 
   //编辑状态改变副作用
@@ -323,15 +318,16 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
     exitEditCallback(stateEditMode);
   }, [stateEditMode]);
 
-  useEffect(() => {
-    dispatch({
-      type: 'save',
-      payload: {
-        currentLayout,
-        dirtyCurrentLayout: currentLayout,
-      },
-    });
-  },[_currentLayout])
+  // useEffect(() => {
+  //   console.log(1)
+  //   dispatch({
+  //     type: 'save',
+  //     payload: {
+  //       currentLayout,
+  //       dirtyCurrentLayout: currentLayout,
+  //     },
+  //   });
+  // },[layout])
 
   const finLayout = useMemo(() => {
     return stateEditMode ? dirtyCurrentLayout : currentLayout;
@@ -360,13 +356,13 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
   };
   const edit = () => setStateEditMode(true);
 
-  const save =() => {
-    onSave && onSave(dirtyCurrentLayout)
+  const save = () => {
+    onSave && onSave(dirtyCurrentLayout);
     update({
       layout: dirtyCurrentLayout,
     });
     setStateEditMode(false);
-  }
+  };
 
   useImperativeHandle(ref, () => ({
     dom: dom.current,
@@ -457,7 +453,7 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
                 icon={<ReloadOutlined />}
                 loading={loading}
                 style={{ marginRight: '10px' }}
-                onClick={() => reload({ id })}
+                onClick={() => reload()}
               />
               <Button
                 size="small"

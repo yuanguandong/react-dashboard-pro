@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
-import Dashboard from '../../../lib';
-// import Dashboard from '../package/dashboard';
+// import Dashboard from '../../../lib';
+import Dashboard from '../package/dashboard';
 import allWidgets from '../widgets';
 
 export default () => {

@@ -55,9 +55,9 @@ const Widget = (props: any) => {
     <div className={widgetClassName}>
       <Row style={{ height: '100%' }} ref={ref}>
         <Col
-          span={layout == 'h' ? 8 : 24}
+          span={layout === 'h' ? 8 : 24}
           className={widgetClassName + '-left'}
-          style={{ height: layout == 'h' ? '100%' : '50%' }}
+          style={{ height: layout === 'h' ? '100%' : '50%' }}
         >
           <div className={widgetClassName + '-clock'}>
             <div className={widgetClassName + '-c1'}>
@@ -85,9 +85,9 @@ const Widget = (props: any) => {
           </div>
         </Col>
         <Col
-          span={layout == 'h' ? 16 : 24}
+          span={layout === 'h' ? 16 : 24}
           className={widgetClassName + '-right'}
-          style={{ height: layout == 'h' ? '100%' : '50%' }}
+          style={{ height: layout === 'h' ? '100%' : '50%' }}
         >
           <div className={widgetClassName + '-timeNum'} style={{ fontSize }}>
             {moment().format('HH')}

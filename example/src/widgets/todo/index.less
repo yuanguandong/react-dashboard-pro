@@ -6,6 +6,31 @@
   user-select: none;
   background: var(--component-background);
   padding: 20px;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 1px;
+    height: 1px;
+    overflow: auto;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
+    min-height: 25px;
+    min-width: 25px;
+
+    &:hover {
+      background-color: #a8a8a8;
+    }
+
+    &:active {
+      background-color: #787878;
+    }
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #f7f7f7;
+    border: 1px solid #efefef;
+  }
   &-title-wrap{
     display:flex;
     justify-content:space-between;

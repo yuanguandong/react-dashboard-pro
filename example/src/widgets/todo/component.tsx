@@ -29,7 +29,7 @@ const Widget = (props: any) => {
             }}
           />
           {item.users.map((user) => (
-            <Avatar src={user.avatar} size={24} style={{ marginRight: 5 }} />
+            <Avatar src={user.avatar} size={24} style={{ marginRight: 5 }} key={user.name}/>
           ))}
         </div>
       ))}

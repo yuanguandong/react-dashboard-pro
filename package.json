@@ -1,6 +1,6 @@
 {
   "name": "react-dashboard-pro",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Out of the box one-stop dashboard solution 开箱即用的一站式仪表板解决方案",
   "keywords": [
     "dashboard",
@@ -31,6 +31,7 @@
     "@babel/core": "^7.15.0",
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
+    "@types/lodash": "^4.14.172",
     "@types/react": "^17.0.13",
     "@types/react-grid-layout": "^1.1.2",
     "@typescript-eslint/parser": "^4.28.2",
@@ -56,9 +57,11 @@
   "dependencies": {
     "@ant-design/charts": "^1.2.10",
     "@ant-design/icons": "^4.6.3",
+    "antd": "^4.16.13",
+    "lodash": "^4.17.21",
     "react-grid-layout": "^1.2.5",
     "react-icons": "^4.2.0",
     "react-resizable": "^3.0.4",
-    "antd": "^4.16.13"
+    "react-resize-detector": "^6.7.6"
   }
 }
