@@ -50,3 +50,20 @@ export const formatLayout = (layout) => {
   });
   return data;
 };
+
+
+//添加最大最小值
+export const calcMinAndMax = (data,widgets)=>{
+  data.map((item, index) => {
+    const key = item.i.split('-')[0];
+    if (!key) {
+      return;
+    }
+    const { minW = 1, maxW = 12, minH = 1, maxH = 100 } = widgets[key];
+    item.minW = minW;
+    item.maxW = maxW;
+    item.minH = minH;
+    item.maxH = maxH;
+  });
+  return data
+}

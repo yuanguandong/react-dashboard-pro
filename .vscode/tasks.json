@@ -36,7 +36,7 @@
       //f10 publish
       {
         "type": "shell",
-        "command": "cd example && rm -rf /Volumes/mac/github/smart-background/example/node_modules/smart-background && mkdir /Volumes/mac/github/smart-background/example/node_modules/smart-background && ln -s /Volumes/mac/github/smart-background/lib/* /Volumes/mac/github/smart-background/example/node_modules/smart-background",
+        "command": "npm publish",
         "label": "publish",
         "problemMatcher": []
       },

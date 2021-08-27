@@ -12,6 +12,7 @@ import classnames from 'classnames';
 import _ from 'lodash';
 import React, {
   forwardRef,
+  ReactElement,
   useCallback,
   useEffect,
   useImperativeHandle,
@@ -22,7 +23,6 @@ import React, {
 } from 'react';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import KeyEvent from 'react-keyevent';
-import { ReactJSXElement } from '_@emotion_react@11.4.1@@emotion/react/types/jsx-namespace';
 import { generateUuid, reducer } from '../utils';
 import Widget from '../widget';
 import WidgetSelector from '../widget/selector';
@@ -37,7 +37,7 @@ import './style/message.css';
 import './style/modal.css';
 import './style/spin.css';
 import './style/tooltip.css';
-import { copy, formatLayout } from './utils';
+import { calcMinAndMax, copy, formatLayout } from './utils';
 
 const ResponsiveReactGridLayout: any = WidthProvider(Responsive);
 
@@ -57,11 +57,11 @@ export interface widgetIF {
   name: string;
   description: string;
   tags: string[];
-  component: ReactJSXElement;
-  configComponent: ReactJSXElement;
+  component: ReactElement;
+  configComponent: ReactElement;
   maxLength: number;
   snapShot: ImageBitmapSource;
-  icon: ReactJSXElement;
+  icon: ReactElement;
   iconBackground: string;
   size: {
     defaultWidth: number;
@@ -80,7 +80,7 @@ export interface Dashboard {
   storageKey: string; //本地存储唯一标识
   widgets: widgetsIF; //widget库
   editMode?: boolean; //是否编辑状态
-  initialLayout?: LayoutsIF; //初始布局
+  defaultLayout?: LayoutsIF; //初始布局
   widgetWrapClassName?: string; //widget容器类名
   widgetWrapStyle?: React.CSSProperties; //widget容器样式
   layout?: LayoutsIF; //布局数据
@@ -88,10 +88,7 @@ export interface Dashboard {
   maxWidgetLength?: number; //当前仪表板最大可添加的widget数量
   toolbar?: boolean; //是否显示默认工具栏
   onLayoutChange: (layout: LayoutsIF) => void;
-  onReset: (
-    dirtyCurrentLayout: LayoutsIF,
-    currentLayout: LayoutItem,
-  ) => void; //清空
+  onReset: (dirtyCurrentLayout: LayoutsIF, currentLayout: LayoutItem) => void; //清空
   onRemoveWidget: (
     widget: widgetIF,
     dirtyCurrentLayout: LayoutsIF,
@@ -109,10 +106,7 @@ export interface Dashboard {
   ) => void; //取消编辑
   onEdit: (currentLayout: LayoutsIF) => void; //编辑
   onSave: (currentLayout: LayoutsIF) => void; //编辑
-  onRevert: (
-    dirtyCurrentLayout: LayoutsIF,
-    currentLayout: LayoutItem,
-  ) => void; //重置
+  onRevert: (dirtyCurrentLayout: LayoutsIF, currentLayout: LayoutItem) => void; //重置
   [key: string]: any;
 }
 
@@ -121,7 +115,7 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
     storageKey = 'default',
     editMode = false,
     widgets,
-    initialLayout = [],
+    defaultLayout = [],
     widgetWrapClassName,
     widgetWrapStyle,
     layout: customLayout = null,
@@ -144,46 +138,32 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
   const [loading, setLoading] = useState(editMode);
 
   const [state, dispatch] = useReducer(reducer, {
-    currentLayout: customLayout,
-    dirtyCurrentLayout: customLayout,
+    currentLayout: [],
+    dirtyCurrentLayout: [],
   });
-  const { currentLayout, dirtyCurrentLayout } = state;
+  const { currentLayout = [], dirtyCurrentLayout = [] } = state;
 
   const dom = useRef<any>(null);
-
-  //计算当前widget可添加length
-  const calcLength = useCallback((widgets: widgetsIF, layout) => {
-    Object.keys(widgets).map((key: string) => {
-      widgets[key].length = 0;
-    });
-    layout.map((item: any) => {
-      Object.keys(widgets).map((key) => {
-        if (item['i'].indexOf(key) >= 0) {
-          widgets[key].length = widgets[key].length + 1;
-        }
-      });
-    });
-  }, []);
 
   //获取操作
   const fetch = useCallback(
     _.debounce(async () => {
       try {
         const response = await fetchApi({ id: storageKey });
-        let layout = _.isArray(initialLayout) ? initialLayout : [];
+        let layout = _.isArray(defaultLayout) ? defaultLayout : [];
         if (response) {
           const resArr = JSON.parse(response).currentLayout;
           if (!_.isEmpty(resArr)) {
             layout = resArr;
           }
         }
-        calcLength(widgets, layout);
         if (layout) {
+          const data =calcMinAndMax(layout,widgets)
           dispatch({
             type: 'save',
             payload: {
-              currentLayout: layout,
-              dirtyCurrentLayout: layout,
+              currentLayout: data,
+              dirtyCurrentLayout: data,
             },
           });
         }
@@ -197,7 +177,7 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
   const reload = useCallback(async () => {
     setLoading(true);
     onReload && onReload(formatLayout(currentLayout));
-    if (!customLayout) {
+    if (customLayout) {
       return;
     }
     fetch();
@@ -347,7 +327,6 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
   const edit = () => setStateEditMode(true);
 
   const save = useCallback(() => {
-    calcLength(widgets, dirtyCurrentLayout);
     dispatch({
       type: 'save',
       payload: {
@@ -400,23 +379,15 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
 
   //响应外部数据
   useEffect(() => {
-    console.log('customLayout', customLayout);
-    customLayout.map((item, index) => {
-      const key = item.i.split('-')[0];
-      if (!key) {
-        return;
-      }
-      const { minW = 1, maxW = 12, minH = 1, maxH = 100 } = widgets[key];
-      item.minW = minW;
-      item.maxW = maxW;
-      item.minH = minH;
-      item.maxH = maxH;
-    });
+    if (!_.isArray(customLayout)) {
+      return;
+    }
+    const data = calcMinAndMax(customLayout,widgets);
     dispatch({
       type: 'save',
       payload: {
-        customLayout: customLayout,
-        dirtyCurrentLayout: customLayout,
+        customLayout: data,
+        dirtyCurrentLayout: data,
       },
     });
   }, [customLayout, widgets]);

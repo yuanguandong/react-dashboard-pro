@@ -22,6 +22,7 @@ import { Helmet } from 'umi';
 // import Background from '../../package';
 import packageInfo from '../config';
 import Dashboard from './dashboard';
+import Dashboard1 from './dashboard1';
 import './index.less';
 import Intro from './intro';
 
@@ -43,7 +44,7 @@ const styles = {
     width: '100%',
     height: '100%',
     backgroundSize: 'cover',
-    backgroundPosition:'center',
+    backgroundPosition: 'center',
     transform: 'scale(1.3)',
   },
   text: { color: '#fff', fontSize: 36, fontWeight: 'bold' },
@@ -106,54 +107,83 @@ const Index: React.FunctionComponent<IProps> = () => {
           href={packageInfo.homePageUrl}
           target="_blank"
         ></a>
-        <div style={{ width: '100%', height: '500px',position:'relative' }}>
-        <Background
-          
-          symbolsStyle={{ opacity: 1 }}
-          symbolSize={200}
-          gap={0}
-          symbols={[
-            ...images.map((img) => (
-              <div
-                style={{
-                  ...styles.img,
-                  backgroundImage: `url(${img})`,
-                }}
-              />
-            )),
-          ]}
-          childrenWrapStyle={{background:'rgba(32,33,131,0.8)',paddingTop:80}}
-          animation={{ type: 'top', speed: 5 }}
-        >
-          <a
-            className="github"
-            href={packageInfo.homePageUrl}
-            style={{
-              backgroundImage: `url(https://img.shields.io/github/stars/yuanguandong/${packageInfo.packageName}?style=social)`,
+        <div style={{ width: '100%', height: '800px', position: 'relative' }}>
+          <Background
+            symbolsStyle={{ opacity: 1 }}
+            symbolSize={200}
+            gap={0}
+            symbols={[
+              ...images.map((img) => (
+                <div
+                  style={{
+                    ...styles.img,
+                    backgroundImage: `url(${img})`,
+                  }}
+                />
+              )),
+            ]}
+            childrenWrapStyle={{
+              background: 'rgba(32,33,131,0.8)',
+              paddingTop: 80,
             }}
-            target="_blank"
-          ></a>
-          <div className="alignCenter">
-            <div className="">
-              {/* <img className="logoImage" src={Logo} alt="react-keyevent" /> */}
-              <div className="logo" style={{ color: '#fff' }}>
-                {packageInfo.symbol}
+            animation={{ type: 'top', speed: 5 }}
+          >
+            <a
+              className="github"
+              href={packageInfo.homePageUrl}
+              style={{
+                backgroundImage: `url(https://img.shields.io/github/stars/yuanguandong/${packageInfo.packageName}?style=social)`,
+              }}
+              target="_blank"
+            ></a>
+            <div className="alignCenter">
+              <div className="">
+                {/* <img className="logoImage" src={Logo} alt="react-keyevent" /> */}
+                <div className="logo" style={{ color: '#fff' }}>
+                  {packageInfo.symbol}
+                </div>
+                <span className="name" style={{ color: '#fff' }}>
+                  React Dashboard Pro
+                </span>
               </div>
-              <span className="name" style={{ color: '#fff' }}>
-                React Dashboard Pro
-              </span>
             </div>
-          </div>
-          <Intro />
-        </Background>
+            <Intro />
+          </Background>
         </div>
         <div className="wrap">
-          
-          <div className="container" style={{background:'#edebe9'}}>
+          <div
+            className="container"
+            style={{ background: 'rgba(250,250,250,0.3)' }}
+          >
             <Dashboard />
           </div>
-          {/* <Title level={2}>Easy To Use 容易使用</Title> */}
-          <Paragraph>默认以圆点作为符号</Paragraph>
+          <Code content={Code0} />
+          <Title level={2}>介绍</Title>
+
+
+          <Title level={5}>
+            react-dashboard-pro
+            是一套组件库也是一套解决方案，解决的是"千人千面"的B端几乎都要用到的Dashboard + Widget 客制化需求。
+          </Title>
+          <Title level={5}>
+            动态可配置仪表板和动态”小程序市场“可以让每个用户非常方便的定制自己的仪表板，提升软件自由度和用户体验。
+          </Title>
+          <Title level={5}>
+            react-dashboard-pro
+            收敛了很多定制化的逻辑，简单的配置，约定式的widget编写规则可以让你开箱即用，
+            如果本身的WidgetSelector和Toolbar不能满足业务和UI需求，那么可以用实例上的方法做到按需定制。
+          </Title>
+          
+          <Title level={2}>数据存储</Title>
+          <Title level={5}>
+            react-dashboard-pro 数据可以在外部存储，也可以使用内置的localStorage内置存储方案，如果不传递layout, 则内部默认开启内置localStorage存储
+          </Title>
+          <div
+            className="container"
+            style={{ background: 'rgba(128,128,128,0.05)' }}
+          >
+            <Dashboard1 />
+          </div>
           <Code content={Code0} />
           <Title level={2}>Why 为什么？</Title>
           在开发过程中，我们经常会遇到使用背景的地方，比如登录页面，用户信息页面，封面图……
