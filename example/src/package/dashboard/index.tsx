@@ -52,7 +52,7 @@ export type LayoutItem = {
   minH: number; //最小高度
   maxH: number; //最大高度
 };
-export type LayoutsIf = LayoutItem[];
+export type LayoutsIF = LayoutItem[];
 export interface widgetIF {
   name: string;
   description: string;
@@ -80,36 +80,37 @@ export interface Dashboard {
   storageKey: string; //本地存储唯一标识
   widgets: widgetsIF; //widget库
   editMode?: boolean; //是否编辑状态
-  initialLayout?: LayoutItem[]; //初始布局
+  initialLayout?: LayoutsIF; //初始布局
   widgetWrapClassName?: string; //widget容器类名
   widgetWrapStyle?: React.CSSProperties; //widget容器样式
-  layout?: LayoutItem[]; //布局数据
+  layout?: LayoutsIF; //布局数据
   minHeight?: number; //最小高度
   maxWidgetLength?: number; //当前仪表板最大可添加的widget数量
-  onLayoutChange: (layout: LayoutItem[]) => void;
+  toolbar?: boolean; //是否显示默认工具栏
+  onLayoutChange: (layout: LayoutsIF) => void;
   onReset: (
-    dirtyCurrentLayout: LayoutItem[],
+    dirtyCurrentLayout: LayoutsIF,
     currentLayout: LayoutItem,
   ) => void; //清空
   onRemoveWidget: (
     widget: widgetIF,
-    dirtyCurrentLayout: LayoutItem[],
-    currentLayout: LayoutItem[],
+    dirtyCurrentLayout: LayoutsIF,
+    currentLayout: LayoutsIF,
   ) => void; //删除
   onAddWidget: (
     widget: widgetIF,
-    dirtyCurrentLayout: LayoutItem[],
-    currentLayout: LayoutItem[],
+    dirtyCurrentLayout: LayoutsIF,
+    currentLayout: LayoutsIF,
   ) => void; //新增
-  onReload: (currentLayout: LayoutItem[]) => void; // 刷新
+  onReload: (currentLayout: LayoutsIF) => void; // 刷新
   onCancelEdit: (
-    dirtyCurrentLayout: LayoutItem[],
+    dirtyCurrentLayout: LayoutsIF,
     currentLayout: LayoutItem,
   ) => void; //取消编辑
-  onEdit: (currentLayout: LayoutItem[]) => void; //编辑
-  onSave: (currentLayout: LayoutItem[]) => void; //编辑
+  onEdit: (currentLayout: LayoutsIF) => void; //编辑
+  onSave: (currentLayout: LayoutsIF) => void; //编辑
   onRevert: (
-    dirtyCurrentLayout: LayoutItem[],
+    dirtyCurrentLayout: LayoutsIF,
     currentLayout: LayoutItem,
   ) => void; //重置
   [key: string]: any;
@@ -126,6 +127,7 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
     layout: customLayout = null,
     minHeight = 300,
     maxWidgetLength = 20,
+    toolbar = true,
     onLayoutChange: _onLayoutChange,
     onReset, //清空
     onReload, //刷新
@@ -497,7 +499,7 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
             ))}
           </ResponsiveReactGridLayout>
 
-          {finLayout.length > 0 ? (
+          {toolbar && finLayout.length > 0 ? (
             !stateEditMode && (
               <div
                 style={{
@@ -573,7 +575,7 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
             </>
           )}
 
-          {stateEditMode && (
+          {toolbar && stateEditMode && (
             <Toolbar
               fixed={false}
               extraRight={

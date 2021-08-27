@@ -13,7 +13,7 @@ export default {
   icon: <RightCircleOutlined />,
   iconBackground: 'linear-gradient(to right, #f52248 0%, #e4620c 100%)',
   size: {
-    defaultWidth: 2,
+    defaultWidth: 4,
     defaultHeight: 5,
     maxWidth: 12,
     maxHeight: 16,
