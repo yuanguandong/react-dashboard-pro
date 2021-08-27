@@ -13,7 +13,7 @@ export default {
   icon: <IssuesCloseOutlined />,
   iconBackground: 'orange',
   size: {
-    defaultWidth: 4,
+    defaultWidth: 2,
     defaultHeight: 5,
     maxWidth: 12,
     maxHeight: 16,

@@ -9,7 +9,6 @@ const { Title } = Typography;
 
 const Widget = (props: any) => {
   const { height } = props;
-  console.log('props', props);
   return (
     <div className={widgetClassName}>
       <div className={widgetClassName + '-title-wrap'}>

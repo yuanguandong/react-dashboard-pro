@@ -1,9 +1,5 @@
-import {
-  AppstoreAddOutlined,
-  PlusOutlined,
-  SearchOutlined
-} from '@ant-design/icons';
-import { Badge, Button, Empty, Input, List, Modal } from 'antd';
+import { AppstoreAddOutlined, PlusOutlined } from '@ant-design/icons';
+import { Button, Drawer, Empty, Input } from 'antd';
 import classnames from 'classnames';
 import _ from 'lodash';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -16,6 +12,7 @@ const WidgetSelector = (props: any) => {
     widgets,
     currentLayout,
     addWidget,
+    container,
     children = (
       <Button
         size="small"
@@ -27,11 +24,11 @@ const WidgetSelector = (props: any) => {
       </Button>
     ),
   } = props;
-
+  console.log('container',container)
   const [stateWidgets, setStateWidgets] = useState(widgets);
   const [visible, setVisible] = useState(false);
-  const [height] = useState(500);
-  const [width] = useState<any>(860);
+  const [height] = useState(600);
+  const [width] = useState<any>(600);
   const [menuData, setMenuData] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [keywords, setKeywords] = useState('');
@@ -132,9 +129,10 @@ const WidgetSelector = (props: any) => {
       >
         {children}
       </div>
-      <Modal
+      <Drawer
+        // className="react-dashboard-widget-selector"
         width={width}
-        centered
+
         title={
           <>
             <AppstoreAddOutlined style={{ margin: '0 5px' }} />
@@ -142,7 +140,7 @@ const WidgetSelector = (props: any) => {
           </>
         }
         visible={visible}
-        onCancel={() => {
+        onClose={() => {
           setVisible(false);
         }}
         footer={null}
@@ -156,39 +154,38 @@ const WidgetSelector = (props: any) => {
               value={keywords}
               onSearch={handleSearch}
               onChange={(e) => handleSearch(e.target.value)}
-              prefix={
-                <SearchOutlined
-                  className={'react-dashboard-widget-searchIcon'}
-                />
-              }
+              // prefix={
+              //   <SearchOutlined
+              //     className={'react-dashboard-widget-searchIcon'}
+              //   />
+              // }
               allowClear
             />
-            <List
-              itemLayout="horizontal"
-              style={{ marginTop: '10px' }}
-              dataSource={menuData}
-              renderItem={(item: any, index: number) => (
-                <List.Item
+            <div style={{ marginTop: 10 }}>
+              {menuData.map((item, index) => (
+                <div
                   className={classnames(
                     'react-dashboard-widget-item',
                     activeIndex == index ? 'react-dashboard-widget-active' : '',
                   )}
+                  key={item.title}
                   onClick={() => handleMenuChange(item, index)}
                 >
                   <div className={'react-dashboard-widget-name'}>
                     {item['title']}
                   </div>
                   <div className={'react-dashboard-widget-Badge'}>
-                    <Badge count={item['count']} />
+                    {item.count}
                   </div>
-                </List.Item>
-              )}
-            />
+                </div>
+              ))}
+            </div>
           </div>
           <div
             className={classnames('react-dashboard-widget-Layer')}
             style={{
-              height: height - 2,
+              height: '100%',
+              overflowY: 'auto'
             }}
           >
             {!_.isEmpty(stateWidgets) ? (
@@ -264,7 +261,7 @@ const WidgetSelector = (props: any) => {
             )}
           </div>
         </div>
-      </Modal>
+      </Drawer>
     </>
   );
 };

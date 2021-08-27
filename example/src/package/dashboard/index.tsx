@@ -21,6 +21,7 @@ import React, {
   useState
 } from 'react';
 import { Responsive, WidthProvider } from 'react-grid-layout';
+import KeyEvent from 'react-keyevent';
 import { ReactJSXElement } from '_@emotion_react@11.4.1@@emotion/react/types/jsx-namespace';
 import { generateUuid, reducer } from '../utils';
 import Widget from '../widget';
@@ -29,6 +30,14 @@ import { getWidgetType } from '../widget/utils';
 import { Toolbar } from './components';
 import './index.less';
 import { fetch as fetchApi, update as updateApi } from './service';
+import './style/button.css';
+import './style/empty.css';
+import './style/input.css';
+import './style/message.css';
+import './style/modal.css';
+import './style/spin.css';
+import './style/tooltip.css';
+import { copy } from './utils';
 
 const ResponsiveReactGridLayout: any = WidthProvider(Responsive);
 export const maxWidgetLength = 20;
@@ -72,11 +81,11 @@ export interface Dashboard {
   id: string; //唯一标识
   widgets: widgetsIF; //widget库
   editMode?: boolean; //是否编辑状态
-  exitEditCallback?: Function; //退出编辑时回调
   initialLayout?: LayoutItem[]; //初始布局
   widgetWrapClassName?: string; //widget容器类名
   widgetWrapStyle?: React.CSSProperties; //widget容器样式
-  currentLayout?: LayoutItem[]; //初始布局
+  layout?: LayoutItem[]; //布局数据
+  minHeight?: number; //最小高度
   onLayoutChange: (layout: LayoutItem[]) => void;
   onReset: (
     dirtyCurrentLayout: LayoutItem[],
@@ -111,11 +120,11 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
     id,
     editMode = false,
     widgets,
-    exitEditCallback = () => {},
     initialLayout = [],
     widgetWrapClassName,
     widgetWrapStyle,
-    layout = [],
+    layout:customLayout = [],
+    minHeight = 300,
     onLayoutChange: _onLayoutChange,
     onReset, //清空
     onRemoveWidget, //删除
@@ -131,8 +140,8 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
   const [loading, setLoading] = useState(editMode);
 
   const [state, dispatch] = useReducer(reducer, {
-    currentLayout: layout,
-    dirtyCurrentLayout: layout,
+    currentLayout: customLayout,
+    dirtyCurrentLayout: customLayout,
   });
   const { currentLayout, dirtyCurrentLayout } = state;
 
@@ -288,7 +297,7 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
       dispatch({
         type: 'save',
         payload: {
-          dirtyCurrentLayout:newLayout,
+          dirtyCurrentLayout: newLayout,
         },
       });
       // onLayoutChange(dirtyCurrentLayout, [], () => {
@@ -306,6 +315,9 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
 
   //id改变副作用
   useEffect(() => {
+    if(!_.isEmpty(customLayout)){
+      return
+    }
     fetch();
   }, [id]);
 
@@ -313,10 +325,6 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
   useEffect(() => {
     setStateEditMode(editMode);
   }, [editMode]);
-
-  useEffect(() => {
-    exitEditCallback(stateEditMode);
-  }, [stateEditMode]);
 
   // useEffect(() => {
   //   console.log(1)
@@ -376,6 +384,31 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
     save,
   }));
 
+  const onCtrlShiftC = () => {
+    const res = _.cloneDeep(currentLayout);
+    res.forEach((item) => {
+      delete item.minW;
+      delete item.maxW;
+      delete item.minH;
+      delete item.maxH;
+      delete item.moved;
+      delete item.static;
+    });
+    copy(JSON.stringify(res));
+    message.success('已复制布局数据到剪切板');
+    console.log('currentLayout', res);
+  };
+
+  useEffect(() => {
+    console.log('customLayout',customLayout)
+    dispatch({
+      type:'save',
+      payload:{
+        customLayout:customLayout,
+      }
+    })
+  },[customLayout])
+
   return (
     <Spin
       spinning={loading}
@@ -383,183 +416,201 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
         width: '100%',
       }}
     >
-      <div
+      <KeyEvent
         style={{
           width: '100%',
         }}
-        ref={dom}
+        events={{
+          onCtrlShiftC,
+        }}
+        needFocusing
       >
-        <ResponsiveReactGridLayout
-          className="react-dashboard-layout"
-          layouts={{ lg: finLayout }}
-          rowHeight={30}
-          isDraggable={stateEditMode}
-          breakpoints={{ lg: 1200, md: 800, sm: 600, xs: 400, xxs: 300 }}
-          cols={{ lg: 12, md: 12, sm: 2, xs: 2, xxs: 2 }}
-          // onBreakpointChange={onBreakpointChange} //断点回调
-          onLayoutChange={onLayoutChange} //布局改变回调
-          isResizable={stateEditMode} //准许改变大小
-          // onWidthChange={()=>onWidthChange()}  //宽度改变回调
-          measureBeforeMount //动画相关
+        <div
+          style={{
+            width: '100%',
+          }}
+          ref={dom}
         >
-          {finLayout.map((item: any) => (
-            <div key={item.i} className={classnames('react-dashboard-item')}>
-              {widgets[getWidgetType(item.i, widgets)] ? (
-                <Widget
-                  {...restProps}
-                  widgetKey={item.i}
-                  widgetType={getWidgetType(item.i, widgets)}
-                  height={item.h * 40 - 10}
-                  editMode={stateEditMode}
-                  onDeleteWidget={() => removeWidget(item.i)}
-                  widgets={widgets}
-                  widgetWrapClassName={widgetWrapClassName}
-                  widgetWrapStyle={widgetWrapStyle}
-                />
-              ) : (
-                <div className="react-dashboard-aligncenter react-dashboard-full">
-                  <div style={{ textAlign: 'center' }}>
-                    <div>
-                      {'数据有误'} {item.i}
+          <ResponsiveReactGridLayout
+            className="react-dashboard-layout"
+            layouts={{ lg: finLayout }}
+            rowHeight={30}
+            isDraggable={stateEditMode}
+            breakpoints={{ lg: 1200, md: 800, sm: 600, xs: 400, xxs: 300 }}
+            cols={{ lg: 12, md: 12, sm: 2, xs: 2, xxs: 2 }}
+            // onBreakpointChange={onBreakpointChange} //断点回调
+            onLayoutChange={onLayoutChange} //布局改变回调
+            isResizable={stateEditMode} //准许改变大小
+            // onWidthChange={()=>onWidthChange()}  //宽度改变回调
+            measureBeforeMount //动画相关
+          >
+            {finLayout.map((item: any) => (
+              <div
+                key={item.i}
+                className={classnames(
+                  'react-dashboard-item',
+                  stateEditMode ? 'react-dashboard-item-edit' : '',
+                )}
+              >
+                {widgets[getWidgetType(item.i, widgets)] ? (
+                  <Widget
+                    {...restProps}
+                    widgetKey={item.i}
+                    widgetType={getWidgetType(item.i, widgets)}
+                    height={item.h * 40 - 10}
+                    editMode={stateEditMode}
+                    onDeleteWidget={() => removeWidget(item.i)}
+                    widgets={widgets}
+                    widgetWrapClassName={widgetWrapClassName}
+                    widgetWrapStyle={widgetWrapStyle}
+                  />
+                ) : (
+                  <div className="react-dashboard-aligncenter react-dashboard-full">
+                    <div style={{ textAlign: 'center' }}>
+                      <div>
+                        {'数据有误'} {item.i}
+                      </div>
+                      {stateEditMode && (
+                        <Button
+                          icon={<DeleteOutlined />}
+                          size="small"
+                          style={{ margin: '10px 0' }}
+                          onClick={() => removeWidget(item.i)}
+                        >
+                          {'删除'}
+                        </Button>
+                      )}
                     </div>
-                    {stateEditMode && (
-                      <Button
-                        icon={<DeleteOutlined />}
-                        size="small"
-                        style={{ margin: '10px 0' }}
-                        onClick={() => removeWidget(item.i)}
+                  </div>
+                )}
+              </div>
+            ))}
+          </ResponsiveReactGridLayout>
+
+          {finLayout.length > 0 ? (
+            !stateEditMode && (
+              <div
+                style={{
+                  display: 'flex',
+                  margin: '0 10px',
+                  marginBottom: '10px',
+                }}
+              >
+                <Button
+                  size="small"
+                  icon={<ReloadOutlined />}
+                  loading={loading}
+                  style={{ marginRight: '10px' }}
+                  onClick={() => reload()}
+                />
+                <Button
+                  size="small"
+                  type="default"
+                  style={{ flex: 1 }}
+                  onClick={edit}
+                >
+                  <DashboardOutlined />
+                  {'编辑仪表板'}
+                </Button>
+              </div>
+            )
+          ) : (
+            <>
+              {!stateEditMode ? (
+                <Spin spinning={loading}>
+                  <div
+                    className="react-dashboard-emptyContent"
+                    style={{ minHeight }}
+                  >
+                    {!loading && (
+                      <Empty
+                        description={<span>{'当前仪表板没有小程序'}</span>}
                       >
-                        {'删除'}
-                      </Button>
+                        <Button size="small" type="primary" onClick={edit}>
+                          <DashboardOutlined />
+                          {'编辑仪表板'}
+                        </Button>
+                      </Empty>
                     )}
                   </div>
+                </Spin>
+              ) : (
+                <div
+                  className={classnames(
+                    'react-dashboard-full',
+                    'react-dashboard-aligncenter',
+                  )}
+                  style={{ minHeight }}
+                >
+                  <WidgetSelector
+                    widgets={widgets}
+                    currentLayout={finLayout}
+                    addWidget={addWidget}
+                  >
+                    <>
+                      <Tooltip title={'添加'}>
+                        <Button
+                          type="dashed"
+                          shape="circle"
+                          icon={<PlusOutlined />}
+                          size="large"
+                        />
+                      </Tooltip>
+                    </>
+                  </WidgetSelector>
                 </div>
               )}
-            </div>
-          ))}
-        </ResponsiveReactGridLayout>
+            </>
+          )}
 
-        {finLayout.length > 0 ? (
-          !stateEditMode && (
-            <div
-              style={{
-                display: 'flex',
-                margin: '0 10px',
-                marginBottom: '10px',
-              }}
-            >
-              <Button
-                size="small"
-                icon={<ReloadOutlined />}
-                loading={loading}
-                style={{ marginRight: '10px' }}
-                onClick={() => reload()}
-              />
-              <Button
-                size="small"
-                type="default"
-                style={{ flex: 1 }}
-                onClick={edit}
-              >
-                <DashboardOutlined />
-                {'编辑仪表板'}
-              </Button>
-            </div>
-          )
-        ) : (
-          <>
-            {!stateEditMode ? (
-              <Spin spinning={loading}>
-                <div
-                  className="react-dashboard-emptyContent"
-                  style={{ minHeight: 300 }}
-                >
-                  {!loading && (
-                    <Empty description={<span>{'当前仪表板没有小程序'}</span>}>
-                      <Button size="small" type="primary" onClick={edit}>
-                        <DashboardOutlined />
-                        {'编辑仪表板'}
-                      </Button>
-                    </Empty>
-                  )}
-                </div>
-              </Spin>
-            ) : (
-              <div
-                className={classnames(
-                  'react-dashboard-full',
-                  'react-dashboard-aligncenter',
-                )}
-                style={{ minHeight: 300 }}
-              >
-                <WidgetSelector
-                  widgets={widgets}
-                  currentLayout={finLayout}
-                  addWidget={addWidget}
-                >
-                  <>
-                    <Tooltip title={'添加'}>
-                      <Button
-                        type="dashed"
-                        shape="circle"
-                        icon={<PlusOutlined />}
-                        size="large"
-                      />
-                    </Tooltip>
-                  </>
-                </WidgetSelector>
-              </div>
-            )}
-          </>
-        )}
-
-        {stateEditMode && (
-          <Toolbar
-            fixed={false}
-            extraRight={
-              <>
-                <Button
-                  size="small"
-                  onClick={cancelEdit}
-                  icon={<CloseOutlined />}
-                >
-                  {'取消'}
-                </Button>
-                <Button
-                  size="small"
-                  onClick={revert}
-                  icon={<RetweetOutlined />}
-                >
-                  {'恢复'}
-                </Button>
-                {!_.isEmpty(finLayout) && (
+          {stateEditMode && (
+            <Toolbar
+              fixed={false}
+              extraRight={
+                <>
                   <Button
                     size="small"
-                    danger
-                    onClick={reset}
-                    icon={<DeleteOutlined />}
+                    onClick={cancelEdit}
+                    icon={<CloseOutlined />}
                   >
-                    {'清空'}
+                    {'取消'}
                   </Button>
-                )}
-                <WidgetSelector
-                  widgets={widgets}
-                  currentLayout={finLayout}
-                  addWidget={addWidget}
-                />
-                <Button
-                  size="small"
-                  onClick={save}
-                  type="primary"
-                  icon={<CheckOutlined />}
-                >
-                  {'保存'}
-                </Button>
-              </>
-            }
-          />
-        )}
-      </div>
+                  <Button
+                    size="small"
+                    onClick={revert}
+                    icon={<RetweetOutlined />}
+                  >
+                    {'恢复'}
+                  </Button>
+                  {!_.isEmpty(finLayout) && (
+                    <Button
+                      size="small"
+                      danger
+                      onClick={reset}
+                      icon={<DeleteOutlined />}
+                    >
+                      {'清空'}
+                    </Button>
+                  )}
+                  <WidgetSelector
+                    widgets={widgets}
+                    currentLayout={finLayout}
+                    addWidget={addWidget}
+                  />
+                  <Button
+                    size="small"
+                    onClick={save}
+                    type="primary"
+                    icon={<CheckOutlined />}
+                  >
+                    {'保存'}
+                  </Button>
+                </>
+              }
+            />
+          )}
+        </div>
+      </KeyEvent>
     </Spin>
   );
 });

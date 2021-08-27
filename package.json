@@ -1,6 +1,6 @@
 {
   "name": "react-dashboard-pro",
-  "version": "1.0.2",
+  "version": "1.0.7",
   "description": "Out of the box one-stop dashboard solution 开箱即用的一站式仪表板解决方案",
   "keywords": [
     "dashboard",
@@ -61,6 +61,7 @@
     "lodash": "^4.17.21",
     "react-grid-layout": "^1.2.5",
     "react-icons": "^4.2.0",
+    "react-keyevent": "^1.0.9",
     "react-resizable": "^3.0.4",
     "react-resize-detector": "^6.7.6"
   }

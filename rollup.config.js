@@ -30,7 +30,6 @@ const commonConf = {
   plugins: [
     uglify(),
     postcss(),
-    // less(),
     resolve(extensions),
     // babel({
     //   exclude: 'node_modules/**' // 仅仅转译我们的源码

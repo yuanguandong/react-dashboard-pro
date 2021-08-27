@@ -13,8 +13,8 @@ export default {
   icon: <BarChartOutlined />,
   iconBackground: '#f00',
   size: {
-    defaultWidth: 4,
-    defaultHeight: 5,
+    defaultWidth: 6,
+    defaultHeight: 11,
     maxWidth: 12,
     maxHeight: 16,
     minWidth: 2,

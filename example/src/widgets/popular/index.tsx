@@ -13,10 +13,10 @@ export default {
   icon: <OrderedListOutlined />,
   iconBackground: 'green',
   size: {
-    defaultWidth: 4,
-    defaultHeight: 5,
+    defaultWidth: 3,
+    defaultHeight: 16,
     maxWidth: 12,
-    maxHeight: 16,
+    maxHeight: 20,
     minWidth: 2,
     minHeight: 4,
   },

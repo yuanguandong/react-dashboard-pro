@@ -122,7 +122,7 @@ const Index: React.FunctionComponent<IProps> = () => {
               />
             )),
           ]}
-          childrenWrapStyle={{background:'rgba(0,0,0,0.5)',paddingTop:80}}
+          childrenWrapStyle={{background:'rgba(32,33,131,0.8)',paddingTop:80}}
           animation={{ type: 'top', speed: 5 }}
         >
           <a

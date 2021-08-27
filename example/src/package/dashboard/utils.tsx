@@ -25,3 +25,18 @@ export const request = async (url:string, options:any) => {
 
   return res;
 };
+
+
+/**
+ *复制字符串到系统剪切板
+ *
+ * @param {*} str
+ */
+ export const copy = (str: string) => {
+  var save = function (e: any) {
+    e.clipboardData.setData("text/plain", str); //下面会说到clipboardData对象
+    e.preventDefault(); //阻止默认行为
+  };
+  document.addEventListener("copy", save);
+  document.execCommand("copy"); //使文档处于可编辑状态，否则无效
+};

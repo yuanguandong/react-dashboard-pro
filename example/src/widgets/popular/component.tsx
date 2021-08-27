@@ -28,7 +28,7 @@ const Widget = (props: any) => {
     e.preventDefault();
     setActiveItem(null);
   };
-  console.log('activeItem', activeItem);
+
 
   return (
     <div className={widgetClassName}>

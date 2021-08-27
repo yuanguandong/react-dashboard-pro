@@ -6,7 +6,6 @@ import { FaCog } from 'react-icons/fa';
 // import allWidgets from '../../widgets';
 //获取widget的类型
 export const getWidgetType = (i: string, widgets: any): string => {
-  console.log('widgets',widgets)
   let allWidgets = widgets;
   var widgetType = '';
   Object.keys(allWidgets).map((key) => {
