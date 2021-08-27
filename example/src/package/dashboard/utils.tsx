@@ -1,9 +1,7 @@
 // import { updateApi as modifySmartChartConfig } from '@/pages/common/widgets/smartchart/service'
+import _ from 'lodash';
 
-
-
-
-export const request = async (url:string, options:any) => {
+export const request = async (url: string, options: any) => {
   const {
     method,
     data: { dataId, dataType, bigData },
@@ -26,17 +24,29 @@ export const request = async (url:string, options:any) => {
   return res;
 };
 
-
 /**
  *复制字符串到系统剪切板
  *
  * @param {*} str
  */
- export const copy = (str: string) => {
+export const copy = (str: string) => {
   var save = function (e: any) {
-    e.clipboardData.setData("text/plain", str); //下面会说到clipboardData对象
+    e.clipboardData.setData('text/plain', str); //下面会说到clipboardData对象
     e.preventDefault(); //阻止默认行为
   };
-  document.addEventListener("copy", save);
-  document.execCommand("copy"); //使文档处于可编辑状态，否则无效
+  document.addEventListener('copy', save);
+  document.execCommand('copy'); //使文档处于可编辑状态，否则无效
+};
+
+export const formatLayout = (layout) => {
+  const data = _.cloneDeep(layout);
+  data.forEach((item) => {
+    delete item.minW;
+    delete item.maxW;
+    delete item.minH;
+    delete item.maxH;
+    delete item.moved;
+    delete item.static;
+  });
+  return data;
 };

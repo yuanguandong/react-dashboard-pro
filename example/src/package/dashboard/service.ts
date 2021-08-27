@@ -1,6 +1,4 @@
-
 import { request } from './utils';
-
 
 interface payloadProps {
   id: string;
@@ -9,60 +7,46 @@ interface payloadProps {
 
 // 获取仪表板信息
 export async function fetch(payload: payloadProps) {
-  const { id } = payload
+  const { id } = payload;
   let url = '/accountUserSelf/getUserData';
-  if (!id) { return }
+  if (!id) {
+    return;
+  }
   return request(url, {
     method: 'GET',
     data: {
       dataId: id,
-      dataType: "dashboard",
-    }
+      dataType: 'dashboard',
+    },
   });
 }
 
-
 // 修改仪表板信息
 export async function update(payload: payloadProps) {
-  const { id, data } = payload
+  const { id, data } = payload;
   let url = '/accountUserSelf/setUserData';
-  if (!id) { return }
+  if (!id) {
+    return;
+  }
   return request(url, {
     method: 'POST',
     data: {
       dataId: id,
-      dataType: "dashboard",
-      bigData: JSON.stringify(data)
-    }
+      dataType: 'dashboard',
+      bigData: JSON.stringify(data),
+    },
   });
 }
 
-// 删除仪表板信息
-// export async function remove(payload: payloadProps) {
-//   const { id, type } = payload
-//   let url = '/accountUserSelf/delUserData';
-//   if (type == 'company') {
-//     url = '/companyData/delCompanyData'
-//   }
-//   if (!id) { return }
-//   return request(url, {
-//     method: 'POST',
-//     data: {
-//       dataId: id,
-//       dataType: "dashboard"
-//     },
-//   });
-// }
-
 //删除小程序信息
-export function removeWidgetApi(params:any) {
-  const { widgetKey } = params
+export function removeWidgetApi(params: any) {
+  const { widgetKey } = params;
   let url = '/accountUserSelf/delUserData';
   return request(url, {
     method: 'DELETE',
     data: {
       dataId: widgetKey,
-      dataType: "widget",
-    }
+      dataType: 'widget',
+    },
   });
 }

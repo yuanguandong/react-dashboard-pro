@@ -37,10 +37,9 @@ import './style/message.css';
 import './style/modal.css';
 import './style/spin.css';
 import './style/tooltip.css';
-import { copy } from './utils';
+import { copy, formatLayout } from './utils';
 
 const ResponsiveReactGridLayout: any = WidthProvider(Responsive);
-export const maxWidgetLength = 20;
 
 export type LayoutItem = {
   w: number; //宽度份数，总共12份
@@ -78,7 +77,7 @@ interface widgetsIF {
   [key: string]: widgetIF;
 }
 export interface Dashboard {
-  id: string; //唯一标识
+  storageKey: string; //本地存储唯一标识
   widgets: widgetsIF; //widget库
   editMode?: boolean; //是否编辑状态
   initialLayout?: LayoutItem[]; //初始布局
@@ -86,6 +85,7 @@ export interface Dashboard {
   widgetWrapStyle?: React.CSSProperties; //widget容器样式
   layout?: LayoutItem[]; //布局数据
   minHeight?: number; //最小高度
+  maxWidgetLength?: number; //当前仪表板最大可添加的widget数量
   onLayoutChange: (layout: LayoutItem[]) => void;
   onReset: (
     dirtyCurrentLayout: LayoutItem[],
@@ -117,16 +117,18 @@ export interface Dashboard {
 
 const Dashboard = forwardRef((props: Dashboard, ref: any) => {
   const {
-    id,
+    storageKey = 'default',
     editMode = false,
     widgets,
     initialLayout = [],
     widgetWrapClassName,
     widgetWrapStyle,
-    layout:customLayout = [],
+    layout: customLayout = null,
     minHeight = 300,
+    maxWidgetLength = 20,
     onLayoutChange: _onLayoutChange,
     onReset, //清空
+    onReload, //刷新
     onRemoveWidget, //删除
     onAddWidget, //新增
     onCancelEdit, //取消编辑
@@ -165,7 +167,7 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
   const fetch = useCallback(
     _.debounce(async () => {
       try {
-        const response = await fetchApi({ id });
+        const response = await fetchApi({ id: storageKey });
         let layout = _.isArray(initialLayout) ? initialLayout : [];
         if (response) {
           const resArr = JSON.parse(response).currentLayout;
@@ -186,23 +188,27 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
         setLoading(false);
       } catch (error) {}
     }, 200),
-    [id, widgets],
+    [storageKey, widgets],
   );
 
   //刷新
   const reload = useCallback(async () => {
     setLoading(true);
+    onReload && onReload(formatLayout(currentLayout));
+    if (!customLayout) {
+      return;
+    }
     fetch();
-  }, [fetch]);
+  }, [fetch, customLayout]);
 
   //设置布局信息
   const update = useCallback(
     async (payload: any, callback: Function = () => {}) => {
       const layout = payload['layout'];
-      calcLength(widgets, layout);
+
       try {
         const response = await updateApi({
-          id,
+          id: storageKey,
           data: {
             currentLayout: layout,
           },
@@ -210,17 +216,11 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
         if (!response) {
           return;
         }
-        dispatch({
-          type: 'save',
-          payload: {
-            currentLayout: layout,
-            widgets,
-          },
-        });
+
         callback();
       } catch (error) {}
     },
-    [id, widgets],
+    [storageKey, widgets],
   );
 
   //删除widget信息
@@ -245,7 +245,7 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
           dirtyCurrentLayout: layout,
         },
       });
-      _onLayoutChange && _onLayoutChange(layout);
+      _onLayoutChange && _onLayoutChange(formatLayout(layout));
       callback && callback();
     }, 300),
     [stateEditMode],
@@ -274,7 +274,12 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
           maxH: widget.size.maxHeight,
         },
       ];
-      onAddWidget && onAddWidget(widget, dirtyCurrentLayout, newLayout);
+      onAddWidget &&
+        onAddWidget(
+          widget,
+          formatLayout(dirtyCurrentLayout),
+          formatLayout(newLayout),
+        );
       onLayoutChange(newLayout);
       message.success('添加成功');
     },
@@ -293,7 +298,11 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
         }
       });
       onRemoveWidget &&
-        onRemoveWidget(removedWidget, dirtyCurrentLayout, newLayout);
+        onRemoveWidget(
+          removedWidget,
+          formatLayout(dirtyCurrentLayout),
+          formatLayout(newLayout),
+        );
       dispatch({
         type: 'save',
         payload: {
@@ -309,22 +318,9 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
 
   //重置
   const reset = useCallback(async () => {
-    onReset && onReset([], currentLayout);
+    onReset && onReset([], formatLayout(currentLayout));
     onLayoutChange([]);
   }, [onLayoutChange]);
-
-  //id改变副作用
-  useEffect(() => {
-    if(!_.isEmpty(customLayout)){
-      return
-    }
-    fetch();
-  }, [id]);
-
-  //编辑状态改变副作用
-  useEffect(() => {
-    setStateEditMode(editMode);
-  }, [editMode]);
 
   // useEffect(() => {
   //   console.log(1)
@@ -342,35 +338,52 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
   }, [stateEditMode, dirtyCurrentLayout, currentLayout]);
 
   //取消编辑
-  const cancelEdit = () => {
+  const cancelEdit = useCallback(() => {
     setStateEditMode(false);
-    onCancelEdit && onCancelEdit(dirtyCurrentLayout, currentLayout);
+    onCancelEdit &&
+      onCancelEdit(
+        formatLayout(dirtyCurrentLayout),
+        formatLayout(currentLayout),
+      );
     dispatch({
       type: 'save',
       payload: {
         dirtyCurrentLayout: currentLayout,
       },
     });
-  };
+  }, [dirtyCurrentLayout, currentLayout]);
 
-  const revert = () => {
-    onRevert && onRevert(dirtyCurrentLayout, currentLayout);
+  const revert = useCallback(() => {
+    onRevert &&
+      onRevert(formatLayout(dirtyCurrentLayout), formatLayout(currentLayout));
     dispatch({
       type: 'save',
       payload: {
         dirtyCurrentLayout: currentLayout,
       },
     });
-  };
+  }, [dirtyCurrentLayout, currentLayout]);
+
   const edit = () => setStateEditMode(true);
 
-  const save = () => {
-    onSave && onSave(dirtyCurrentLayout);
+  const save = useCallback(() => {
+    calcLength(widgets, dirtyCurrentLayout);
+    dispatch({
+      type: 'save',
+      payload: {
+        currentLayout: dirtyCurrentLayout,
+        widgets,
+      },
+    });
+    onSave && onSave(formatLayout(dirtyCurrentLayout));
+    setStateEditMode(false);
+    if (customLayout) {
+      return;
+    }
     update({
       layout: dirtyCurrentLayout,
     });
-    setStateEditMode(false);
-  };
+  }, [dirtyCurrentLayout, update, customLayout]);
 
   useImperativeHandle(ref, () => ({
     dom: dom.current,
@@ -384,30 +397,49 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
     save,
   }));
 
-  const onCtrlShiftC = () => {
-    const res = _.cloneDeep(currentLayout);
-    res.forEach((item) => {
-      delete item.minW;
-      delete item.maxW;
-      delete item.minH;
-      delete item.maxH;
-      delete item.moved;
-      delete item.static;
-    });
+  //打印布局数据
+  const onCtrlShiftC = useCallback(() => {
+    const res = formatLayout(currentLayout);
     copy(JSON.stringify(res));
     message.success('已复制布局数据到剪切板');
     console.log('currentLayout', res);
-  };
+  }, [currentLayout]);
 
+  //默认存储
   useEffect(() => {
-    console.log('customLayout',customLayout)
-    dispatch({
-      type:'save',
-      payload:{
-        customLayout:customLayout,
+    if (customLayout) {
+      return;
+    }
+    fetch();
+  }, [customLayout]);
+
+  //编辑状态改变副作用
+  useEffect(() => {
+    setStateEditMode(editMode);
+  }, [editMode]);
+
+  //响应外部数据
+  useEffect(() => {
+    console.log('customLayout', customLayout);
+    customLayout.map((item, index) => {
+      const key = item.i.split('-')[0];
+      if (!key) {
+        return;
       }
-    })
-  },[customLayout])
+      const { minW = 1, maxW = 12, minH = 1, maxH = 100 } = widgets[key];
+      item.minW = minW;
+      item.maxW = maxW;
+      item.minH = minH;
+      item.maxH = maxH;
+    });
+    dispatch({
+      type: 'save',
+      payload: {
+        customLayout: customLayout,
+        dirtyCurrentLayout: customLayout,
+      },
+    });
+  }, [customLayout, widgets]);
 
   return (
     <Spin
