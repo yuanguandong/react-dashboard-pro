@@ -223,15 +223,6 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
     [storageKey, widgets],
   );
 
-  //删除widget信息
-  // const removeWidget = useCallback(async (widgetKey) => {
-  //   try {
-  //     await removeWidgetApi({
-  //       widgetKey,
-  //     });
-  //   } catch (error) {}
-  // }, []);
-
   //改变布局触发
   const onLayoutChange = useCallback(
     _.debounce((layout: any, layouts?: any, callback?: Function) => {
@@ -309,9 +300,6 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
           dirtyCurrentLayout: newLayout,
         },
       });
-      // onLayoutChange(dirtyCurrentLayout, [], () => {
-      //   removeWidget(widgetKey);
-      // });
     },
     [dirtyCurrentLayout, onLayoutChange],
   );
@@ -322,17 +310,7 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
     onLayoutChange([]);
   }, [onLayoutChange]);
 
-  // useEffect(() => {
-  //   console.log(1)
-  //   dispatch({
-  //     type: 'save',
-  //     payload: {
-  //       currentLayout,
-  //       dirtyCurrentLayout: currentLayout,
-  //     },
-  //   });
-  // },[layout])
-
+  //最终的布局数据
   const finLayout = useMemo(() => {
     return stateEditMode ? dirtyCurrentLayout : currentLayout;
   }, [stateEditMode, dirtyCurrentLayout, currentLayout]);
