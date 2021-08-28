@@ -1,4 +1,5 @@
-import { Api, Api1, Api2, Code, Code0, Code1, Code2, Code3, Footer } from '@/components';
+import { Api, Api1, Api2, Code, Footer } from '@/components';
+import { Code0, Code1, Code2, Code3, Npm } from '@/components/code/index';
 import { Typography } from 'antd';
 import React, { useState } from 'react';
 import {
@@ -117,7 +118,7 @@ const Index: React.FunctionComponent<IProps> = () => {
         ></a>
         <div style={{ width: '100%', height: '800px', position: 'relative' }}>
           <Background
-            symbolsStyle={{ opacity: 1,transform: 'scale(1.5)'}}
+            symbolsStyle={{ opacity: 1, transform: 'scale(1.5)' }}
             symbolSize={200}
             gap={0}
             symbols={[
@@ -164,13 +165,20 @@ const Index: React.FunctionComponent<IProps> = () => {
           >
             <Dashboard />
           </div>
-          <Code content={Code0} />
-          <Title level={2}>介绍</Title>
 
+          <Title level={2}>安装</Title>
+          <Code content={Npm} defaultOpen/>
+
+          <Title level={2} >代码示例</Title>
+
+          <Code content={Code0} defaultOpen/>
+
+          <Title level={2}>介绍</Title>
 
           <Title level={5}>
             react-dashboard-pro
-            是一套组件库也是一套解决方案，解决的是"千人千面"的B端几乎都要用到的Dashboard + Widget 客制化需求。
+            是一套组件库也是一套解决方案，解决的是"千人千面"的B端几乎都要用到的Dashboard
+            + Widget 客制化需求。
           </Title>
           <Title level={5}>
             动态可配置仪表板和动态”小程序市场“可以让每个用户非常方便的定制自己的仪表板，提升软件自由度和用户体验。
@@ -180,10 +188,12 @@ const Index: React.FunctionComponent<IProps> = () => {
             收敛了很多定制化的逻辑，简单的配置，约定式的widget编写规则可以让你开箱即用，
             如果本身的WidgetSelector和Toolbar不能满足业务和UI需求，那么可以用实例上的方法做到按需定制。
           </Title>
-          
+
           <Title level={2}>数据存储</Title>
           <Title level={5}>
-            react-dashboard-pro 数据可以在外部存储，也可以使用内置的localStorage内置存储方案，如果不传递layout, 则内部默认开启内置localStorage存储
+            react-dashboard-pro
+            数据可以在外部存储，也可以使用内置的localStorage内置存储方案，如果不传递layout,
+            则内部默认开启内置localStorage存储
           </Title>
           <div
             className="container"
@@ -192,31 +202,35 @@ const Index: React.FunctionComponent<IProps> = () => {
             <Dashboard1 />
           </div>
 
-
-          <Code content={Code1} defaultOpen/>
+          <Code content={Code1} defaultOpen />
           <Title level={2}>Props</Title>
           <Api />
 
-
-          
-
-
-          <Title level={2} id="widget">Widget</Title>
+          <Title level={2} id="widget">
+            Widget
+          </Title>
           <Title level={5}>
-            widget可以是开放式的任何内容，可以自由扩展，入口文件需要导出一个对象来描述这个widget, 对象格式如下，更多widget可以看<a target="_blank" href={packageInfo.widgetRepository}>这里</a>
-           
+            widget可以是开放式的任何内容，可以自由扩展，入口文件需要导出一个对象来描述这个widget,
+            对象格式如下，更多widget可以看
+            <a target="_blank" href={packageInfo.widgetRepository}>
+              这里
+            </a>
           </Title>
           <Api2 />
           <Code content={Code3} />
 
-          <Title level={2} id="layout">Layout</Title> 
+          <Title level={2} id="layout">
+            Layout
+          </Title>
           <Title level={5}>
-            布局信息一般情况下不需要太关注，只需要序列化的存储下来即可，若想实时获取仪表板布局数据，可以聚焦（鼠标点击）到对应的仪表板，按快捷键 <Text keyboard>Ctrl</Text>+<Text keyboard>Shift</Text>+<Text keyboard>C</Text> 复制布局数据到剪切板，同时console面板也会打印出来布局数据
-           
+            布局信息一般情况下不需要太关注，只需要序列化的存储下来即可，若想实时获取仪表板布局数据，可以聚焦（鼠标点击）到对应的仪表板，按快捷键{' '}
+            <Text keyboard>Ctrl</Text>+<Text keyboard>Shift</Text>+
+            <Text keyboard>C</Text>{' '}
+            复制布局数据到剪切板，同时console面板也会打印出来布局数据
           </Title>
           <Api1 />
           <Code content={Code2} />
-          
+
           <Footer />
         </div>
       </div>
