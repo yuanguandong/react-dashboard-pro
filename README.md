@@ -158,3 +158,5 @@ export default [
 ☑️ more widget
 
 ☑️ widget-cli
+
+☑️ 国际化
