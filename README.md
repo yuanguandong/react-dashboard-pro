@@ -1,6 +1,6 @@
 # React Dashboard Pro
 [![npm version](https://badge.fury.io/js/react-dashboard-pro.svg)](#) [![npm version](https://img.shields.io/badge/react-%3E16-green)](#) [![npm version](	https://img.shields.io/github/issues/yuanguandong/react-dashboard-pro)](#) [![npm version](	https://img.shields.io/github/forks/yuanguandong/react-dashboard-pro)](#) [![npm version](https://img.shields.io/github/license/yuanguandong/react-dashboard-pro)](#) [![npm version](	https://img.shields.io/github/stars/yuanguandong/react-dashboard-pro)](#)
-### 开箱即用的一站式仪表板解决方案
+## 开箱即用的一站式仪表板解决方案
 只需简单几步即可拥有动态仪表板功能  
 
 解决的是"千人千面"的B端几乎都要用到的Dashboard + Widget 客制化需求。
@@ -8,17 +8,17 @@
 ![repository-open-graph-template副本](./snapshot.png)
 
 
-### Live demo
+## Live demo
 https://yuanguandong.github.io/react-dashboard-pro/
 
-### Install
+## Install
 ```bash
 npm i react-dashboard-pro -S
 
 git clone https://github.com/yuanguandong/react-widgets
 ```
 
-### How to use
+## How to use
 ```js
 import React, { useState } from 'react';
 import type { LayoutsIF } from 'react-dashboard-pro';
@@ -40,7 +40,7 @@ export default () => {
 };
 ```
 
-### Props
+## Props
 
 | property            | description                      | type                                                                              | defaultValue | required |
 | ------------------- | -------------------------------- | --------------------------------------------------------------------------------- | ------------ | -------- |
@@ -64,8 +64,10 @@ export default () => {
 | onSave              | 保存按钮的回调                   | (currentLayout: LayoutsIF) => void                                                |              | false    |
 | onRevert            | 恢复按钮的回调                   | (dirtyCurrentLayout: LayoutsIF, currentLayout: LayoutItem) => void                |              | false    |
 
-### Widget
+## Widget
 widget可以是开放式的任何内容，可以自由扩展，入口文件需要导出一个对象来描述这个widget, 对象格式如下，更多widget可以看<a href="https://github.com/yuanguandong/react-widgets" target="_blank">这里</a>
+> 预设的widget基本都依赖了antd,使用了less, 注意依赖的安装
+
 | property        | description                          | type                                                                                                               | defaultValue | required |
 | --------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------ | -------- |
 | name            | 小程序名称                           | string                                                                                                             |              | true     |
@@ -117,7 +119,7 @@ export default{ Clock,Guide,Popular,Todo,Column,Ring };
 
 ```
 
-### Layout
+## Layout
 布局信息一般情况下不需要太关注，只需要序列化的存储下来即可，若想实时获取仪表板布局数据，可以聚焦（鼠标点击）到对应的仪表板，按快捷键 <Text keyboard>Ctrl</Text>+<Text keyboard>Shift</Text>+<Text keyboard>C</Text> 复制布局数据到剪切板，同时console面板也会打印出来布局数据
 | property | description                                                      | type   | defaultValue | required |
 | -------- | ---------------------------------------------------------------- | ------ | ------------ | -------- |
@@ -148,7 +150,7 @@ export default [
   }
 ]
 ```
-### Todo
+## Todo
 ✅ configPanel 
 
 ☑️ gap 
