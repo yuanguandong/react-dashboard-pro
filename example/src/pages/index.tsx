@@ -196,7 +196,7 @@ const Index: React.FunctionComponent<IProps> = () => {
 
           <Title level={2} id="widget">Widget</Title>
           <Title level={5}>
-            widget可以是开放式的任何内容，可以自由扩展，入口文件需要导出一个对象来描述这个widget, 对象格式如下，更多widget可以看<a>这里</a>
+            widget可以是开放式的任何内容，可以自由扩展，入口文件需要导出一个对象来描述这个widget, 对象格式如下，更多widget可以看<a target="_blank" href={packageInfo.widgetRepository}>这里</a>
            
           </Title>
           <Api2 />

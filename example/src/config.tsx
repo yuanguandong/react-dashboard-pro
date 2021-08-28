@@ -6,5 +6,6 @@ export default {
   packageName:'react-dashboard-pro',
   authorHomePage:'https://github.com/yuanguandong',
   homePageUrl: 'https://github.com/yuanguandong/react-dashboard-pro',
-  symbol:<RiDashboardFill/>
+  symbol:<RiDashboardFill/>,
+  widgetRepository:'https://github.com/yuanguandong/react-widgets'
 }
