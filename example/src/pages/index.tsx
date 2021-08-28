@@ -68,7 +68,7 @@ const icons = [
 ];
 
 const images = [
-  'http://hbimg.huabanimg.com/fd96f248fc148615ddfc47f4878c9c6faa1f44e0805fb-FE039l_fw658/format/webp',
+  'http://cdn.dribbble.com/users/1615584/screenshots/15501287/media/925336eda523f4042701e662988f3bfd.jpg?compress=1&resize=1200x900',
   'http://hbimg.huabanimg.com/28b7fa3dfa092b6da73174391ef0c387e8fc42fffcba9-NpUPuG_fw658/format/webp',
   'http://hbimg.huabanimg.com/0dc20d8fe1fabb39184e91fe3811998bad8ab72eea39a-yauPGJ_fw658/format/webp',
   'http://hbimg.huabanimg.com/9a428dd11ecb30aeae5d1f52e4a0ef446f8d24161310e-OYobtd_fw658/format/webp',
