@@ -42,12 +42,12 @@ export default () => {
 
 | property            | description                      | type                                                                              | defaultValue | required |
 | ------------------- | -------------------------------- | --------------------------------------------------------------------------------- | ------------ | -------- |
-| widgets             | 可选的小程序对象集合             | widgetsIF                                                                         |              | true     |
+| widgets             | 可选的小程序对象集合             | { \[key: string\]:<a href="#widget">widget</a>}                                   |              | true     |
 | editMode            | 是否编辑状态                     | boolean                                                                           | false        | false    |
-| defaultLayout       | 默认布局                         | LayoutItem[]                                                                      | []           | false    |
+| defaultLayout       | 默认布局                         | <a href="#layout">layoutItem</a>[]                                                | []           | false    |
 | widgetWrapClassName | widget容器类名                   | string                                                                            |              | false    |
 | widgetWrapStyle     | widget容器样式                   | React.CSSProperties                                                               |              | false    |
-| layout              | 布局数据                         | LayoutItem[]                                                                      | null         | false    |
+| layout              | 布局数据                         | <a href="#layout">layoutItem</a>[]                                                | null         | false    |
 | minHeight           | 最小高度                         | number                                                                            | 300          | false    |
 | maxWidgetLength     | 当前仪表板最大可添加的widget数量 | number                                                                            | 20           | false    |
 | toolbar             | 是否显示默认工具栏               | {type: 'left' \| 'right' \| 'top' \| 'bottom'; speed: number;}                    | true         | false    |
@@ -64,17 +64,17 @@ export default () => {
 
 ### Widget
 widget可以是开放式的任何内容，可以自由扩展，入口文件需要导出一个对象来描述这个widget, 对象格式如下，更多widget可以看<a>这里</a>
-| property        | description                          | type                                                                                                                 | defaultValue | required |
-| --------------- | ------------------------------------ | -------------------------------------------------------------------------------------------------------------------- | ------------ | -------- |
-| name            | 小程序名称                           | string                                                                                                               |              | true     |
-| description     | 小程序描述                           | string                                                                                                               |              | true     |
-| tags            | 标签，被用作小程序选择器分类依据     | string[]                                                                                                             |              | true     |
-| component       | 小程序组件                           | ReactElement                                                                                                         |              | true     |
-| configComponent | 小程序对应的配置组件                 | ReactElement                                                                                                         |              | true     |
-| maxLength       | 该小程序在当前仪表板最大可添加数量   | number                                                                                                               |              | true     |
-| snapShot        | 小程序快照图片，用于小程序选择器显示 | ImageBitmapSource                                                                                                    |              | true     |
-| icon            | 小程序图标，用于小程序选择器显示     | ReactElement                                                                                                         |              | true     |
-| iconBackground  | 小程序图标背景，用于小程序选择器显示 | string                                                                                                               |              | true     |
+| property        | description                          | type                                                                                                               | defaultValue | required |
+| --------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------ | -------- |
+| name            | 小程序名称                           | string                                                                                                             |              | true     |
+| description     | 小程序描述                           | string                                                                                                             |              | true     |
+| tags            | 标签，被用作小程序选择器分类依据     | string[]                                                                                                           |              | true     |
+| component       | 小程序组件                           | ReactElement                                                                                                       |              | true     |
+| configComponent | 小程序对应的配置组件                 | ReactElement                                                                                                       |              | true     |
+| maxLength       | 该小程序在当前仪表板最大可添加数量   | number                                                                                                             |              | true     |
+| snapShot        | 小程序快照图片，用于小程序选择器显示 | ImageBitmapSource                                                                                                  |              | true     |
+| icon            | 小程序图标，用于小程序选择器显示     | ReactElement                                                                                                       |              | true     |
+| iconBackground  | 小程序图标背景，用于小程序选择器显示 | string                                                                                                             |              | true     |
 | size            | 小程序尺寸信息                       | {defaultWidth: number;defaultHeight: number;maxWidth: number;maxHeight: number;minWidth: number;minHeight: number} |              | true     |
 ```tsx
 // todo/index.tsx
@@ -147,8 +147,12 @@ export default [
 ]
 ```
 ### Todo
-✅ configPanel
-☑️ gap
-☑️ modern theme
-☑️ dark theme
+✅ configPanel 
+
+☑️ gap 
+
+☑️ modern theme 
+
+☑️ dark theme 
+
 ☑️ more widget
