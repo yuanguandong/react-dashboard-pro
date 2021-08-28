@@ -31,7 +31,7 @@ jobs:
 
       # Runs a set of commands using the runners shell
       - name: build:doc
-        run: cd example && npm run build:doc && npm run build:netlify
+        run: cd example && npm run build:doc
       
       - name: Commit report
         run: |
