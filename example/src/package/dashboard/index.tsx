@@ -77,8 +77,7 @@ interface widgetsIF {
   [key: string]: widgetIF;
 }
 export interface Dashboard {
-  storageKey: string; //本地存储唯一标识
-  widgets: widgetsIF; //widget库
+  widgets: widgetsIF; //widgets对象
   editMode?: boolean; //是否编辑状态
   defaultLayout?: LayoutsIF; //初始布局
   widgetWrapClassName?: string; //widget容器类名
@@ -87,26 +86,27 @@ export interface Dashboard {
   minHeight?: number; //最小高度
   maxWidgetLength?: number; //当前仪表板最大可添加的widget数量
   toolbar?: boolean; //是否显示默认工具栏
-  onLayoutChange: (layout: LayoutsIF) => void;
-  onReset: (dirtyCurrentLayout: LayoutsIF, currentLayout: LayoutItem) => void; //清空
-  onRemoveWidget: (
+  storageKey?: string; //本地存储唯一标识
+  onLayoutChange?: (layout: LayoutsIF) => void;
+  onReset?: (dirtyCurrentLayout: LayoutsIF, currentLayout: LayoutItem) => void; //清空
+  onRemoveWidget?: (
     widget: widgetIF,
     dirtyCurrentLayout: LayoutsIF,
     currentLayout: LayoutsIF,
   ) => void; //删除
-  onAddWidget: (
+  onAddWidget?: (
     widget: widgetIF,
     dirtyCurrentLayout: LayoutsIF,
     currentLayout: LayoutsIF,
   ) => void; //新增
-  onReload: (currentLayout: LayoutsIF) => void; // 刷新
-  onCancelEdit: (
+  onReload?: (currentLayout: LayoutsIF) => void; // 刷新
+  onCancelEdit?: (
     dirtyCurrentLayout: LayoutsIF,
     currentLayout: LayoutItem,
   ) => void; //取消编辑
-  onEdit: (currentLayout: LayoutsIF) => void; //编辑
-  onSave: (currentLayout: LayoutsIF) => void; //编辑
-  onRevert: (dirtyCurrentLayout: LayoutsIF, currentLayout: LayoutItem) => void; //重置
+  onEdit?: (currentLayout: LayoutsIF) => void; //编辑
+  onSave?: (currentLayout: LayoutsIF) => void; //编辑
+  onRevert?: (dirtyCurrentLayout: LayoutsIF, currentLayout: LayoutItem) => void; //重置
   [key: string]: any;
 }
 

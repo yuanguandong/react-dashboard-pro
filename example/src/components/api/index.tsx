@@ -1,82 +1,166 @@
 import { Table } from 'antd';
 
-export default (props:any)=>{
-  
+export default (props: any) => {
   const dataSource = [
     {
-      prop: `symbols`,
-      desc: `元素/字符/符号集合`,
-      type: `(string | ReactNode | Element)[]`,
-      default: `['●']`,
-      required: `false`
+      prop: `widgets`,
+      desc: `可选的小程序对象集合`,
+      type: (
+        <>
+          {`{
+          [key: string]`}
+          :<a href="#widget">widget</a>{`}`}
+        </>
+      ),
+      default: ``,
+      required: `true`,
     },
     {
-      prop: `random`,
-      desc: `符号是否随机生成位置和大小`,
-      type: `{ fontSizeRange: number[] } | undefined`,
-      default: ``,
-      required: `false`
-    },{
-      prop: `underlayColor`,
-      desc: `底衬颜色`,
-      type: `string`,
-      default: ``,
-      required: `false`
-    },{
-      prop: `underlayImage`,
-      desc: `底衬图片`,
-      type: `string`,
-      default: ``,
-      required: `false`
-    },{
-      prop: `symbolsStyle`,
-      desc: `符号样式`,
-      type: `Object`,
-      default: `{color: '#000',opacity: '0.3'}`,
-      required: `false`
-    },{
-      prop: `rotate`,
-      desc: `符号旋转角度`,
-      type: `number`,
-      default: `0`,
-      required: `false`
-    },{
-      prop: `symbolSize`,
-      desc: `符号大小`,
-      type: `number`,
-      default: `90`,
-      required: `false`
-    },{
-      prop: `gap`,
-      desc: `符号间距`,
-      type: `number`,
-      default: `10`,
-      required: `false`
-    },{
-      prop: `animation`,
-      desc: `滚动动画`,
-      type: `{
-        type: 'left' | 'right' | 'top' | 'bottom';
-        speed: number;
-      }`,
-      default: ``,
-      required: `false`
-    },{
-      prop: `childrenWrapClassName`,
-      desc: `子组件容器类名`,
-      type: `string`,
-      default: ``,
-      required: `false`
+      prop: `editMode`,
+      desc: `是否编辑状态`,
+      type: `boolean`,
+      default: `false`,
+      required: `false`,
     },
     {
-      prop: `childrenWrapStyle`,
-      desc: `子组件容器类名`,
+      prop: `defaultLayout`,
+      desc: `初始布局`,
+      type: <><a href="#layout">LayoutItem</a>[]</>,
+      default: `[]`,
+      required: `false`,
+    },
+    {
+      prop: `widgetWrapClassName`,
+      desc: `widget容器类名`,
+      type: `string`,
+      default: ``,
+      required: `false`,
+    },
+    {
+      prop: `widgetWrapStyle`,
+      desc: `widget容器样式`,
       type: `React.CSSProperties`,
+      default: `{color: '#000',opacity: '0.3'}`,
+      required: `false`,
+    },
+    {
+      prop: `layout`,
+      desc: `布局数据`,
+      type: <><a href="#layout">LayoutItem</a>[]</>,
+      default: `null`,
+      required: `false`,
+    },
+    {
+      prop: `minHeight`,
+      desc: `最小高度`,
+      type: `number`,
+      default: `300`,
+      required: `false`,
+    },
+    {
+      prop: `maxWidgetLength`,
+      desc: `当前仪表板最大可添加的widget数量`,
+      type: `number`,
+      default: `20`,
+      required: `false`,
+    },
+    {
+      prop: `toolbar`,
+      desc: `是否显示默认工具栏`,
+      type: `boolean`,
+      default: `true`,
+      required: `false`,
+    },
+    {
+      prop: `storageKey`,
+      desc: `本地存储唯一标识`,
+      type: `string`,
+      default: `default`,
+      required: `false`,
+    },
+    {
+      prop: `onLayoutChange`,
+      desc: `布局改变的回调`,
+      type: `(layout: LayoutsIF) => void`,
       default: ``,
-      required: `false`
-    }
+      required: `false`,
+    },
+    ,
+    {
+      prop: `onReset`,
+      desc: `清空按钮的回调`,
+      type: `(dirtyCurrentLayout: LayoutsIF, currentLayout: LayoutItem) => void`,
+      default: ``,
+      required: `false`,
+    },
+    ,
+    {
+      prop: `onRemoveWidget`,
+      desc: `删除小程序的回调`,
+      type: `(
+        widget: widgetIF,
+        dirtyCurrentLayout: LayoutsIF,
+        currentLayout: LayoutsIF,
+      ) => void`,
+      default: ``,
+      required: `false`,
+    },
+    {
+      prop: `onAddWidget`,
+      desc: `添加小程序的回调`,
+      type: `(
+        widget: widgetIF,
+        dirtyCurrentLayout: LayoutsIF,
+        currentLayout: LayoutsIF,
+      ) => void`,
+      default: ``,
+      required: `false`,
+    },
+    ,
+    {
+      prop: `onReload`,
+      desc: `刷新按钮的回调`,
+      type: `(currentLayout: LayoutsIF) => void;`,
+      default: ``,
+      required: `false`,
+    },
+    ,
+    {
+      prop: `onCancelEdit`,
+      desc: `取消编辑的回调`,
+      type: `(
+        dirtyCurrentLayout: LayoutsIF,
+        currentLayout: LayoutItem,
+      ) => void`,
+      default: ``,
+      required: `false`,
+    },
+    ,
+    {
+      prop: `onEdit`,
+      desc: `进入编辑的回调`,
+      type: `(currentLayout: LayoutsIF) => void`,
+      default: ``,
+      required: `false`,
+    },
+    ,
+    {
+      prop: `onSave`,
+      desc: `保存按钮的回调`,
+      type: `(currentLayout: LayoutsIF) => void`,
+      default: ``,
+      required: `false`,
+    },
+    ,
+    {
+      prop: `onRevert`,
+      desc: `恢复按钮的回调`,
+      type: `(dirtyCurrentLayout: LayoutsIF, currentLayout: LayoutItem) => void`,
+      default: ``,
+      required: `false`,
+    },
   ];
-  
+
   const columns = [
     {
       title: '属性',
@@ -104,6 +188,15 @@ export default (props:any)=>{
       key: 'required',
     },
   ];
-  
-  return <Table rowKey={'prop'} bordered dataSource={dataSource} columns={columns} pagination={false}/>
-}
+
+  return (
+    <Table
+      rowKey={'prop'}
+      bordered
+      dataSource={dataSource}
+      columns={columns}
+      pagination={false}
+      style={{ marginBottom: 10 }}
+    />
+  );
+};

@@ -1,4 +1,4 @@
-import { Api, Code, Code0, Footer } from '@/components';
+import { Api, Api1, Api2, Code, Code0, Code1, Code2, Code3, Footer } from '@/components';
 import { Typography } from 'antd';
 import React, { useState } from 'react';
 import {
@@ -184,12 +184,32 @@ const Index: React.FunctionComponent<IProps> = () => {
           >
             <Dashboard1 />
           </div>
-          <Code content={Code0} />
-          <Title level={2}>Why 为什么？</Title>
-          在开发过程中，我们经常会遇到使用背景的地方，比如登录页面，用户信息页面，封面图……
-          寻找契合业务主题的背景十分耗费精力，总觉得做的背景不合适，如果直接用图片呢，逻辑是比较简单，但寻找到一张契合业务主题的图片也不是那么容易，所以想到用符号生成幕布一样的背景，从这个出发点做了这个组件，滚动的图片墙可能这个需求比较常见，用SmartBackground可以很快速的实现，希望可以帮到您，别忘了star哟
+
+
+          <Code content={Code1} defaultOpen/>
           <Title level={2}>Props</Title>
           <Api />
+
+
+          
+
+
+          <Title level={2} id="widget">Widget</Title>
+          <Title level={5}>
+            widget可以是开放式的任何内容，可以自由扩展，入口文件需要导出一个对象来描述这个widget, 对象格式如下，更多widget可以看<a>这里</a>
+           
+          </Title>
+          <Api2 />
+          <Code content={Code3} />
+
+          <Title level={2}>Layout</Title> 
+          <Title level={5}>
+            布局信息一般情况下不需要太关注，只需要序列化的存储下来即可，若想实时获取仪表板布局数据，可以聚焦（鼠标点击）到对应的仪表板，按快捷键 <Text keyboard>Ctrl</Text>+<Text keyboard>Shift</Text>+<Text keyboard>C</Text> 复制布局数据到剪切板，同时console面板也会打印出来布局数据
+           
+          </Title>
+          <Api1 />
+          <Code content={Code2} />
+          
           <Footer />
         </div>
       </div>
