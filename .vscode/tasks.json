@@ -29,7 +29,7 @@
       //f9 build
       {
         "type": "shell",
-        "command": "npm run build",
+        "command": "npm run build && npm publish",
         "label": "build",
         "problemMatcher": []
       },

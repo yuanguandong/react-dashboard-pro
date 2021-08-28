@@ -14,6 +14,8 @@ https://yuanguandong.github.io/react-dashboard-pro/
 ### Install
 ```bash
 npm i react-dashboard-pro -S
+
+git clone https://github.com/yuanguandong/react-widgets
 ```
 
 ### How to use
@@ -63,7 +65,7 @@ export default () => {
 | onRevert            | 恢复按钮的回调                   | (dirtyCurrentLayout: LayoutsIF, currentLayout: LayoutItem) => void                |              | false    |
 
 ### Widget
-widget可以是开放式的任何内容，可以自由扩展，入口文件需要导出一个对象来描述这个widget, 对象格式如下，更多widget可以看<a>这里</a>
+widget可以是开放式的任何内容，可以自由扩展，入口文件需要导出一个对象来描述这个widget, 对象格式如下，更多widget可以看<a href="https://github.com/yuanguandong/react-widgets" target="_blank">这里</a>
 | property        | description                          | type                                                                                                               | defaultValue | required |
 | --------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------ | -------- |
 | name            | 小程序名称                           | string                                                                                                             |              | true     |
