@@ -24,7 +24,7 @@ export default (props: any) => {
     },
     {
       prop: `defaultLayout`,
-      desc: `初始布局`,
+      desc: `默认布局`,
       type: <><a href="#layout">LayoutItem</a>[]</>,
       default: `[]`,
       required: `false`,
@@ -40,7 +40,7 @@ export default (props: any) => {
       prop: `widgetWrapStyle`,
       desc: `widget容器样式`,
       type: `React.CSSProperties`,
-      default: `{color: '#000',opacity: '0.3'}`,
+      default: ``,
       required: `false`,
     },
     {
@@ -120,7 +120,7 @@ export default (props: any) => {
     {
       prop: `onReload`,
       desc: `刷新按钮的回调`,
-      type: `(currentLayout: LayoutsIF) => void;`,
+      type: `(currentLayout: LayoutsIF) => void`,
       default: ``,
       required: `false`,
     },

@@ -1,74 +1,154 @@
 # React Dashboard Pro
-[![npm version](https://badge.fury.io/js/smart-background.svg)](#) [![npm version](https://img.shields.io/badge/react-%3E16-green)](#) [![npm version](	https://img.shields.io/github/issues/yuanguandong/smart-background)](#) [![npm version](	https://img.shields.io/github/forks/yuanguandong/smart-background)](#) [![npm version](https://img.shields.io/github/license/yuanguandong/smart-background)](#) [![npm version](	https://img.shields.io/github/stars/yuanguandong/smart-background)](#)
-### An React Component Can Automatically Generate The Background
-一个快速生成元素背景的react组件
+[![npm version](https://badge.fury.io/js/react-dashboard-pro.svg)](#) [![npm version](https://img.shields.io/badge/react-%3E16-green)](#) [![npm version](	https://img.shields.io/github/issues/yuanguandong/react-dashboard-pro)](#) [![npm version](	https://img.shields.io/github/forks/yuanguandong/react-dashboard-pro)](#) [![npm version](https://img.shields.io/github/license/yuanguandong/react-dashboard-pro)](#) [![npm version](	https://img.shields.io/github/stars/yuanguandong/react-dashboard-pro)](#)
+### 开箱即用的一站式仪表板解决方案
+只需简单几步即可拥有动态仪表板功能  
+
+解决的是"千人千面"的B端几乎都要用到的Dashboard + Widget 客制化需求。
 
 ![repository-open-graph-template副本](./snapshot.png)
 
 
 ### Live demo
-https://yuanguandong.github.io/smart-background/
+https://yuanguandong.github.io/react-dashboard-pro/
 
 ### Install
 ```bash
-npm i smart-background -S
+npm i react-dashboard-pro -S
 ```
 
 ### How to use
 ```js
-import React from 'react';
-import Background from 'smart-background';
-import { FaLaugh } from 'react-icons/fa';
+import React, { useState } from 'react';
+import type { LayoutsIF } from 'react-dashboard-pro';
+import Dashboard from 'react-dashboard-pro';
+import allWidgets from '../widgets';
 
 export default () => {
+  const [layout, setLayout] = useState<LayoutsIF>([]);
+  const onLayoutChange = (layout: LayoutsIF) => {
+    setLayout(layout);
+  };
   return (
-    <div style={styles.container}>
-      <Background underlayColor="#f00" animation={{ type: 'bottom', speed: 5 }}>
-        <div style={styles.content}>
-          <FaLaugh style={styles.icon} />
-          <h1 style={styles.text}>JUST DO IT</h1>
-        </div>
-      </Background>
-    </div>
+    <Dashboard
+      widgets={allWidgets}
+      onLayoutChange={onLayoutChange}
+      layout={layout}
+    />
   );
-};
-
-const styles = {
-  container: { width: '100%', position: 'relative', height: 350 },
-  content: {
-    width: '100%',
-    height: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'column',
-  },
-  icon: { color: '#fff', fontSize: 120 },
-  text: { color: '#fff', fontSize: 36, fontWeight: 'bold' },
 };
 ```
 
 ### Props
 
-| property              | description                | type                                                           | defaultValue                    | required |
-| --------------------- | -------------------------- | -------------------------------------------------------------- | ------------------------------- | -------- |
-| symbols               | 元素/字符/符号集合         | (string \| ReactNode    \| Element)[ ]                         | ['●']                           | false    |
-| random                | 符号是否随机生成位置和大小 | { fontSizeRange: number[] } \| undefined                       |                                 | false    |
-| underlayColor         | 底衬颜色                   | string                                                         |                                 | false    |
-| underlayImage         | 底衬图片                   | string                                                         |                                 | false    |
-| symbolsStyle          | 符号样式                   | Object                                                         | {color: '#000', opacity: '0.3'} | false    |
-| rotate                | 符号旋转角度               | number                                                         | 0                               | false    |
-| symbolSize            | 符号大小                   | number                                                         | 90                              | false    |
-| gap                   | 符号间距                   | number                                                         | 10                              | false    |
-| animation             | 滚动动画                   | {type: 'left' \| 'right' \| 'top' \| 'bottom'; speed: number;} |                                 | false    |
-| exact                 | 精确模式                   | boolean                                                        | false                           | false    |
-| childrenWrapClassName | 子组件容器类名             | string                                                         |                                 | false    |
-| childrenWrapStyle     | 子组件容器类名             | React.CSSProperties                                            |                                 | false    |
+| property            | description                      | type                                                                              | defaultValue | required |
+| ------------------- | -------------------------------- | --------------------------------------------------------------------------------- | ------------ | -------- |
+| widgets             | 可选的小程序对象集合             | widgetsIF                                                                         |              | true     |
+| editMode            | 是否编辑状态                     | boolean                                                                           | false        | false    |
+| defaultLayout       | 默认布局                         | LayoutItem[]                                                                      | []           | false    |
+| widgetWrapClassName | widget容器类名                   | string                                                                            |              | false    |
+| widgetWrapStyle     | widget容器样式                   | React.CSSProperties                                                               |              | false    |
+| layout              | 布局数据                         | LayoutItem[]                                                                      | null         | false    |
+| minHeight           | 最小高度                         | number                                                                            | 300          | false    |
+| maxWidgetLength     | 当前仪表板最大可添加的widget数量 | number                                                                            | 20           | false    |
+| toolbar             | 是否显示默认工具栏               | {type: 'left' \| 'right' \| 'top' \| 'bottom'; speed: number;}                    | true         | false    |
+| storageKey          | 本地存储唯一标识                 | boolean                                                                           | 'default'    | false    |
+| onLayoutChange      | 布局改变的回调                   | (layout: LayoutsIF) => void                                                       |              | false    |
+| onReset             | 清空按钮的回调                   | (dirtyCurrentLayout: LayoutsIF, currentLayout: LayoutItem) => void                |              | false    |
+| onRemoveWidget      | 删除小程序的回调                 | (widget: widgetIF,dirtyCurrentLayout: LayoutsIF,currentLayout: LayoutsIF) => void |              | false    |
+| onAddWidget         | 添加小程序的回调                 | (widget: widgetIF,dirtyCurrentLayout: LayoutsIF,currentLayout: LayoutsIF) => void |              | false    |
+| onReload            | 刷新按钮的回调                   | (currentLayout: LayoutsIF) => void                                                |              | false    |
+| onCancelEdit        | 取消编辑的回调                   | (dirtyCurrentLayout: LayoutsIF,currentLayout: LayoutItem) => void                 |              | false    |
+| onEdit              | 进入编辑的回调                   | (currentLayout: LayoutsIF) => void                                                |              | false    |
+| onSave              | 保存按钮的回调                   | (currentLayout: LayoutsIF) => void                                                |              | false    |
+| onRevert            | 恢复按钮的回调                   | (dirtyCurrentLayout: LayoutsIF, currentLayout: LayoutItem) => void                |              | false    |
 
+### Widget
+widget可以是开放式的任何内容，可以自由扩展，入口文件需要导出一个对象来描述这个widget, 对象格式如下，更多widget可以看<a>这里</a>
+| property        | description                          | type                                                                                                                 | defaultValue | required |
+| --------------- | ------------------------------------ | -------------------------------------------------------------------------------------------------------------------- | ------------ | -------- |
+| name            | 小程序名称                           | string                                                                                                               |              | true     |
+| description     | 小程序描述                           | string                                                                                                               |              | true     |
+| tags            | 标签，被用作小程序选择器分类依据     | string[]                                                                                                             |              | true     |
+| component       | 小程序组件                           | ReactElement                                                                                                         |              | true     |
+| configComponent | 小程序对应的配置组件                 | ReactElement                                                                                                         |              | true     |
+| maxLength       | 该小程序在当前仪表板最大可添加数量   | number                                                                                                               |              | true     |
+| snapShot        | 小程序快照图片，用于小程序选择器显示 | ImageBitmapSource                                                                                                    |              | true     |
+| icon            | 小程序图标，用于小程序选择器显示     | ReactElement                                                                                                         |              | true     |
+| iconBackground  | 小程序图标背景，用于小程序选择器显示 | string                                                                                                               |              | true     |
+| size            | 小程序尺寸信息                       | {defaultWidth: number;defaultHeight: number;maxWidth: number;maxHeight: number;minWidth: number;minHeight: number} |              | true     |
+```tsx
+// todo/index.tsx
+import { CalendarOutlined } from '@ant-design/icons';
+import Panel from './component';
+import snapShot from './snapshot.png';
 
+export default {
+  name: 'Todo',
+  description: 'todo list',
+  tags: ['all','list'],
+  component: Panel,
+  configComponent: null,
+  maxLength: 2,
+  snapShot,
+  icon: <CalendarOutlined />,
+  iconBackground: 'linear-gradient(-20deg, #b721ff 0%, #21d4fd 100%)',
+  size: {
+    defaultWidth: 3,
+    defaultHeight: 11,
+    maxWidth: 12,
+    maxHeight: 16,
+    minWidth: 2,
+    minHeight: 4,
+  },
+}
+// **/**.index ……
+
+// widgets/index.tsx
+import Clock from './clock';
+import Column from './column';
+import Guide from './guide';
+import Popular from './popular';
+import Ring from './ring';
+import Todo from './todo';
+
+export default{ Clock,Guide,Popular,Todo,Column,Ring };
+
+```
+
+### Layout
+布局信息一般情况下不需要太关注，只需要序列化的存储下来即可，若想实时获取仪表板布局数据，可以聚焦（鼠标点击）到对应的仪表板，按快捷键 <Text keyboard>Ctrl</Text>+<Text keyboard>Shift</Text>+<Text keyboard>C</Text> 复制布局数据到剪切板，同时console面板也会打印出来布局数据
+| property | description                                                      | type   | defaultValue | required |
+| -------- | ---------------------------------------------------------------- | ------ | ------------ | -------- |
+| i        | 唯一标识, 以小程序的唯一标识加中划线开头，如 'widgetKey-1234567' | string |              | true     |
+| w        | 宽度份数，总共12份                                               | number |              | true     |
+| h        | 高度份数，1份大概30px                                            | number |              | true     |
+| x        | 横向位置，总共12份                                               | number |              | true     |
+| y        | 纵向位置，1份大概30px                                            | number |              | true     |
+| minW     | 最小宽度                                                         | number |              | true     |
+| maxW     | 最大宽度                                                         | number |              | true     |
+| minH     | 最小高度                                                         | number |              | true     |
+| maxH     | 最大高度                                                         | number |              | true     |
+```js
+export default [
+  {
+    w: 3,
+    h: 16,
+    x: 0,
+    y: 0,
+    i: 'Popular-81735522335293475546087951289435',
+  },
+  {
+    w: 3,
+    h: 11,
+    x: 3,
+    y: 5,
+    i: 'Todo-53084247679600442035440807237732',
+  }
+]
+```
 ### Todo
-configPanel
-gap
-modern theme
-dark theme
-更多的widget
+✅ configPanel
+☑️ gap
+☑️ modern theme
+☑️ dark theme
+☑️ more widget

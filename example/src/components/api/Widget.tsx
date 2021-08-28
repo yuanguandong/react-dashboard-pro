@@ -15,49 +15,49 @@ export default (props:any)=>{
       desc: `小程序描述`,
       type: `string`,
       default: ``,
-      required: `false`
+      required: `true`
     },{
       prop: `tags`,
       desc: `标签，被用作小程序选择器分类依据`,
       type: `string[]`,
       default: ``,
-      required: `false`
+      required: `true`
     },{
       prop: `component`,
       desc: `小程序组件`,
       type: `ReactElement`,
       default: ``,
-      required: `false`
+      required: `true`
     },{
       prop: `configComponent`,
       desc: `小程序对应的配置组件`,
       type: `ReactElement`,
       default: ``,
-      required: `false`
+      required: `true`
     },{
       prop: `maxLength`,
       desc: `该小程序在当前仪表板最大可添加数量`,
       type: `number`,
       default: ``,
-      required: `false`
+      required: `true`
     },{
       prop: `snapShot`,
       desc: `小程序快照图片，用于小程序选择器显示`,
       type: `ImageBitmapSource`,
       default: ``,
-      required: `false`
+      required: `true`
     },{
       prop: `icon`,
       desc: `小程序图标，用于小程序选择器显示`,
       type: `ReactElement`,
       default: ``,
-      required: `false`
+      required: `true`
     },{
       prop: `iconBackground`,
       desc: `小程序图标背景，用于小程序选择器显示`,
       type: `string`,
       default: ``,
-      required: `false`
+      required: `true`
     },{
       prop: `size`,
       desc: `小程序尺寸信息`,
@@ -68,9 +68,9 @@ export default (props:any)=>{
         maxHeight: number;
         minWidth: number;
         minHeight: number;
-      }[]`,
+      }`,
       default: ``,
-      required: `false`
+      required: `true`
     }
   ];
   

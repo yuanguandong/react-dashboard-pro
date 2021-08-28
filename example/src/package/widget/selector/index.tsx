@@ -12,7 +12,6 @@ const WidgetSelector = (props: any) => {
     widgets,
     currentLayout,
     addWidget,
-    container,
     children = (
       <Button
         size="small"
