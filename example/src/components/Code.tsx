@@ -2,14 +2,16 @@ import { Button, Collapse } from 'antd';
 import { useState } from 'react';
 import { FaCode } from 'react-icons/fa';
 import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
+import bash from 'react-syntax-highlighter/dist/esm/languages/hljs/bash';
 import typescript from 'react-syntax-highlighter/dist/esm/languages/hljs/typescript';
 import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 const { Panel } = Collapse;
 
 SyntaxHighlighter.registerLanguage('javascript', typescript);
+SyntaxHighlighter.registerLanguage('bash', bash);
 
 export default (props: any) => {
-  const { content, defaultOpen = false, title = '代码示例' } = props;
+  const { content, defaultOpen = false, title = '代码示例',type='typescript' } = props;
 
   const [show, setShow] = useState(defaultOpen);
 
@@ -36,7 +38,7 @@ export default (props: any) => {
       </Button>
       {show && (
         <SyntaxHighlighter
-          language="typescript"
+          language={type}
           // showLineNumbers={true}
           wrapLines={true}
           style={atomOneDark}

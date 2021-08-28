@@ -166,13 +166,6 @@ const Index: React.FunctionComponent<IProps> = () => {
             <Dashboard />
           </div>
 
-          <Title level={2}>安装</Title>
-          <Code content={Npm} defaultOpen/>
-
-          <Title level={2} >代码示例</Title>
-
-          <Code content={Code0} defaultOpen/>
-
           <Title level={2}>介绍</Title>
 
           <Title level={5}>
@@ -188,6 +181,16 @@ const Index: React.FunctionComponent<IProps> = () => {
             收敛了很多定制化的逻辑，简单的配置，约定式的widget编写规则可以让你开箱即用，
             如果本身的WidgetSelector和Toolbar不能满足业务和UI需求，那么可以用实例上的方法做到按需定制。
           </Title>
+          
+
+          <Title level={2}>安装</Title>
+          <Code content={Npm} defaultOpen type="bash"/>
+
+          <Title level={2} >使用示例</Title>
+
+          <Code content={Code0} defaultOpen/>
+
+          
 
           <Title level={2}>数据存储</Title>
           <Title level={5}>
