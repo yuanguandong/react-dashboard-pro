@@ -156,3 +156,5 @@ export default [
 ☑️ dark theme 
 
 ☑️ more widget
+
+☑️ widget-cli
