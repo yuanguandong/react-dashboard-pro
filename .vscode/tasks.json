@@ -12,10 +12,8 @@
       },
       //f6
       {
-        "type": "npm",
-        "script": "gitpush",
-        "path": "./",
-        "group": "build",
+        "type": "shell",
+        "command": "git push",
         "label": "git push",
         "problemMatcher": []
       },
