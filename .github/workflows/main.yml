@@ -32,7 +32,16 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: build:doc
         run: cd example && npm run build:doc && npm run build:netlify
-        
+      
+      - name: Commit report
+        run: |
+          git config --global user.name 'yuanguandong'
+          git config --global user.email '995749721@qq.com'
+          git pull
+          git add .
+          git commit -m "Automated build docs"
+          git push origin master
+          
       # 部署到github pages
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3

@@ -66,23 +66,31 @@ const icons = [
   <FaInstagramSquare />,
   <FaOpera />,
 ];
-
 const images = [
-  'http://cdn.dribbble.com/users/1615584/screenshots/15501287/media/925336eda523f4042701e662988f3bfd.jpg',
-  'http://hbimg.huabanimg.com/28b7fa3dfa092b6da73174391ef0c387e8fc42fffcba9-NpUPuG_fw658/format/webp',
-  'http://hbimg.huabanimg.com/0dc20d8fe1fabb39184e91fe3811998bad8ab72eea39a-yauPGJ_fw658/format/webp',
-  'http://hbimg.huabanimg.com/9a428dd11ecb30aeae5d1f52e4a0ef446f8d24161310e-OYobtd_fw658/format/webp',
-  'http://hbimg.huabanimg.com/3740a4a22f95c71dabc904480cfd232a8961d0fa4fbba-jtoOUa_fw658/format/webp',
-  'http://hbimg.huabanimg.com/1f28f9567dcd2938893cbca0cbabd2cf1b2d938b5c174-KWwyrP_fw658/format/webp',
-  'http://hbimg.huabanimg.com/eb23a1b5f1fed937276dd3295ce07d7b5625132a195051-PkJYOb_fw658/format/webp',
-  'http://hbimg.huabanimg.com/f48e29827e4800268a3e160b0dfa1524c47a12cbd1ba3-UN275A_fw658/format/webp',
-  'http://hbimg.huabanimg.com/35a54ec1334e50e8de8e08d518105e63e5e0d9338236d-0joFUt_fw658/format/webp',
-  'http://hbimg.huabanimg.com/d1d0bb7f29eb34e4cc83c15c373643ea0d91617c1c23eb-A93wCR_fw658/format/webp',
-  'http://hbimg.huabanimg.com/49c4e6cf8dfb99a68f0b6b68ff23a7e1a3c3903835183-LM4QJL_fw658/format/webp',
-  'http://hbimg.huabanimg.com/18f762933cbb540d15972db232c54ff9b7002165653c1b-DHUmlw_fw658/format/webp',
-  'http://hbimg.huabanimg.com/d765e303684e26aef25efaed0b735d9f41e57c3818124-akgLhX_fw658/format/webp',
-  'http://hbimg.huabanimg.com/0470e96effca0776c8b223ed3f39114a752fc5527b43a-bCVmXH_fw658/format/webp',
-  'http://hbimg.huabanimg.com/5b5919b6352cc3c8372e7d329c6d858dd6ce0750309e36-KuvqvD_fw658/format/webp',
+  'http://cdn.dribbble.com/users/1615584/screenshots/15501287/media/925336eda523f4042701e662988f3bfd.jpg?compress=1&resize=300x300',
+  'https://cdn.dribbble.com/users/1615584/screenshots/15378686/media/cff7c84fa3b7113a8b6ba2a42ea86dd0.jpg?compress=1&resize=300x300',
+  'https://cdn.dribbble.com/users/1615584/screenshots/15210251/media/a52605dae1af2a9397d2a20e6b849c53.jpg?compress=1&resize=300x300',
+  'https://cdn.dribbble.com/users/2253180/screenshots/15774969/media/56a6cce1177146ed5450e877e7b84eca.jpg?compress=1&resize=300x300',
+  'https://cdn.dribbble.com/users/1615584/screenshots/15252667/media/b80ad2ebdc5a6bc17e60ba6959c52817.jpg?compress=1&resize=300x300',
+  'https://cdn.dribbble.com/users/2947819/screenshots/16219411/media/351ebff1fc8e7803d1e864bb32c56f4c.png?compress=1&resize=300x300',
+  'https://cdn.dribbble.com/users/2253180/screenshots/15627123/media/3abcd7981e062604f751dd83bcada6e7.png?compress=1&resize=300x300',
+  'https://cdn.dribbble.com/users/2253180/screenshots/15455950/media/bdb93831fb3685a34016f47aaa1d41c3.jpg?compress=1&resize=300x300',
+  'https://cdn.dribbble.com/users/1615584/screenshots/15023587/media/9e7661bd6bc7eb447fcbb7e75bbd7fcb.jpg?compress=1&resize=300x300',
+  'https://cdn.dribbble.com/users/2045817/screenshots/16111797/media/601e3f76be7420140cdf59c556233af7.png?compress=1&resize=300x300',
+  'https://cdn.dribbble.com/users/1615584/screenshots/15216951/media/237d66ec9b350b60d70f09f77eec3f4a.jpg?compress=1&resize=300x300',
+  'https://cdn.dribbble.com/users/1325623/screenshots/15831358/media/6b17ba172c1e4c4d1c4d704caa23b26a.png?compress=1&resize=300x300',
+  'https://cdn.dribbble.com/users/1615584/screenshots/16007029/media/7f09e3adfac27a27718fa9bc5757b13a.jpg?compress=1&resize=300x300',
+  'https://cdn.dribbble.com/users/1615584/screenshots/14995855/media/ca41b084c9c84e0aaf991aa87cffb771.jpg?compress=1&resize=300x300',
+  'https://cdn.dribbble.com/users/2253180/screenshots/15627155/media/8bb9b30bb7277656c9e601633d0c308e.jpg?compress=1&resize=300x300',
+  'https://cdn.dribbble.com/users/1615584/screenshots/14715367/media/b22718517b88736e01d0eeb8a0caade0.jpg?compress=1&resize=300x300',
+  'https://cdn.dribbble.com/users/4832883/screenshots/15258503/media/d271d6558284ff84a8d8043d84621a8a.png?compress=1&resize=300x300',
+  'https://cdn.dribbble.com/users/1615584/screenshots/14119591/media/481f74ce775606c4fcdc9129437cedaf.jpg?compress=1&resize=300x300',
+  'https://cdn.dribbble.com/users/1615584/screenshots/14252559/media/353e9ac8e3959fedb929b6ff4cbba4c5.jpg?compress=1&resize=300x300',
+  'https://cdn.dribbble.com/users/1294892/screenshots/15776389/media/77cee9466a19d2d22f847202ff97550e.png?compress=1&resize=300x300',
+  'https://cdn.dribbble.com/users/297195/screenshots/14752281/media/5adba6f2997aecfb1c1d3c78b3586580.png?compress=1&resize=300x300',
+  'https://cdn.dribbble.com/users/297195/screenshots/14723268/media/3141e4f10f008c028afbab86e864530f.png?compress=1&resize=300x300',
+  'https://cdn.dribbble.com/users/2253180/screenshots/15332879/media/a15b519353be7afadb5796757f1fa1b1.jpg?compress=1&resize=300x300',
+  'https://cdn.dribbble.com/users/4335179/screenshots/15265886/media/a49ee8db959987e8ed2b554abe961699.png?compress=1&resize=300x300',
 ];
 
 interface IProps {}
@@ -99,7 +107,7 @@ const Index: React.FunctionComponent<IProps> = () => {
           React Dashboard Pro —— 一个开箱即用的一站式Dashboard解决方案
         </title>
         <link rel="canonical" href={packageInfo.homePageUrl} />
-        {/* <link rel="shortcut icon" type="image/x-icon" href="/assets/logo.png" /> */}
+        {/* <link rel="shortcut icon" type="image/x-icon" href="/assets/logo.png?compress=1&resize=300x300" /> */}
       </Helmet>
       <div className="App">
         <a
@@ -109,7 +117,7 @@ const Index: React.FunctionComponent<IProps> = () => {
         ></a>
         <div style={{ width: '100%', height: '800px', position: 'relative' }}>
           <Background
-            symbolsStyle={{ opacity: 1 }}
+            symbolsStyle={{ opacity: 1,transform: 'scale(1.5)'}}
             symbolSize={200}
             gap={0}
             symbols={[
@@ -123,7 +131,7 @@ const Index: React.FunctionComponent<IProps> = () => {
               )),
             ]}
             childrenWrapStyle={{
-              background: 'rgba(32,33,131,0.8)',
+              background: 'rgba(32,33,131,0.7)',
               paddingTop: 80,
             }}
             animation={{ type: 'top', speed: 5 }}
@@ -138,12 +146,11 @@ const Index: React.FunctionComponent<IProps> = () => {
             ></a>
             <div className="alignCenter">
               <div className="">
-                {/* <img className="logoImage" src={Logo} alt="react-keyevent" /> */}
                 <div className="logo" style={{ color: '#fff' }}>
                   {packageInfo.symbol}
                 </div>
                 <span className="name" style={{ color: '#fff' }}>
-                  React Dashboard Pro
+                  {packageInfo.name}
                 </span>
               </div>
             </div>

@@ -36,7 +36,7 @@ const Widget = (props: any) => {
         className={widgetClassName + '-hero'}
         style={{
           backgroundImage:
-            'url(https://hbimg.huabanimg.com/01308dcce96f800014c94ee8b06038db43766744109ea4-Njdiqp_fw658/format/webp)',
+            'url(https://cdn.dribbble.com/users/1723105/screenshots/16326363/media/bfe7e98aada92660443c68d330754b86.png?compress=1&resize=400x300)',
           opacity: activeItem ? 0 : 1,
           height: activeItem ? 0 : 200,
           marginBottom: activeItem ? 0 : 10,
