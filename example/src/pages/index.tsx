@@ -202,7 +202,7 @@ const Index: React.FunctionComponent<IProps> = () => {
           <Api2 />
           <Code content={Code3} />
 
-          <Title level={2}>Layout</Title> 
+          <Title level={2} id="layout">Layout</Title> 
           <Title level={5}>
             布局信息一般情况下不需要太关注，只需要序列化的存储下来即可，若想实时获取仪表板布局数据，可以聚焦（鼠标点击）到对应的仪表板，按快捷键 <Text keyboard>Ctrl</Text>+<Text keyboard>Shift</Text>+<Text keyboard>C</Text> 复制布局数据到剪切板，同时console面板也会打印出来布局数据
            
