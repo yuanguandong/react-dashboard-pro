@@ -1,0 +1,100 @@
+@widgetClassName: ~'react-dashboard-widget-Popular';
+@speed:0.5s;
+.@{widgetClassName} {
+  width: 100%;
+  height: 100%;
+  // user-select: none;
+  
+  padding: 10px;
+  background: var(--component-background);
+
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 1px;
+    height: 1px;
+    overflow: auto;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
+    min-height: 25px;
+    min-width: 25px;
+
+    &:hover {
+      background-color: #a8a8a8;
+    }
+
+    &:active {
+      background-color: #787878;
+    }
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #f7f7f7;
+    border: 1px solid #efefef;
+  }
+  
+  &-hero {
+    width: 100%;
+    height: 200px;
+    background-size: cover;
+    background-position: center center;
+    transition: all @speed;
+    
+  }
+  &-list {
+    width: 100%;
+    .@{widgetClassName}-item {
+      cursor: pointer;
+      transition: all @speed;
+      overflow:hidden;
+      margin-bottom:10px;
+      width: 100%;
+      display: flex;
+      .@{widgetClassName}-img {
+        width: 100px;
+        transition: all @speed;
+        height: 60px;
+        border-radius: 10px;
+        background-size: cover;
+        background-position: center center;
+      }
+      .@{widgetClassName}-content {
+        transition: all @speed;
+        padding: 5px 10px;
+        flex: 1;
+        .@{widgetClassName}-title {
+          display: flex;
+          .@{widgetClassName}-left {
+            transition: all @speed;
+            flex: 1;
+            font-size: 16px;
+            font-weight: bold;
+          }
+          .@{widgetClassName}-right {
+          }
+        }
+        .@{widgetClassName}-desc {
+          display: flex;
+          .@{widgetClassName}-left {
+            transition: all @speed;
+            flex: 1;
+            color: rgba(128, 128, 128, 0.5);
+          }
+          .@{widgetClassName}-right {
+            color: rgba(128, 128, 128, 0.5);
+          }
+        }
+      }
+    }
+  }
+  &-body{
+    transition: all @speed;
+  }
+  &-close{
+    width:100%;
+    padding:30px;
+    text-align:center;
+    font-size:24px;
+  }
+}

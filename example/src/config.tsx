@@ -2,7 +2,9 @@ import React from 'react'
 import { RiDashboardFill } from 'react-icons/ri'
 
 export default {
-  packageName:'smart-background',
-  homePageUrl: 'https://github.com/yuanguandong/smart-background',
+  name:'React Dashobard Pro',
+  packageName:'react-dashboard-pro',
+  authorHomePage:'https://github.com/yuanguandong',
+  homePageUrl: 'https://github.com/yuanguandong/react-dashboard-pro',
   symbol:<RiDashboardFill/>
 }

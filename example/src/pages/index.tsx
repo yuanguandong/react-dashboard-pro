@@ -99,7 +99,7 @@ const Index: React.FunctionComponent<IProps> = () => {
           React Dashboard Pro —— 一个开箱即用的一站式Dashboard解决方案
         </title>
         <link rel="canonical" href={packageInfo.homePageUrl} />
-        <link rel="shortcut icon" type="image/x-icon" href="/assets/logo.png" />
+        {/* <link rel="shortcut icon" type="image/x-icon" href="/assets/logo.png" /> */}
       </Helmet>
       <div className="App">
         <a
