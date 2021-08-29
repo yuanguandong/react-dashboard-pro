@@ -4,13 +4,13 @@ export const List = [{
   process:30,
   users:[{
     name:'Tom',
-    avatar:'https://hbimg.huabanimg.com/60a99dbf811d6c4b0918f0e866fbe94c40bef3194458b-wQnWdH_fw658/format/webp'
+    avatar:'https://cdn.dribbble.com/users/515705/screenshots/15102691/media/f5ec0b25eb7853394cf26f2162b76d8d.jpg?compress=1&resize=40x30'
   },{
     name:'John',
-    avatar:'https://hbimg.huabanimg.com/705b8bd1ef14d6fe357e4acc81b31700e96a466135025-amey79_fw658/format/webp'
+    avatar:'https://cdn.dribbble.com/users/1338391/screenshots/15386836/media/dea169824f0cce3899c068c35b82205b.jpg?compress=1&resize=40x30'
   },{
     name:'Lucy',
-    avatar:'https://hbimg.huabanimg.com/69aa5056d378d388eac4a8e41cb6902780b855912d9a0-2Hp392_fw658/format/webp'
+    avatar:'https://cdn.dribbble.com/users/1355613/screenshots/15234311/media/863e1b6962855907bf7b31f09a4c3eb1.jpg?compress=1&resize=40x30'
   }]
 },{
   title:'Work on Design System',
@@ -18,12 +18,12 @@ export const List = [{
   process:60,
   users:[{
     name:'Yoi',
-    avatar:'https://hbimg.huabanimg.com/393d056b91326dc1d94b24413ab6d12cbf4a49e13459d-p6US6S_fw658/format/webp'
+    avatar:'https://cdn.dribbble.com/users/1174720/screenshots/15718185/media/b54ee56400b00386f558b6a6f465d5b0.png?compress=1&resize=40x30'
   },{
     name:'Pany',
-    avatar:'https://hbimg.huabanimg.com/1158908ab071ddd63cbc15a902972c2100f4cd5b330f5-nx0dGB_fw658/format/webp'
+    avatar:'https://cdn.dribbble.com/users/721159/screenshots/15220386/media/ea0f2e0fce088e54581039ceeb82212c.png?compress=1&resize=40x30'
   },{
     name:'Danty',
-    avatar:'https://hbimg.huabanimg.com/e4a47f5e8d50d7850eb4f2e5ba4ebc686fc2222d25590-TtEQKK_fw658/format/webp'
+    avatar:'https://cdn.dribbble.com/users/230875/screenshots/12163492/media/9ccf7b00b9933758d84c8f6b2bf9185f.jpg?compress=1&resize=40x30'
   }]
 }]
