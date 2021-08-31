@@ -126,7 +126,7 @@ export default{ Clock,Guide,Popular,Todo,Column,Ring };
 
 
 ## Layout
-布局信息一般情况下不需要太关注，只需要序列化的存储下来即可，若想实时获取仪表板布局数据，可以聚焦（鼠标点击）到对应的仪表板，按快捷键 <Text keyboard>Ctrl</Text>+<Text keyboard>Shift</Text>+<Text keyboard>C</Text> 复制布局数据到剪切板，同时console面板也会打印出来布局数据
+布局信息一般情况下不需要太关注，只需要序列化的以字符串方式存储下来即可，若想实时获取仪表板布局数据（比如要设置默认布局时），可以聚焦（鼠标点击）到对应的仪表板，按快捷键 <Text keyboard>Ctrl</Text>+<Text keyboard>Shift</Text>+<Text keyboard>C</Text> 复制布局数据到剪切板，同时console面板也会打印出来布局数据
 
 | property | description                                                      | type   | defaultValue | required |
 | -------- | ---------------------------------------------------------------- | ------ | ------------ | -------- |

@@ -5,7 +5,7 @@ export default (props:any)=>{
   const dataSource = [
     {
       prop: `i`,
-      desc: `唯一标识, 以小程序的唯一标识加中划线开头，如 'widgetKey-1234567'`,
+      desc: `唯一标识, 以小程序的key-uuid组成,加中划线分割，如 'Todo-53084247679600442035440807237732',uuid不限制位数，只需确保当前仪表板中唯一即可`,
       type: `string`,
       default: ``,
       required: `true`

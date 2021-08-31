@@ -353,7 +353,7 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
     cancelEdit, //取消编辑
     edit, //编辑
     revert, //重置
-    save,
+    save,  //保存
   }));
 
   //打印布局数据

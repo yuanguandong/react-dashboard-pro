@@ -1,5 +1,5 @@
-import { Api, Api1, Api2, Code, Footer } from '@/components';
-import { Code0, Code1, Code2, Code3, Npm } from '@/components/code/index';
+import { Api, Api1, Api2,RefAPI, Code, Footer } from '@/components';
+import { Code0, Code1, Code2, Code3, Code4,Npm } from '@/components/code/index';
 import { Typography } from 'antd';
 import React, { useState } from 'react';
 import {
@@ -68,7 +68,7 @@ const icons = [
   <FaOpera />,
 ];
 const images = [
-  'http://cdn.dribbble.com/users/1615584/screenshots/15501287/media/925336eda523f4042701e662988f3bfd.jpg?compress=1&resize=300x300',
+  'https://cdn.dribbble.com/users/1615584/screenshots/15210251/media/a52605dae1af2a9397d2a20e6b849c53.jpg?compress=1&resize=300x300',
   'https://cdn.dribbble.com/users/1615584/screenshots/15378686/media/cff7c84fa3b7113a8b6ba2a42ea86dd0.jpg?compress=1&resize=300x300',
   'https://cdn.dribbble.com/users/1615584/screenshots/15210251/media/a52605dae1af2a9397d2a20e6b849c53.jpg?compress=1&resize=300x300',
   'https://cdn.dribbble.com/users/2253180/screenshots/15774969/media/56a6cce1177146ed5450e877e7b84eca.jpg?compress=1&resize=300x300',
@@ -233,6 +233,15 @@ const Index: React.FunctionComponent<IProps> = () => {
           </Title>
           <Api1 />
           <Code content={Code2} />
+
+          <Title level={2} id="layout">
+            实例方法
+          </Title>
+          <Title level={5}>
+            可通过ref获取组件实例，实例对象上挂载了一些方法和dom对象，可以方便拓展自定义的Toolbar和WidgetSelector
+          </Title>
+          <RefAPI />
+          <Code content={Code4} />
 
           <Footer />
         </div>

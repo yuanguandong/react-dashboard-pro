@@ -31,11 +31,14 @@ export const request = async (url: string, options: any) => {
  */
 export const copy = (str: string) => {
   var save = function (e: any) {
-    e.clipboardData.setData('text/plain', str); //下面会说到clipboardData对象
+    e.clipboardData.setData('text/plain', str);
     e.preventDefault(); //阻止默认行为
   };
   document.addEventListener('copy', save);
-  document.execCommand('copy'); //使文档处于可编辑状态，否则无效
+  document.execCommand('copy');
+  setTimeout(() => {
+    document.removeEventListener('copy', save);
+  }, 1000);
 };
 
 export const formatLayout = (layout) => {
@@ -51,9 +54,8 @@ export const formatLayout = (layout) => {
   return data;
 };
 
-
 //添加最大最小值
-export const calcMinAndMax = (data,widgets)=>{
+export const calcMinAndMax = (data, widgets) => {
   data.map((item, index) => {
     const key = item.i.split('-')[0];
     if (!key) {
@@ -65,5 +67,5 @@ export const calcMinAndMax = (data,widgets)=>{
     item.minH = minH;
     item.maxH = maxH;
   });
-  return data
-}
+  return data;
+};
