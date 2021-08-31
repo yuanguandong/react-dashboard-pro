@@ -159,6 +159,42 @@ export default [
 ]
 ```
 
+
+## 实例方法
+可通过ref获取组件实例，实例对象上挂载了一些方法和dom对象，可以方便拓展自定义的Toolbar和WidgetSelector
+
+| property     | description | type                |
+| ------------ | ----------- | ------------------- |
+| dom          | DOM对象     | HTMLDivElement      |
+| addWidget    | 添加小程序  | (widget)=>void      |
+| removeWidget | 删除小程序  | (i:widgetKey)=>void |
+| reload       | 刷新        | ()=>void            |
+| edit         | 进入编辑    | ()=>void            |
+| cancelEdit   | 取消编辑    | ()=>void            |
+| revert       | 重置        | ()=>void            |
+| save         | 保存        | ()=>void            |
+
+```js
+import React,{useRef} from 'react';
+import Dashboard from 'react-dashboard-pro';
+import allWidgets from '../widgets';
+
+export default () => {
+  const ref = useRef()
+  const addWidget = ()=>{
+    ref.current.addWidget('Todo-1234567')
+  }
+  return (<>
+      <Dashboard
+        ref={ref}
+        widgets={allWidgets}
+      />
+      <button onClick={addWidget}>新增</button>
+    </>
+  );
+};
+```
+
 ## Todo
 ✅ configPanel 
 
