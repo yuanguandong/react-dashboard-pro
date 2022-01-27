@@ -4,7 +4,7 @@ import { Typography } from 'antd';
 import React, { useState } from 'react';
 import {
   Fa500Px,
-  FaAdobe,
+  FaBootstrap,
   FaAdversal,
   FaAirbnb,
   FaAlipay,
@@ -54,7 +54,7 @@ const styles = {
 const icons = [
   <Fa500Px />,
   <FaApple />,
-  <FaAdobe />,
+  <FaBootstrap />,
   <FaAdversal />,
   <FaAirbnb />,
   <FaAlipay />,

@@ -5,6 +5,7 @@ let { BASE } = process.env;
 console.log(BASE)
 
 export default defineConfig({
+  hash:true,
   favicon: './logo.png',
   publicPath: BASE,
   base: BASE,
@@ -18,5 +19,6 @@ export default defineConfig({
     { path: '/widget', component: '@/pages/dashboard' },
   ],
   fastRefresh: {},
-  outputPath:BASE==='/' ? '../netlify': '../docs' 
+  outputPath:BASE==='/' ? '../netlify': '../docs',
+  mfsu:{}
 });

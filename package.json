@@ -21,10 +21,9 @@
   "main": "lib/index.js",
   "module": "lib/index.esm.js",
   "scripts": {
-    "start": "cd example && npm start",
+    "start": "cd example && npm i && npm start",
     "dev": "set NODE_ENV=developemnt&& rollup -c rollup.config.js -w",
-    "build": "rm -rf lib && set NODE_ENV=production && rollup -c rollup.config.js",
-    "init": "mkdir /Volumes/mac/github/react-dashboard-pro/example/src/pages/package && ln -s /Volumes/mac/github/react-dashboard-pro/src/* /Volumes/mac/github/react-dashboard-pro/example/src/pages/package"
+    "build": "rm -rf lib && set NODE_ENV=production && rollup -c rollup.config.js"
   },
   "types": "lib/index.d.ts",
   "devDependencies": {
@@ -63,6 +62,8 @@
     "react-icons": "^4.2.0",
     "react-keyevent": "^1.0.9",
     "react-resizable": "^3.0.4",
-    "react-resize-detector": "^6.7.6"
+    "react-resize-detector": "^6.7.6",
+    "rollup": "^2.66.1",
+    "umi": "^3.5.20"
   }
 }
