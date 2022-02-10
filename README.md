@@ -17,7 +17,7 @@ https://yuanguandong.github.io/react-dashboard-pro/
 ```bash
 npm i react-dashboard-pro -S
 
-git clone https://github.com/yuanguandong/react-widgets
+git clone git@github.com:yuanguandong/react-widgets.git
 ```
 
 ## How to use
