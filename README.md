@@ -13,6 +13,8 @@ https://github.com/yuanguandong/react-dashboard-pro
 ## Live demo
 https://yuanguandong.github.io/react-dashboard-pro/
 
+[![alt text](https://codesandbox.io/static/img/play-codesandbox.svg "在线编辑")](https://codesandbox.io/s/react-dashboard-pro-demo-6doss?file=/src/App.tsx)
+
 ## Install
 ```bash
 npm i react-dashboard-pro -S
