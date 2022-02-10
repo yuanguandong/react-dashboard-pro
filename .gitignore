@@ -4,3 +4,4 @@ build
 lib
 netlify
 docs
+.DS_Store
