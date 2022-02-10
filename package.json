@@ -21,7 +21,7 @@
   "main": "lib/index.js",
   "module": "lib/index.esm.js",
   "scripts": {
-    "start": "cd example && npm i && npm start",
+    "start": "cd doc && npm i && npm start",
     "dev": "set NODE_ENV=developemnt&& rollup -c rollup.config.js -w",
     "build": "rm -rf lib && set NODE_ENV=production && rollup -c rollup.config.js"
   },

@@ -20,7 +20,7 @@
       //f8 start
       {
         "type": "shell",
-        "command": "cd example && npm start",
+        "command": "cd doc && npm start",
         "label": "start",
         "problemMatcher": []
       },
@@ -41,14 +41,14 @@
       //f11 my install
       {
         "type": "shell",
-        "command": "cd example && cnpm i",
+        "command": "cd doc && cnpm i",
         "label": "my install",
         "problemMatcher": []
       },
       //f12 reset
       {
         "type": "shell",
-        "command": "cd example && rm -rf node_modules",
+        "command": "cd doc && rm -rf node_modules",
         "label": "reset",
         "problemMatcher": []
       },

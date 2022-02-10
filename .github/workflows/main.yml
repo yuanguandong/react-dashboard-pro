@@ -27,11 +27,11 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: install
-        run: cd example && npm i
+        run: cd doc && npm i
 
       # Runs a set of commands using the runners shell
       - name: build:doc
-        run: cd example && npm run build:doc
+        run: cd doc && npm run build:doc
       
       - name: Commit report
         run: |

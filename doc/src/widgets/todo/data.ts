@@ -1,6 +1,6 @@
 export const List = [{
   title:'Research',
-  content:'I need 5 examples of the logo',
+  content:'I need 5 docs of the logo',
   process:30,
   users:[{
     name:'Tom',
