@@ -4,4 +4,5 @@ export { default as Code2 } from './Code2'
 export { default as Code3 } from './Code3'
 export { default as Code4 } from './Code4'
 export { default as Npm } from './npm'
+export { default as Download } from './download'
 

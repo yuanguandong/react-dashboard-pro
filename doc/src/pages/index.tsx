@@ -1,6 +1,6 @@
 import { Api, Api1, Api2,RefAPI, Code, Footer } from '@/components';
-import { Code0, Code1, Code2, Code3, Code4,Npm } from '@/components/code/index';
-import { Typography } from 'antd';
+import { Code0, Code1, Code2, Code3, Code4,Npm,Download } from '@/components/code/index';
+import { Typography,Button } from 'antd';
 import React, { useState } from 'react';
 import {
   Fa500Px,
@@ -26,6 +26,7 @@ import Dashboard from './dashboard';
 import Dashboard1 from './dashboard1';
 import './index.less';
 import Intro from './intro';
+import {ShoppingOutlined} from '@ant-design/icons'
 
 const { Title, Paragraph, Text, Link } = Typography;
 
@@ -185,6 +186,11 @@ const Index: React.FunctionComponent<IProps> = () => {
 
           <Title level={2}>安装</Title>
           <Code content={Npm} defaultOpen type="bash"/>
+
+          <Title level={2}>下载widget</Title>
+          <Code content={Download} defaultOpen type="bash"/>
+
+          <Button style={{margin:'20px 0'}} type="primary" size="large" shape={'round'} icon={<ShoppingOutlined />} href="https://yuanguandong.github.io/react-widgets/" target="_blank">部件商店</Button>
 
           <Title level={2} >使用示例</Title>
 
