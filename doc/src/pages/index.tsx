@@ -26,7 +26,7 @@ import Dashboard from './dashboard';
 import Dashboard1 from './dashboard1';
 import './index.less';
 import Intro from './intro';
-import {ShoppingOutlined} from '@ant-design/icons'
+import {ShoppingOutlined,CodeSandboxOutlined} from '@ant-design/icons'
 
 const { Title, Paragraph, Text, Link } = Typography;
 
@@ -196,7 +196,8 @@ const Index: React.FunctionComponent<IProps> = () => {
 
           <Code content={Code0} defaultOpen/>
 
-          
+          <Button style={{margin:'20px 0'}} type="primary" size="large" shape={'round'} icon={<CodeSandboxOutlined />} href="https://codesandbox.io/s/react-dashboard-pro-demo-6doss?file=/src/App.tsx" target="_blank">在线编辑</Button>
+
 
           <Title level={2}>数据存储</Title>
           <Title level={5}>
