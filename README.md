@@ -22,6 +22,16 @@ npm i react-dashboard-pro -S
 git clone git@github.com:yuanguandong/react-widgets.git
 ```
 
+## DownLoad widget
+```bash
+npm i widgets-cli -D
+npx widgets-cli
+```
+
+## widget store
+https://yuanguandong.github.io/react-widgets/
+
+
 ## How to use
 ```js
 import React, { useState } from 'react';
