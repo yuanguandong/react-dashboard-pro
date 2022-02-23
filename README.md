@@ -1,10 +1,11 @@
 # React Dashboard Pro
 [![npm version](https://badge.fury.io/js/react-dashboard-pro.svg)](#) [![npm version](https://img.shields.io/badge/react-%3E16-green)](#) [![npm version](	https://img.shields.io/github/issues/yuanguandong/react-dashboard-pro)](#) [![npm version](	https://img.shields.io/github/forks/yuanguandong/react-dashboard-pro)](#) [![npm version](https://img.shields.io/github/license/yuanguandong/react-dashboard-pro)](#) [![npm version](	https://img.shields.io/github/stars/yuanguandong/react-dashboard-pro)](#)
-## 开箱即用的一站式仪表板解决方案
+## Out-of-the-box one-stop dashboard solution 
 Dynamic Dashboard functionality in just a few simple steps
 
 It solves the customization needs of Dashboard + Widget, which are almost used by the B-side of "Thousands of People, Thousands of Faces".
 
+## 开箱即用的一站式仪表板解决方案
 只需简单几步即可拥有动态仪表板功能  
 
 解决的是"千人千面"的B端几乎都要用到的Dashboard + Widget 客制化需求。
@@ -17,6 +18,7 @@ https://github.com/yuanguandong/react-dashboard-pro
 ## Docs
 https://yuanguandong.github.io/react-dashboard-pro/
 
+## Demo
 [![alt text](https://codesandbox.io/static/img/play-codesandbox.svg "在线编辑")](https://codesandbox.io/s/react-dashboard-pro-demo-6doss?file=/src/App.tsx)
 
 ## Install
@@ -24,17 +26,17 @@ https://yuanguandong.github.io/react-dashboard-pro/
 npm i react-dashboard-pro -S
 ```
 
-## DownLoad widget
+## DownLoad Widget
 ```bash
 npm i widgets-cli -D
 npx widgets-cli
 ```
 
-## Widget store
+## Widget Store
 https://yuanguandong.github.io/react-widgets/
 
 
-## How to use
+## Usage
 ```js
 import React, { useState } from 'react';
 import type { LayoutsIF } from 'react-dashboard-pro';
@@ -174,7 +176,7 @@ export default [
 ```
 
 
-## 实例方法
+## Method
 可通过ref获取组件实例，实例对象上挂载了一些方法和dom对象，可以方便拓展自定义的Toolbar和WidgetSelector
 
 | property     | description | type                |
