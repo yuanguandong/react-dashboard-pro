@@ -222,7 +222,7 @@ export default () => {
 
 ☑️ more widget
 
-☑️ widget-cli
+✅ widget-cli
 
 ☑️ 国际化
 
