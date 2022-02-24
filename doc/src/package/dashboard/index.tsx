@@ -53,7 +53,7 @@ export type LayoutItem = {
   maxH: number; //最大高度
 };
 export type LayoutsIF = LayoutItem[];
-export interface widgetIF {
+export interface WidgetIF {
   name: string;
   description: string;
   tags: string[];
@@ -74,7 +74,7 @@ export interface widgetIF {
   [key: string]: any;
 }
 interface widgetsIF {
-  [key: string]: widgetIF;
+  [key: string]: WidgetIF;
 }
 export interface Dashboard {
   widgets: widgetsIF; //widgets对象
@@ -90,12 +90,12 @@ export interface Dashboard {
   onLayoutChange?: (layout: LayoutsIF) => void;
   onReset?: (dirtyCurrentLayout: LayoutsIF, currentLayout: LayoutItem) => void; //清空
   onRemoveWidget?: (
-    widget: widgetIF,
+    widget: WidgetIF,
     dirtyCurrentLayout: LayoutsIF,
     currentLayout: LayoutsIF,
   ) => void; //删除
   onAddWidget?: (
-    widget: widgetIF,
+    widget: WidgetIF,
     dirtyCurrentLayout: LayoutsIF,
     currentLayout: LayoutsIF,
   ) => void; //新增
@@ -226,7 +226,7 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
 
   //添加小程序
   const addWidget = useCallback(
-    (widget: widgetIF) => {
+    (widget: WidgetIF) => {
       if (dirtyCurrentLayout.length >= maxWidgetLength) {
         message.warning(
           `超过了最大限制数量${maxWidgetLength}` + ',' + '不能再添加了',
@@ -264,7 +264,7 @@ const Dashboard = forwardRef((props: Dashboard, ref: any) => {
     (widgetKey: string) => {
       let removedWidget: any;
       let newLayout = _.cloneDeep(dirtyCurrentLayout);
-      newLayout.map((item: widgetIF, index: number) => {
+      newLayout.map((item: WidgetIF, index: number) => {
         if (item['i'] === widgetKey) {
           removedWidget = item;
           newLayout.splice(index, 1);

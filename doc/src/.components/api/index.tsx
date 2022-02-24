@@ -98,7 +98,7 @@ export default (props: any) => {
       prop: `onRemoveWidget`,
       desc: `删除小程序的回调`,
       type: `(
-        widget: widgetIF,
+        widget: WidgetIF,
         dirtyCurrentLayout: LayoutsIF,
         currentLayout: LayoutsIF,
       ) => void`,
@@ -109,7 +109,7 @@ export default (props: any) => {
       prop: `onAddWidget`,
       desc: `添加小程序的回调`,
       type: `(
-        widget: widgetIF,
+        widget: WidgetIF,
         dirtyCurrentLayout: LayoutsIF,
         currentLayout: LayoutsIF,
       ) => void`,

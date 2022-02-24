@@ -74,8 +74,8 @@ export default () => {
 | storageKey          | 本地存储唯一标识                 | boolean                                                                           | 'default'    | false    |
 | onLayoutChange      | 布局改变的回调                   | (layout: LayoutsIF) => void                                                       |              | false    |
 | onReset             | 清空按钮的回调                   | (dirtyCurrentLayout: LayoutsIF, currentLayout: LayoutItem) => void                |              | false    |
-| onRemoveWidget      | 删除小程序的回调                 | (widget: widgetIF,dirtyCurrentLayout: LayoutsIF,currentLayout: LayoutsIF) => void |              | false    |
-| onAddWidget         | 添加小程序的回调                 | (widget: widgetIF,dirtyCurrentLayout: LayoutsIF,currentLayout: LayoutsIF) => void |              | false    |
+| onRemoveWidget      | 删除小程序的回调                 | (widget: WidgetIF,dirtyCurrentLayout: LayoutsIF,currentLayout: LayoutsIF) => void |              | false    |
+| onAddWidget         | 添加小程序的回调                 | (widget: WidgetIF,dirtyCurrentLayout: LayoutsIF,currentLayout: LayoutsIF) => void |              | false    |
 | onReload            | 刷新按钮的回调                   | (currentLayout: LayoutsIF) => void                                                |              | false    |
 | onCancelEdit        | 取消编辑的回调                   | (dirtyCurrentLayout: LayoutsIF,currentLayout: LayoutItem) => void                 |              | false    |
 | onEdit              | 进入编辑的回调                   | (currentLayout: LayoutsIF) => void                                                |              | false    |
