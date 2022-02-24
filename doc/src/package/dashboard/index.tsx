@@ -10,9 +10,10 @@ import {
 import { Button, Empty, message, Spin, Tooltip } from 'antd';
 import classnames from 'classnames';
 import _ from 'lodash';
+import type { Component, FunctionComponent, ReactElement } from 'react';
 import React, {
   forwardRef,
-  ReactElement,
+
   useCallback,
   useEffect,
   useImperativeHandle,
@@ -57,8 +58,8 @@ export interface WidgetIF {
   name: string;
   description: string;
   tags: string[];
-  component: ReactElement;
-  configComponent: ReactElement;
+  component: Component | FunctionComponent;
+  configComponent: Component | FunctionComponent | null;
   maxLength: number;
   snapShot: ImageBitmapSource;
   icon: ReactElement;
