@@ -74,11 +74,11 @@ export interface WidgetIF {
   };
   [key: string]: any;
 }
-interface widgetsIF {
+export interface WidgetsIF {
   [key: string]: WidgetIF;
 }
 export interface Dashboard {
-  widgets: widgetsIF; //widgets对象
+  widgets: WidgetsIF; //widgets对象
   editMode?: boolean; //是否编辑状态
   defaultLayout?: LayoutsIF; //初始布局
   widgetWrapClassName?: string; //widget容器类名
