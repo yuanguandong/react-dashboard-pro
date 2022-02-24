@@ -25,13 +25,13 @@ export default (props:any)=>{
     },{
       prop: `component`,
       desc: `小程序组件`,
-      type: `ReactElement`,
+      type: `Component | FunctionComponent`,
       default: ``,
       required: `true`
     },{
       prop: `configComponent`,
       desc: `小程序对应的配置组件`,
-      type: `ReactElement`,
+      type: `Component | FunctionComponent | null`,
       default: ``,
       required: `true`
     },{
