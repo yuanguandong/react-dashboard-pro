@@ -171,7 +171,7 @@ const Index: React.FunctionComponent<IProps> = () => {
 
           <Title level={5}>
             react-dashboard-pro
-            是一套组件库也是一套解决方案，解决的是"千人千面"的B端几乎都要用到的Dashboard
+            是一套组件库也是一套解决方案，解决的是"千人千面"到的Dashboard
             + Widget 客制化需求。
           </Title>
           <Title level={5}>

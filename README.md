@@ -8,7 +8,7 @@ It solves the customization needs of Dashboard + Widget, which are almost used b
 ## 开箱即用的一站式仪表板解决方案
 只需简单几步即可拥有动态仪表板功能  
 
-解决的是"千人千面"的B端几乎都要用到的Dashboard + Widget 客制化需求。
+解决的是"千人千面"的Dashboard + Widget 客制化需求。
 
 ![repository-open-graph-template副本](./snapshot.png)
 
