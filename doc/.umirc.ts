@@ -5,20 +5,20 @@ let { BASE } = process.env;
 console.log(BASE)
 
 export default defineConfig({
-  hash:true,
+  hash: true,
   favicon: './logo.png',
   publicPath: BASE,
   base: BASE,
   nodeModulesTransform: {
     type: 'none',
   },
-  antd:{},
-  devtool:'source-map',
+  antd: {},
+  devtool: 'source-map',
   routes: [
     { path: '/', component: '@/pages/index' },
     { path: '/widget', component: '@/pages/dashboard' },
   ],
-  fastRefresh: {},
-  outputPath:BASE==='/' ? '../netlify': '../docs',
-  mfsu:{}
+  // fastRefresh: {},
+  outputPath: BASE === '/' ? '../netlify' : '../docs',
+  // mfsu:{}
 });

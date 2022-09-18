@@ -3,9 +3,9 @@ import Panel from './component';
 import snapShot from './snapshot.png';
 
 export default {
-  name: 'Guide',
+  name: 'guide',
   description: 'Guide panel, navigation',
-  tags: ['all','panel'],
+  tags: ['all', 'panel'],
   component: Panel,
   configComponent: null,
   maxLength: 2,

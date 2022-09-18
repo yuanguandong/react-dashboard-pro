@@ -3,9 +3,9 @@ import Panel from './component';
 import snapShot from './snapshot.png';
 
 export default {
-  name: 'Todo',
+  name: 'todo',
   description: 'todo list',
-  tags: ['all','list'],
+  tags: ['all', 'list'],
   component: Panel,
   configComponent: null,
   maxLength: 2,

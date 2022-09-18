@@ -3,9 +3,9 @@ import Panel from './component';
 import snapShot from './snapshot.png';
 
 export default {
-  name: 'Clock',
+  name: 'clock',
   description: 'a clock',
-  tags: ['all','system'],
+  tags: ['all', 'system'],
   component: Panel,
   configComponent: null,
   maxLength: 2,

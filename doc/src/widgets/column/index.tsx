@@ -3,9 +3,9 @@ import Panel from './component';
 import snapShot from './snapshot.png';
 
 export default {
-  name: 'Column',
+  name: 'column',
   description: 'column chart',
-  tags: ['all','chart'],
+  tags: ['all', 'chart'],
   component: Panel,
   configComponent: null,
   maxLength: 2,

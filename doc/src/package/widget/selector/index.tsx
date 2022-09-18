@@ -83,7 +83,7 @@ const WidgetSelector = (props: any) => {
       //查询
       if (
         finData[key]['name'].toLowerCase().indexOf(keywords.toLowerCase()) <
-          0 &&
+        0 &&
         finData[key]['description']
           .toLowerCase()
           .indexOf(keywords.toLowerCase()) < 0
@@ -91,10 +91,13 @@ const WidgetSelector = (props: any) => {
         finData[key].visible = false;
       }
     });
+    console.log('finData', finData)
     //已添加次数
-    currentLayout.map((item: any) => {
+    currentLayout.forEach((item: any) => {
       const key = item.i.split('-')[0];
-      finData[key].length = finData[key].length + 1;
+      console.log('item.i', item.i)
+      console.log('finData[key]', finData[key])
+      finData[key].length = finData[key].length ? finData[key]?.length + 1 : 1;
     });
     return finData;
   }, [currentLayout, widgets, keywords, activeMenuKey, visible]);
