@@ -234,3 +234,7 @@ export default () => {
 
 觉得有用的话点个star吧 🙊
 
+
+## Deployment
+
+[![Deploy on Hostinger](https://assets.hostinger.com/vps/deploy.svg)](https://www.hostinger.com/web-apps-hosting)
